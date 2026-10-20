@@ -170,9 +170,13 @@ def properties(loops):
         ring['depth'] = sum(1 for other in rings
                             if other is not ring and other['area'] > ring['area']
                             and inside(probe, other['pts']))
+    # normalise orientation: outer rings CCW, holes CW; otherwise signed moments cancel each other
+    for ring in rings:
+        wanted_positive = ring['depth'] % 2 == 0
+        if (signed_area(ring['pts']) > 0) != wanted_positive:
+            ring['pts'] = list(reversed(ring['pts']))
     area = ix = iy = ixy = sx = sy = 0.0
     for ring in rings:
-        sign = 1 if ring['depth'] % 2 == 0 else -1
         pts = ring['pts']
         a2 = sxr = syr = ixr = iyr = ixyr = 0.0
         for i in range(len(pts)):
@@ -185,13 +189,13 @@ def properties(loops):
             ixr += (y1 * y1 + y1 * y2 + y2 * y2) * cross
             iyr += (x1 * x1 + x1 * x2 + x2 * x2) * cross
             ixyr += (x1 * y2 + 2 * x1 * y1 + 2 * x2 * y2 + x2 * y1) * cross
-        a = a2 / 2
-        area += sign * abs(a)
-        sx += sign * sxr / 6
-        sy += sign * syr / 6
-        ix += sign * ixr / 12
-        iy += sign * iyr / 12
-        ixy += sign * ixyr / 24
+        # orientation already encodes outer(+)/hole(−), so accumulate the raw signed terms
+        area += a2 / 2
+        sx += sxr / 6
+        sy += syr / 6
+        ix += ixr / 12
+        iy += iyr / 12
+        ixy += ixyr / 24
     if not area:
         raise ValueError('no closed ring found — check that the drawing contains a closed outline '
                          '(segments within the snap tolerance)')

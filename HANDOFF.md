@@ -1,5 +1,25 @@
 # HWK Modern 交接 · 规格 V1 冻结 + PoC/MVP 定稿
 
+## 交接更新 · 2026-10-21 05:40 (UTC+8)：图库 DWG 列解开但块内为空；截面几何仍以 BREP 为准
+
+**三行复述**——已验证：`图库数据表.DWG` 是 **bzip2 压缩的 AC1024 DWG**（gid 1783：12,506 B → 16,775 B），
+`dwg2dxf`/`dwgread -O JSON` 均可读，但**块内没有任何 LINE/ARC**（只有 TABLE/DICTIONARY/空 BLOCK_HEADER），
+`$INSBASE` 恰等于型材 `CX/CY`（24.7160306/27.9604829）→ 块里是 HWK 自定义对象（`HWUtil.arx` 定义），通用 DWG 工具看不到实体；
+因此几何仍以 BREP 为准（已解 line=48 B 两个 3D 端点、arc=96 B 圆心/半径/起止角，gid 1783 面积 **0.00%** 命中）。
+未完成：8/12 型材的 BREP 里没有 line/arc（实体类型未清点）、链接器加固、Ix/Iy/Wx 比对、P2–P4。
+
+### 新增资产
+
+`evidence/poc/P1/sections/section-1783.dwg`（解压后的 DWG）+ `section-{1780..1783}.svg`（由 BREP 几何渲染，供目视核对）。
+
+### 下一条命令
+
+```text
+python3 scripts/poc/brep-stream.py 4570   # 清点"无 line/arc"的型材实际用了哪些实体类型
+```
+
+---
+
 ## 交接更新 · 2026-10-21 04:55 (UTC+8)：BREP 结构定性 —— 记录体是"子对象流"，P1 s4 恢复推进
 
 **三行复述**——已验证：Arc 记录体内部是**多个子对象的串联**，每个子对象由 `u32 version(6) + u32 objectId + u64 0`（16 B）开头再接该类型字段；

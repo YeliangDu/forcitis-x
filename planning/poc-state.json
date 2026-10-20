@@ -44,7 +44,7 @@
     },
     "s4": {
      "status": "RUNNING",
-     "note": "geometry encoding solved and verified on gid 1783: line=48B (two 3-D points), arc=96B (startRad, radius, endRad, cx, cy, cz), 2-byte markers ignored; chained 23 lines + 16 arcs → area 73.5 mm² == stored 73.5 mm² (0.00%). Remaining: robust chaining for multi-loop sections (1780/1781/1782 chain counts too high)"
+     "note": "geometry encoding solved and verified on gid 1783: line=48B (two 3-D points), arc=96B (startRad, radius, endRad, cx, cy, cz), 2-byte markers ignored; chained 23 lines + 16 arcs → area 73.5 mm² == stored 73.5 mm² (0.00%). Remaining: robust chaining for multi-loop sections (1780/1781/1782 chain counts too high) | 图库 DWG 列=bzip2(AC1024) 但块内无标准实体（HWK 自定义对象），几何仍取 BREP；已解 line 48B/arc 96B，gid1783 面积 0.00%；8/12 型材的 BREP 无 line/arc，需清点实体类型"
     }
    },
    "gate": {

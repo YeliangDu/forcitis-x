@@ -1,4 +1,86 @@
-# HWK Modern 交接 · 规格 V1 冻结 + PoC/MVP 定稿
+# 交接 · FORCITIS-x（截面库导入 + 规范/CI 基建完成后）
+
+## 交接更新 · 2026-10-21 11:30 (UTC+8) / 新会话从这里读
+
+**三行复述**——已验证：**截面库路线改为"直接上传 DWG → 服务端转换 → 算参 → 入库"**（D26/D27），
+`FG5025`（50×25×2 方管）与闭式解**逐位一致**（A=284.000、Ix=29,603.67、Iy=90,078.67、Cy=12.5，误差 0）；
+`PBW7525103` 双算法（Green 解析 vs 扫描线全局 even-odd）互校 **0.5%**（A=820.955 mm²、Ix=316,988 mm⁴、Iy=672,569 mm⁴）；
+未完成：**与原版的逐件外部差分**（缺该件号旧值）、轴向口径锚定（IZ↔Iy、IY↔Ix 仍是假设）、多外环/图框污染的分组修正；P2/P3/P4 未启动。
+
+### 一、本轮真正落地的东西
+
+| 产物 | 说明 |
+| --- | --- |
+| `scripts/poc/dxf-section.py` | DXF/DWG → 环 → 孔 → 参数；`--selftest`（DXF）、`--selftest-dwg`（DXF→dwgwrite→DWG→导入）均 PASS；含 `$INSUNITS` 单位、INSERT 递归展开、转换器产物损坏时自动降级 group-code 扫描 |
+| `scripts/poc/dwg-blocks.py` | 块普查：解 `TABLES/BLOCK_RECORD` 句柄→块名，按块求特性 |
+| `scripts/poc/classify-sections.py` | 家族判别（铝型材 / 方管 / 钣金 / 五金 / 图框），特征：填充率、环数、长细比、等效壁厚 `≈2A/Σ周长`、名称白/黑名单 |
+| `scripts/poc/crosscheck-section.py` | 双算法对拍（Green vs 光栅） |
+| `scripts/poc/render-blocks.py` | 候选块渲染成对照图 `evidence/poc/P1/sections/profiles-sheet-{1,2}.png` |
+| `docs/section-library-spec.md` | 截面库规格（导入→校验→入库→按 `sectionAssetId+version` 引用） |
+| `docs/decisions.md` D26/D27 | 截面库路线；DWG 直传 + 服务端转换（LibreDWG，GPL-3 待决策；商业替代 ODA） |
+
+### 二、真实图纸实测（用户桌面的 `7#10#楼型材断面图.dwg`）
+
+```text
+2,381,186 B DXF ← dwg2dxf；ezdxf 拒收（POLYLINE 子实体不规范）→ 自动 group-code 扫描兜底
+1,425 实体 / 94 闭合环 / INSUNITS=4(mm) / 坐标在 27 万 mm 量级（必须先平移到局部原点）
+BLOCK_RECORD 251 个块；含几何 69；闭合环 33；疑似截面 30
+```
+
+家族判别结果（`evidence/poc/P1/blocks-classified.json`）：铝型材 9、方管 1、钣金 4、五金 13、图框 7、待定 10。
+已向用户确认：`FG5025` = 50×25 方钢（方管）；**`PBW7525103` 用户说明是"组合型材"**。
+
+### 三、P1 台账状态（`planning/poc-state.json`）
+
+| 步骤 | 状态 |
+| --- | --- |
+| s1 引擎单测（9 个） | PASS |
+| s2 解析解判据（5 用例 ≤1e-12） | PASS |
+| s3 旧系统数据摄取（只读导出 12+3+12 行） | PASS |
+| s4 **DXF/DWG 导入与算参** | **PASS**（自检两条链路都在） |
+| s4b 真实图纸批量导入与对照 | **RUNNING**（导入可用；分组与外部差分未完） |
+| s5 与旧系统值对照（A/B 面积判据 9 检查 0 失败） | PASS |
+| gate P1 | 仍 BLOCKED（C 项缺外部参照） |
+
+### 四、下一条命令（按优先级）
+
+```text
+# 1) 口径锚定：找一件"尺寸已知"的旧库行（T=2、面积≈2.84 cm² 的方管）
+python3 scripts/poc/export-old-system.py --sql "SELECT IID,AREA,IZ,IY,T FROM [dbo].[型材参数表] WHERE T=2 AND AREA BETWEEN 2.6 AND 3.0"
+
+# 2) 分组修正（当前把图框外环当父级，导致部分截面惯性矩为负）
+python3 scripts/poc/dxf-section.py evidence/poc/P1/sections/real-profiles.dwg --split
+
+# 3) 全量对拍（每个候选块）
+python3 scripts/poc/crosscheck-section.py PBW7525103
+```
+
+### 五、阻塞与未决
+
+1. **外部差分缺参照**：旧库按名称查不到 `PBW7525*`；`复合型材参数表` 只有 3 行且面积不在 8.21 cm² 附近；
+   `型材参数表` 面积 8.15–8.27 的两行 IZ/IY 与本件不符（40.99/58.54、37.77/37.77 vs 我们 31.70/67.26）。
+   → 需要：该件号的旧值截图 / 含该型材的旧 `.cwx` / 件号与旧 `IID` 的对照表。
+2. **轴向口径**：假设 `IZ ↔ 我们的 Iy`、`IY ↔ 我们的 Ix`（依据 IID 204 比值 3.037 vs 我们 3.043），未确证。
+3. **分组**：图框外环把型材当孔 → 需按"环内含其它环则视为容器"或按图层/块分组。
+4. **转换器许可**：LibreDWG 为 GPL-3（内部可用；产品分发需 ODA 或法务确认）。
+5. **上下文误报教训**：不要再凭感觉报"上下文耗尽"；用 `python3 scripts/session-usage.py`（读会话 usage，阈值 75%）。
+
+### 六、最近检查（全部 exit 0）
+
+```text
+cd replica && npm run check                  # build+lint+9 tests
+python3 scripts/check-standards.py           # 10 项门禁
+python3 scripts/poc/dxf-section.py --selftest        # 50x60 带孔矩形，A=5600、Ix=1,786,666.67
+python3 scripts/poc/dxf-section.py --selftest-dwg    # DXF→DWG→导入，同值
+python3 scripts/poc/brep-arcs2.py                    # 1783 面积 0.00%（BREP 路线保留为证据）
+```
+
+远端仓库 `github.com/YeliangDu/forcitis-x`（public），CI 已通过（run 39406831450）；注意
+`scripts/scheduler/assurance.py` 有 6 条**既有**类型告警（与截面工作无关，未改动）。
+
+---
+
+## 历史（按时间倒序，内容保留不覆盖）
 
 ## 交接更新 · 2026-10-21 11:00 (UTC+8)：口径探针（IZ/IY ↔ x/y）；方法与结果的关系已澄清
 

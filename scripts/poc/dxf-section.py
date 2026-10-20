@@ -12,10 +12,14 @@ Usage:
 """
 import json
 import math
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import ezdxf  # pyright: ignore[reportPrivateImportUsage]
+from ezdxf.lldxf.const import DXFStructureError  # pyright: ignore[reportPrivateImportUsage]
 
 ROOT = Path(__file__).resolve().parents[2]
 SNAP = 0.02
@@ -199,16 +203,120 @@ def properties(loops):
                        float(max(p[1] for loop in loops for p in loop))]}
 
 
+def to_dxf(path):
+    """Return a DXF path for the input; DWG is converted server-side (no user-side conversion)."""
+    path = Path(path)
+    if path.suffix.lower() != '.dwg':
+        return path, None
+    tool = shutil.which('dwg2dxf')
+    if tool is None:
+        raise SystemExit('DWG import requires LibreDWG (dwg2dxf) or an ODA converter on the server')
+    out_dir = Path(tempfile.mkdtemp(prefix='dwg2dxf-'))
+    out = out_dir / (path.stem + '.dxf')
+    proc = subprocess.run([tool, '--as', 'r2000', '-o', str(out), str(path)],
+                          capture_output=True, text=True, check=False)
+    if proc.returncode != 0 or not out.is_file():
+        raise SystemExit(f'dwg2dxf failed: {(proc.stderr or proc.stdout)[:300]}')
+    return out, tool
+
+
+def raw_dxf_entities(path, scale):
+    """Group-code scan of the ENTITIES section: tolerant of malformed DXF from converters."""
+    lines = Path(path).read_text(encoding='utf-8', errors='replace').splitlines()
+    pairs = [(lines[i].strip(), lines[i + 1].strip()) for i in range(0, len(lines) - 1, 2)]
+    out, current, in_entities, verts = [], None, False, []
+    fields = {}
+    for code, value in pairs:
+        if code == '0':
+            if current == 'LWPOLYLINE' and in_entities:
+                for i in range(len(verts)):
+                    x1, y1, b = verts[i]
+                    x2, y2, _ = verts[(i + 1) % len(verts)]
+                    if abs(b) < 1e-12:
+                        out.append(('line', (x1 * scale, y1 * scale), (x2 * scale, y2 * scale)))
+                    else:
+                        out.append(bulge_to_arc(x1, y1, x2, y2, b, scale))
+            elif current and in_entities and fields:
+                if current == 'LINE' and '10' in fields and '11' in fields:
+                    out.append(('line', (float(fields['10']) * scale, float(fields['20']) * scale),
+                                (float(fields['11']) * scale, float(fields['21']) * scale)))
+                elif current == 'ARC' and '10' in fields:
+                    out.append(('arc', (float(fields['10']) * scale, float(fields['20']) * scale),
+                                float(fields['40']) * scale, math.radians(float(fields.get('50', 0))),
+                                math.radians(float(fields.get('51', 360)))))
+                elif current == 'CIRCLE' and '10' in fields:
+                    out.append(('arc', (float(fields['10']) * scale, float(fields['20']) * scale),
+                                float(fields['40']) * scale, 0.0, 2 * math.pi))
+            current, fields, verts = value, {}, []
+            in_entities = value == 'SECTION' and False or in_entities
+            continue
+        if current == 'SECTION' and code == '2' and value == 'ENTITIES':
+            in_entities = True
+            current = None
+            continue
+        if current == 'ENDSEC' and value == '':
+            in_entities = False
+        if not in_entities:
+            continue
+        if current == 'LWPOLYLINE' and code in ('10', '20', '42'):
+            fields.setdefault(code, value)
+            if code == '10':
+                verts.append([float(value), 0.0, 0.0])
+            elif code == '20' and verts:
+                verts[-1][1] = float(value)
+            elif code == '42' and verts:
+                verts[-1][2] = float(value)
+        elif code in ('10', '20', '11', '21', '40', '50', '51'):
+            fields[code] = value
+    return out
+
+
 def analyse(path):
-    doc = ezdxf.readfile(str(path))  # pyright: ignore[reportPrivateImportUsage]
-    unit_code = doc.header.get('$INSUNITS', 4)
-    scale = UNITS.get(unit_code, 1.0)
-    stream = entity_stream(doc, scale)
+    dxf_path, converter = to_dxf(path)
+    unit_code, scale = 4, 1.0
+    stream = None
+    try:
+        doc = ezdxf.readfile(str(dxf_path))  # pyright: ignore[reportPrivateImportUsage]
+        unit_code = doc.header.get('$INSUNITS', 4)
+        scale = UNITS.get(unit_code, 1.0)
+        stream = entity_stream(doc, scale)
+    except (ValueError, DXFStructureError) as error:            # converters can emit loose DXFs
+        sys.stderr.write(f'ezdxf rejected the DXF ({error}); falling back to a group-code scan\n')
+    if stream is None:
+        stream = raw_dxf_entities(dxf_path, scale)
     loops = build_loops([polyline_of(seg) for seg in stream])
     props = properties(loops)
     props['entities'] = len(stream)
     props['units'] = f'INSUNITS={unit_code} scale={scale}'
+    props['sourceFormat'] = Path(path).suffix.lower().lstrip('.')
+    props['converter'] = converter or 'none (native DXF)'
     return props
+
+
+def selftest_dwg():
+    """End-to-end: build a DXF, convert it to DWG with dwgwrite, then import the DWG."""
+    if shutil.which('dwgwrite') is None:
+        print(json.dumps({'dwg_selftest': 'SKIP (dwgwrite not available)'}))
+        return 0
+    work = Path(tempfile.mkdtemp())
+    dxf_path = work / 'input.dxf'
+    dwg_path = work / 'input.dwg'
+    doc = ezdxf.new('R2010')  # pyright: ignore[reportPrivateImportUsage]
+    doc.header['$INSUNITS'] = 4
+    msp = doc.modelspace()
+    msp.add_lwpolyline([(0, 0), (100, 0), (100, 60), (0, 60)], close=True)
+    msp.add_lwpolyline([(40, 20), (60, 20), (60, 40), (40, 40)], close=True)
+    doc.saveas(dxf_path)
+    proc = subprocess.run(['dwgwrite', '-o', str(dwg_path), str(dxf_path)],
+                          capture_output=True, text=True, check=False)
+    if proc.returncode != 0:
+        print(json.dumps({'dwg_selftest': 'SKIP (dwgwrite failed)', 'detail': proc.stderr[:200]}))
+        return 0
+    props = analyse(dwg_path)
+    expected_area = 100 * 60 - 20 * 20
+    ok = bool(abs(float(props['areaMm2']) - expected_area) / expected_area < 1e-6 and props['rings'] == 2)
+    print(json.dumps({'dwg_selftest': ok, **{k: props[k] for k in ('areaMm2', 'ixMm4', 'rings', 'depths', 'sourceFormat', 'converter')}}, ensure_ascii=False))
+    return 0 if ok else 1
 
 
 def selftest():
@@ -234,6 +342,8 @@ def selftest():
 def main(argv):
     if '--selftest' in argv:
         return selftest()
+    if '--selftest-dwg' in argv:
+        return selftest_dwg()
     path = next((a for a in argv[1:] if not a.startswith('--')), None)
     if not path:
         print('usage: dxf-section.py <file.dxf> [--json out] [--selftest]')

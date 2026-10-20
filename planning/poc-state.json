@@ -44,7 +44,7 @@
     },
     "s4": {
      "status": "BLOCKED",
-     "note": "static layout mismatch: body starts with int32 6 / int64 5 / int32 0 / double 1.5708..., while decompiled write order starts with int literal 21 + int64 + int32 + CbString — so the BREP records are written by the container (tag+name+…) rather than by a direct Serialize call; switch to dynamic differential (change one section dimension → save → byte diff) | refined: BREP per part = one entity + large paired-int32 index table (object-table refs); outline needs the index table resolved, not just the 132-byte field block"
+     "note": "four static hypotheses rejected (see evidence/poc/P1/rea/arc-layout.json negative_results); remaining: A2 object-table decode, or B dynamic differential via UI (preflight done: session 1 Active, XWall not running)"
     }
    },
    "gate": {

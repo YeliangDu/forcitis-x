@@ -1,5 +1,32 @@
 # HWK Modern 交接 · 规格 V1 冻结 + PoC/MVP 定稿
 
+## 交接更新 · 2026-10-21 04:20 (UTC+8)：P1 C 项 —— 四种静态假设全部排除，只剩 A2/B 两条路
+
+**三行复述**——本轮做了 4 个可证伪实验并全部否证（①中间区是点阵 double？否，含 7.4e248；
+②尾部关系表能解释整条记录？否，只有最后 8–192 B 是 `u32 count + count×u32 id`；
+③型材可当空心矩形由 (AREA,IZ,IY,T) 反解几何？否，预测误差 >50%；
+④记录体 = `Serialize` 直写？否，前缀 `int32 6 / int32 5 / 8B 0 / double…` 与反编译顺序不符）；
+未完成：P1 C 项（需 A2 对象表解码或 B 动态差分）、P2–P4。
+
+### 证据
+
+`evidence/poc/P1/rea/arc-layout.json` 新增 `negative_results`（4 条，含具体数字）与 `next_options`（A2/B）。
+
+### 两条候选路（判据不变）
+
+| 路 | 做法 | 状态 |
+| --- | --- | --- |
+| **A2** | 在 7 条记录中找"固定宽度对象表"（试 8/16/24 B 记录），用引用 id 范围与计数闭合校验 | 纯离线，未开始 |
+| **B** | 启动隔离客户端 → 型材/断面编辑器改一个尺寸 → 另存 → 比较库中 BREP 差异 | 前置已做：session 1 Active、XWall 未运行；需 UI 自动化 |
+
+### 下一条命令
+
+```text
+python3 scripts/poc/solve-brep-layout.py 1783     # A2 的第一版搜索器（尾部先行，已可跑）
+```
+
+---
+
 ## 交接更新 · 2026-10-21 03:40 (UTC+8)：P1 s4 方法切换 —— 静态度量对不上，改走"改尺寸→另存→字节差分"
 
 **三行复述**——本轮把 `HWKCADGraphArc/Line`、`HWKCADGraphBase`、`HWKCADGraphModelDocObject` 三个 `Serialize` 反编译完整读出并落盘

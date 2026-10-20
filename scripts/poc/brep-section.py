@@ -78,7 +78,7 @@ def polygon_props(points):
     area = a2 / 2
     if area == 0:
         return None
-    return {'areaMm2': abs(area), 'cxMm': sx / (6 * area), 'cyMm': sy / (6 * area),
+    return {'signedAreaMm2': area, 'areaMm2': abs(area), 'cxMm': sx / (6 * area), 'cyMm': sy / (6 * area),
             'ixMm4': ix / 12, 'iyMm4': iy / 12}
 
 

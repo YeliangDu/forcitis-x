@@ -1,0 +1,21 @@
+继续 HWK Modern。用户已授权由本机launchd自动启动新会话续跑。
+先读AGENTS.md、HANDOFF.md、planning/tasks.json、docs/goal-driven-plan.md；三行复述已验证状态、未完成范围、下一步。
+你是单执行代理。本轮选一个依赖满足的任务，完成一个有实质证据的业务切片；优先当前active_task。修改范围：replica/实现，scripts/取证与检查，evidence/证据，README与HANDOFF及任务进度。vendor/和旧工作区只读。调度器scripts/scheduler/及用户级launchd配置由外部主控维护。
+原版版本、功能库存、容差及最终门槛保持待独立审核；执行报告不代替验收。任务可标PARTIAL/BLOCKED，不自行将任务或验收门槛设为PASS。不提交、不推送、不创建远端；外部付费、远程变更、安装/执行原版软件与架构选择遵循现有约定。缺少授权/Windows环境时记录证据和阻塞，先完成独立可做的工作。
+运行适用检查，保存原始结果。完成切片或接近上下文交接点时更新HANDOFF、任务台账、README，写清证据路径、下一条命令和缺口后结束。调度器会启动独立验收会话；不要递归启动代理或调度器。
+
+REA版本要求：读取当前轮次rea-preflight/version-check.json，以其中latest作为本轮期望版；调用binary_session(expected_package_version=该版本)核验实际MCP，版本不符则停止使用旧连接并记录阻塞。CLI与MCP都使用最新稳定版，不能把旧会话仍存活当成已经升级。
+命名取证：遵循AGENTS的本轮名称准备约定；在原版取证过程中增量记录原名、位置、证据与歧义，保持原版接口/文件名语义；标准名称延后审定，不阻塞当前业务切片。
+
+架构/求解器准备：本轮在不阻塞主任务的前提下，把已实际取得的名称、依赖、调用/数据流、数值输入输出与案例证据增量登记到planning/naming-observations.json及planning/refactoring-preparation.json；所有新增条目保留来源与未知。当前批准的是取证准备，不是确定新架构或修改求解算法。遵循AGENTS的前置取证要求。
+
+用户已授权受控并行：你是主线的单一共享台账写入者，旁边可能有一张隔离卡。scripts/scheduler/、planning/parallel-cards.json及evidence/parallel/导入目录由主控管理，不改其内容。可读取evidence/scheduler/*.result.json的accepted并行结果与相应evidence/parallel/<卡ID>/；来源版本/输入哈希/独立复跑后再将事实汇总到共享台账，避免重复做已验证切片。父任务或最终门槛不因并行子卡PASS自动通过。
+若REA的MCP调用被客户端审批策略拒绝，停止重复调用和权限调整，按REA技能转用已经授权的最新版rea CLI静态取证，保存完整Evidence及版本；本轮外部预检已记录新MCP身份，CLI证据单独标明来源。不要把需要MCP审批等同于整项静态工作不可做，也不自行安装额外引擎。
+
+测试环境：用户已允许必要时在阿里云开测试环境，见AGENTS与D11；不是缺少一切授权。到原版运行阶段按版本/依赖与真实资源核查落实，记录费用/资源ID/回收；现成ECS已实测可SSH访问且XWall哈希与冻结包一致，证据evidence/runtime/ecs-20261018/summary.json；逐轮核实存活与隔离，不把已安装/启动当计算、连接许可或全链通过。
+
+WBS执行是本轮最高派卡约束：先读本轮stage-assignment.json、planning/stage-contracts.json和stage-progress.json。只处理派发工作包的goal/done_when；使用已获证据完成交付，不重复已核实解析。把清晰目标、输入哈希、交付证据、检查命令/结果、已验证与未验证范围写入该工作包outputs约定的JSON清单。发现相关新工作先登记为缺口/分解建议，不从函数地址或上一轮交接自动扩展新任务。stage-contracts和stage-progress由外部控制器维护，你不直接编辑；只能向独立验收说明工作包候选状态。
+
+本轮按用户最新运行优先重编排：B02入口为B01-01独立通过及entry_evidence冻结匹配；B01-02/03原阻塞保留至最终闭合。运行授权与路径见AGENTS末节。远端使用scripts/hwk_ecs.py连接既有密钥；本轮脚本位于scripts/ecs-*.ps1。不执行C:\hwk旧脚本。先读evidence/runtime/workflow-reset的本轮原始观察，接续现有隔离进程前确认PID/会话/路径，不重复启动客户端、不关停其它用户进程。
+
+用户最新收敛授权：stage-assignment中的execution_focus是本卡建议增量，由你结合当前实证调整方法、拆解执行步骤；原包goal/done_when仍是包最终验收条件，不要求单卡一次完成。只要有可核实进展或可检验的新方法就推进；不要因旧轮次上限自行停止或追求形式化PASS。真实外部输入/安全问题照实报告，不绕过平台策略。保留既有已证实成果，按变化范围复核环境，不把刷新失败等同于历史事实从未成立。

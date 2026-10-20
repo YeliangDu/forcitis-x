@@ -1,0 +1,248 @@
+{
+  "plan": {
+    "support_hashes": {
+      "docs/goal-driven-plan.md": "fea3ed63b68f04e293380d056454dcc3d2c41542da2d113cc7e7650494acc16c",
+      "evidence/runtime/ecs-20261018/summary.json": "4595dc2bf387c06b266a848d2a9b28fc1d051a56d983c8c1e89d67080a4649a4",
+      "evidence/scheduler-reviews/HWK-000037-B02-01/review.md": "a242e41a8426cd8ea957a3636054301e31903ffe860054e86144aef77fe82876",
+      "evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/exit.json": "1a77d47f4a441dbbc1390fe4bf087624b0ff78f22f6f10056503b0fdf744ddf6",
+      "evidence/scheduler/20261018T170608152098Z-assurance/assessor.jsonl": "488c441106a56d6adf907bf7088ca632fe78b817646c1ca67a15bc70f233b20b",
+      "evidence/scheduler/20261018T170608152098Z-assurance/assurance-assignment.json": "b3edb623972dcd910b028dd61797124afd184162868523e9ca329bdf94bc3be6",
+      "evidence/scheduler/setup/convergence/network-probe/events.jsonl": "e72e6fa244f40cd7ae4e12bf268511eea0e85ac9d0c40c22b204b413f7dbf4a6",
+      "planning/acceptance.json": "a0188a6aa652f4665634d1c5471a75c11d6861807dde3f2bb2b8b7c3307654ff",
+      "planning/convergence-policy.json": "59fc097c26ad53953eabe76e7549d4e1f243ae95ca88a64e518cb66bf8f4830b",
+      "planning/goal-assurance-policy.json": "a6ae7efd7e8d2664adb4312dfd0fe9e91ce3348f7e7f81ceab4e5b825a98d99b",
+      "planning/scope.json": "8e773b91d218599fb7170b3702a80a4bd75c34f809ec60c0d49c0e22c1418cf1",
+      "planning/stage-contracts.json": "5c05e7c059d6baa39feb0abceebee2ee4c4f1d837d9f0fea5882b586df084640"
+    },
+    "kind": "plan_audit",
+    "stage_id": "B02",
+    "subject_digest": "75575ed1ca3c9863e394030d4ce1c1969e74f12181e47afb95f79a7d5ceb2160",
+    "approved": true,
+    "reviewer": "HWK-000040",
+    "report": "evidence/goal-assurance/HWK-000040.json",
+    "at": "2026-10-18T17:07:47.678667+00:00",
+    "result": {
+      "kind": "plan_audit",
+      "stage_id": "B02",
+      "stage_achievement": "NOT_RUN",
+      "goal_contribution": "PASS",
+      "composition_status": "PASS",
+      "overall_goal_achievement": "PARTIAL",
+      "decision": "CONTINUE",
+      "next_step_justified": true,
+      "reason": "允许继续B02-01环境与隔离续采，不放行B02阶段。亲自核对subject_digest、当前合同、政策及入口证据哈希一致；B01-01独立PASS，其他B01缺口保留。直接只读SSH返回0，证明此前连接前策略失败已有可检验的新执行条件，但不证明环境、隔离目录、许可或业务链通过。收敛政策仅改变续派策略，未降低Goal、done_when、依赖或最终门槛。",
+      "composition_argument": "B02提供可重复原版运行及真实输入输出，供B03枚举完整范围；B03库存经独立关闭后进入B04案例、边界与比较规则。P01至P04完成真实试点输入、独立计算、绘图报告、双向文件往返及使用者验收；E01依据冻结库存展开有限叶子包，逐体系完成全链并回归共享状态。R01汇总全库存业务、部署及使用者专业验收，仍依赖B01关闭包内库存和安装义务。P02/E01实施容器禁止直接派卡，空库存不能通过。该组合在计划层面覆盖整体Goal，实际可组合性仍须各阶段源证据与独立审查证明。",
+      "claims": [
+        {
+          "requirement_id": "G01",
+          "status": "PASS",
+          "reason": "计划保留B01目标版本与组件义务，并由B03以UI、资源和示例交叉关闭完整库存，E01/R01核对全量追踪。目前库存为空且未关闭，只通过覆盖论证。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "planning/stage-contracts.json",
+            "planning/scope.json"
+          ]
+        },
+        {
+          "requirement_id": "G02",
+          "status": "PASS",
+          "reason": "B03枚举窗口、菜单、快捷键、工程树和属性，B04建立案例，P/E实施并由R01验收；尚无完整UI运行验收。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "planning/stage-contracts.json",
+            "docs/goal-driven-plan.md"
+          ]
+        },
+        {
+          "requirement_id": "G03",
+          "status": "PASS",
+          "reason": "B03/B04确认实际体系和高风险边界，P02反追单位、默认值、材料规范、全局状态及求解中间量，E01扩展全部库存；未运行分支不得推断通过。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "planning/stage-contracts.json",
+            "docs/goal-driven-plan.md"
+          ]
+        },
+        {
+          "requirement_id": "G04",
+          "status": "PASS",
+          "reason": "B02采集真实报告及绘图，P03逐项比较数值、单位、文本、章节、分页、尺寸和标注，E01/R01扩展及验收打印导出；当前输出能力未验证。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "planning/stage-contracts.json"
+          ]
+        },
+        {
+          "requirement_id": "G05",
+          "status": "PASS",
+          "reason": "B02要求编辑另存、退出重开重算；P01/P03明确字段、引用、数据库关联、未知字段及原版打开新版工程的实测要求，E01/R01覆盖全部范围。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "planning/stage-contracts.json"
+          ]
+        },
+        {
+          "requirement_id": "G06",
+          "status": "PASS",
+          "reason": "整体计划保留既定前端与待审技术决策，禁止原DLL、常量或fixture替代主计算；P04要求候选实验与用户决定。此结论不批准任何尚未审定的内核或持久化方案。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "docs/goal-driven-plan.md",
+            "planning/stage-contracts.json"
+          ]
+        },
+        {
+          "requirement_id": "G07",
+          "status": "PASS",
+          "reason": "B02锁定环境及输入输出，B04审定逐变量规则和保留案例，后续独立差分禁止容差掩盖状态或阈值翻转。入口摘要哈希本轮核对一致，业务比较规则尚未形成。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "planning/stage-contracts.json",
+            "evidence/runtime/ecs-20261018/summary.json",
+            "planning/acceptance.json"
+          ]
+        },
+        {
+          "requirement_id": "G08",
+          "status": "PASS",
+          "reason": "阶段依赖、完整业务链、全局状态案例、双向文件往返、跨体系回归及最终全量追踪均有归属。收敛续派保留独立否定和包完成条件，不把dispatch_status当作验收通过。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "planning/tasks.json",
+            "planning/stage-contracts.json",
+            "planning/convergence-policy.json",
+            "planning/stage-progress.json"
+          ]
+        },
+        {
+          "requirement_id": "G09",
+          "status": "PASS",
+          "reason": "B02环境、隔离、许可与实际操作验证分包明确；本轮只读SSH成功，历史探针同时记录本地写入拒绝，未使用full-access。历史SSH退出255保留；干净安装卸载及恢复仍由B01/R01闭合，当前不宣称部署通过。",
+          "evidence_type": "RUNTIME",
+          "evidence": [
+            "evidence/scheduler/setup/convergence/network-probe/events.jsonl",
+            "evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/exit.json",
+            "planning/stage-contracts.json"
+          ]
+        },
+        {
+          "requirement_id": "G10",
+          "status": "PASS",
+          "reason": "P04试点和R01最终验收明确要求真实使用者操作及专业人员裁定安全相关差异；代理不可自行降低标准，目前均未执行。",
+          "evidence_type": "PLAN_ARGUMENT",
+          "evidence": [
+            "planning/stage-contracts.json",
+            "planning/acceptance.json"
+          ]
+        }
+      ],
+      "gaps": [
+        {
+          "description": "当前完整环境、交互会话、源安装前后哈希及新隔离目录尚未独立验证；SSH身份成功仅消除连接可达性疑问。",
+          "owner_stage": "B02",
+          "blocks_next_step": false,
+          "verification": "继续B02-01，先核查祖先路径与重解析点，确认新目标不存在，再由可写执行卡采集；独立验收通过前禁止B02-02。"
+        },
+        {
+          "description": "许可、真实工程重算、报告绘图及编辑保存重开尚无本轮完整闭环。",
+          "owner_stage": "B02",
+          "blocks_next_step": false,
+          "verification": "依次执行B02-02至B02-04，保留原始命令、输出、截图与哈希，并独立复跑。"
+        },
+        {
+          "description": "全功能库存为空，全部体系及跨体系组合仍待发现和冻结。",
+          "owner_stage": "B03",
+          "blocks_next_step": false,
+          "verification": "UI、资源及全部可用示例交叉核对差集；独立关闭库存后方可注册实施叶子包。"
+        },
+        {
+          "description": "包内组件库存和安装控制流仍有既有否定结论。",
+          "owner_stage": "B01",
+          "blocks_next_step": false,
+          "verification": "保留原BLOCKED及证据，闭合B01-02至B01-04；R01依赖B01，不得以现成环境可用替代。"
+        },
+        {
+          "description": "数值规则、独立实现、全量回归、部署及使用者专业验收均未完成。",
+          "owner_stage": "R01",
+          "blocks_next_step": false,
+          "verification": "分别完成B04、P01至P04、E01及R01合同义务；最终全量源证据与使用者专业门槛全部通过才可完成Goal。"
+        }
+      ],
+      "counterexamples": [
+        "历史B02-01独立SSH退出255，但本轮同一授权主机只读whoami退出0；因此不能继续把连接前策略失败推断为远端不可达，也不能把身份查询成功推断为整包通过。",
+        "即使B02单工程全链通过，planning/scope.json仍为空且未关闭；不能据此宣称全体系或整体Goal完成。",
+        "即使现成ECS可运行，也不证明干净安装、卸载及失败恢复；R01-02仍明确保留该义务。",
+        "检查了工作包全部PASS自动放行、未知库存直接实施和轮数重置风险：政策保留阶段独立审查、实施容器冻结覆盖门槛及历史否定；当前B02候选仍未就绪。"
+      ],
+      "checks": [
+        {
+          "command": "ssh -i ~/.ssh/hwk-win-test -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=yes -o UserKnownHostsFile=evidence/runtime/ecs-20261018/known_hosts Administrator@8.149.129.78 whoami",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 -c \"import json,hashlib,pathlib; p=pathlib.Path; a=json.loads(p('evidence/scheduler/20261018T170608152098Z-assurance/assurance-assignment.json').read_text()); s=a['subject']; print('digest',hashlib.sha256(json.dumps(s,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()); c=json.loads(p('planning/stage-contracts.json').read_text()); print('contracts_equal',s['contracts']==c); print('policy_equal',s['policy']==json.loads(p('planning/goal-assurance-policy.json').read_text())); print('convergence_equal',s['execution_policy']==json.loads(p('planning/convergence-policy.json').read_text())); print('entry_hash',hashlib.sha256(p('evidence/runtime/ecs-20261018/summary.json').read_bytes()).hexdigest()); print('progress_B01_01',json.loads(p('planning/stage-progress.json').read_text())['stages']['B01']['items']['B01-01']['status']); print('scope',p('planning/scope.json').read_text()); print('dependencies', {x['id']:x['depends_on'] for x in json.loads(p('planning/tasks.json').read_text())['tasks']})\"",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 -c \"from pathlib import Path; import json; fs=['docs/goal-driven-plan.md','planning/stage-contracts.json','planning/tasks.json','planning/stage-progress.json','planning/scope.json','planning/acceptance.json','planning/convergence-policy.json','planning/goal-assurance-policy.json','evidence/scheduler/20261018T170608152098Z-assurance/assurance-assignment.json','evidence/runtime/ecs-20261018/summary.json','evidence/scheduler/setup/convergence/network-probe/events.jsonl','evidence/scheduler-reviews/HWK-000037-B02-01/review.md','evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/exit.json']; assert all(Path(f).is_file() for f in fs); c=json.loads(Path('planning/stage-contracts.json').read_text()); print('verified evidence paths',len(fs)); print('work_packages',sum(len(s['work_items']) for s in c['stages'])); print('containers',[(s['id'],w['id'],w['planned_by']) for s in c['stages'] for w in s['work_items'] if w.get('requires_decomposition')]); print(Path('evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/exit.json').read_text())\"",
+          "exit_code": 0
+        }
+      ],
+      "evidence": [
+        "evidence/scheduler/20261018T170608152098Z-assurance/assurance-assignment.json",
+        "planning/goal-assurance-policy.json",
+        "docs/goal-driven-plan.md",
+        "planning/stage-contracts.json",
+        "planning/tasks.json",
+        "planning/stage-progress.json",
+        "planning/convergence-policy.json",
+        "planning/scope.json",
+        "planning/acceptance.json",
+        "evidence/runtime/ecs-20261018/summary.json",
+        "evidence/scheduler/setup/convergence/network-probe/events.jsonl",
+        "evidence/scheduler-reviews/HWK-000037-B02-01/review.md",
+        "evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/exit.json"
+      ]
+    },
+    "record_digest": "2fd2f48e8bd77e6e391cf8fd92a834e63904b217b70abe576c9f05db2672b552"
+  },
+  "stages": {},
+  "history": [
+    {
+      "kind": "plan_audit",
+      "stage_id": "B01",
+      "subject_digest": "ca35ef0d43f20e204165345d4c7c62c9f7923f1f079b65e5fe03d00c2e823fdc",
+      "approved": true,
+      "reviewer": "HWK-000024",
+      "report": "evidence/goal-assurance/HWK-000024.json",
+      "at": "2026-10-18T11:49:59.242955+00:00"
+    },
+    {
+      "kind": "plan_audit",
+      "stage_id": "B01",
+      "subject_digest": "ca35ef0d43f20e204165345d4c7c62c9f7923f1f079b65e5fe03d00c2e823fdc",
+      "approved": true,
+      "reviewer": "HWK-000028",
+      "report": "evidence/goal-assurance/HWK-000028.json",
+      "at": "2026-10-18T12:40:46.479568+00:00"
+    },
+    {
+      "kind": "plan_audit",
+      "stage_id": "B02",
+      "subject_digest": "c78564a14bbb27e04ed002efbb415b5c18fd99ac577ef7414fa4e48a43fd7a4f",
+      "approved": true,
+      "reviewer": "HWK-000036",
+      "report": "evidence/goal-assurance/HWK-000036.json",
+      "at": "2026-10-18T14:51:52.130814+00:00"
+    },
+    {
+      "kind": "plan_audit",
+      "stage_id": "B02",
+      "subject_digest": "75575ed1ca3c9863e394030d4ce1c1969e74f12181e47afb95f79a7d5ceb2160",
+      "approved": true,
+      "reviewer": "HWK-000040",
+      "report": "evidence/goal-assurance/HWK-000040.json",
+      "at": "2026-10-18T17:07:47.678667+00:00"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "enabled": false,
+  "authorization": "用户2026-10-18明确要求自动修复阻塞并继续运行",
+  "max_incidents_per_stage": 4,
+  "extra_rounds_per_item": 2,
+  "max_reopens_per_item": 1,
+  "allowed_routes": [
+    "LOCAL_FIX",
+    "REPLAN"
+  ],
+  "forbidden": [
+    "修改Goal、完成条件、阶段依赖或验收门槛",
+    "删除失败证据",
+    "直接标记业务PASS",
+    "更改审批策略",
+    "未经核查创建外部资源",
+    "修复会话修改调度控制器"
+  ],
+  "max_repairs_per_item": 2,
+  "superseded_by": "planning/convergence-policy.json"
+}

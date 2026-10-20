@@ -1,0 +1,171 @@
+{
+ "inventory_complete": false,
+ "reviewer": null,
+ "inventory_evidence": [],
+ "features": [
+  {
+   "id": "POC-1",
+   "stage": "POC",
+   "title": "断面特性引擎（组合断面）",
+   "done_when": "1 个旧系统复合型材的 A/Ix/Iy/Wx 与旧系统值偏差 ≤0.5% 或偏差可归因（薄壁 vs 精确）",
+   "cases": [
+    "复合型材（MAINID+SUBID1+SUBID2）特性复算",
+    "与手算/标准型材表对照",
+    "偏差归因记录"
+   ],
+   "evidence_dir": "evidence/poc/P1"
+  },
+  {
+   "id": "POC-2",
+   "stage": "POC",
+   "title": "图形→计算桥（构件/受荷/荷载派生）",
+   "done_when": "1 个真实工程中 3 个构件的跨度、受荷宽度、线荷载与旧系统一致（≤1e-6）",
+   "cases": [
+    "分格→构件派生",
+    "受荷宽度/从属面积",
+    "线荷载分配与旧系统对照"
+   ],
+   "evidence_dir": "evidence/poc/P2"
+  },
+  {
+   "id": "POC-3",
+   "stage": "POC",
+   "title": "结果→计算书 PDF（数值+文本+图，确定性）",
+   "done_when": "数值 1e-6、同输入 PDF 内容 hash 稳定、图可重渲染一致、元数据含指纹",
+   "cases": [
+    "玻璃强度/挠度数值对齐",
+    "挠度曲线+应力云图渲染",
+    "PDF 指纹与重生成一致性"
+   ],
+   "evidence_dir": "evidence/poc/P3"
+  },
+  {
+   "id": "POC-4",
+   "stage": "POC_OPTIONAL",
+   "title": "FE 板壳对齐（MITC4/Mindlin，后置决策）",
+   "done_when": "1 个板/壳模型位移与应力相对误差 ≤2% 或差异可解释",
+   "cases": [
+    "板单元模型收敛性",
+    "与旧系统位移/应力对照",
+    "异常案例"
+   ],
+   "evidence_dir": "evidence/poc/P4"
+  },
+  {
+   "id": "MVP-1",
+   "stage": "MVP",
+   "title": "2D 参数化分格与构件派生",
+   "done_when": "参数化标高/轴网/分格/洞口→构件清单与计算点自动生成，改动可追溯",
+   "cases": [
+    "分格参数化编辑",
+    "构件自动派生",
+    "计算点生成"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-1"
+  },
+  {
+   "id": "MVP-2",
+   "stage": "MVP",
+   "title": "断面编辑器 + 组合断面",
+   "done_when": "可建/改断面并自动算特性；组合断面（主+子）可用并入库",
+   "cases": [
+    "断面编辑",
+    "特性自动计算",
+    "组合断面"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-2"
+  },
+  {
+   "id": "MVP-3",
+   "stage": "MVP",
+   "title": "计算引擎 + RulePack v1（3 个体系）",
+   "done_when": "玻璃强度/挠度/杆件三体系在 ≥5 个真实工程上中间量差值 ≤1e-6 或进差异台账",
+   "cases": [
+    "M1 数值对齐",
+    "RulePack 冻结与钉版本",
+    "差异台账登记"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-3"
+  },
+  {
+   "id": "MVP-4",
+   "stage": "MVP",
+   "title": "结果三元组与 6 类分析图",
+   "done_when": "数值/文本/图形规格同源；6 类图模板可渲染且数据可复现",
+   "cases": [
+    "ResultBundle schema",
+    "6 类图渲染",
+    "图数据与数值一致性"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-4"
+  },
+  {
+   "id": "MVP-5",
+   "stage": "MVP",
+   "title": "计算书 PDF（含指纹与审计号）",
+   "done_when": "M2 通过：内容齐全、hash 可复现、元数据含 rulepack_fp/engine/figure_hashes/audit_id",
+   "cases": [
+    "PDF 内容完整性",
+    "hash 复现",
+    "签章占位"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-5"
+  },
+  {
+   "id": "MVP-6",
+   "stage": "MVP",
+   "title": "平台基座：AD SSO / 角色 / ACL / 审计",
+   "done_when": "域组→角色生效；越权被拒；全部关键动作可审计",
+   "cases": [
+    "SSO 登录",
+    "角色与项目 ACL",
+    "审计事件完整性"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-6"
+  },
+  {
+   "id": "MVP-7",
+   "stage": "MVP",
+   "title": "协作：方案快照 / 自动保存 / 计算队列",
+   "done_when": "M6 通过：断线重连不丢工作；快照不可变；队列可取消且有配额",
+   "cases": [
+    "快照不可变",
+    "自动保存与幂等提交",
+    "队列/配额/取消"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-7"
+  },
+  {
+   "id": "MVP-8",
+   "stage": "MVP",
+   "title": "比选：并排对比 + 差异表 + 定案",
+   "done_when": "M3 通过：3 候选→对比→定案→PDF 全程留痕",
+   "cases": [
+    "候选快照生成",
+    "对比视图与差异表",
+    "定案与审计"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-8"
+  },
+  {
+   "id": "MVP-9",
+   "stage": "MVP",
+   "title": "单城市试点（10–20 人，双轨）",
+   "done_when": "M4/M5 通过：5 工作日无阻断；p95/计算/PDF 时延达标",
+   "cases": [
+    "试点部署",
+    "性能达标",
+    "双轨与回退"
+   ],
+   "evidence_dir": "evidence/mvp/MVP-9"
+  }
+ ],
+ "note": "B03 must enumerate and independently reconcile full original scope before closure. staging.features 只覆盖 POC/MVP；总目标仍需 74 体系全量库存与验收。",
+ "staging": {
+  "note": "本清单为第一阶段（POC/MVP）可验收项；74 个计算体系的完整功能库存仍须独立闭合后才可判定总目标。",
+  "authority": "docs/product-spec-v1.md（S1–S9）、docs/poc-mvp-plan.md（P1–P4、M1–M7）",
+  "frozen_at": "2026-10-20",
+  "user_confirmed": true
+ },
+ "updated_at": "2026-10-20T09:36:30.496771+00:00"
+}

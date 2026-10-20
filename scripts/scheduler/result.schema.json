@@ -1,0 +1,1 @@
+{"type":"object","additionalProperties":false,"properties":{"outcome":{"type":"string","enum":["continue","blocked","complete"]},"new_evidence":{"type":"boolean"},"reason":{"type":"string"},"evidence":{"type":"array","items":{"type":"string"}}},"required":["outcome","new_evidence","reason","evidence"]}

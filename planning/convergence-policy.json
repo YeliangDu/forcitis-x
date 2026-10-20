@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "authorization": "用户2026-10-18：只要目标逐渐收敛，其余交给agent判断，不要总是阻断停止排卡",
+  "round_limits": "review_hints_only",
+  "stagnation_action": "agent_change_method_or_replan",
+  "card_failure_action": "preserve_verdict_and_request_agent_continuation",
+  "progress_definition": "独立验收说明有证据的缺口缩小、新约束发现或可检验的新方法；文件数量/哈希变化本身不是业务进展",
+  "global_stop_conditions": ["用户明确停止", "安全或资产完整性问题", "agent核实无可执行替代且必须等待外部输入", "认证/额度或执行控制器本身不可用"],
+  "unchanged": ["Goal与完整业务范围", "包/阶段/最终验收完成条件", "独立验收", "冻结输入和证据来源", "不提交推送、不越权改生产"]
+}

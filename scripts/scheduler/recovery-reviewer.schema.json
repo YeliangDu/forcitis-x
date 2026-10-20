@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "approved": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "reopen_item_id": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "exit_code": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "command",
+          "exit_code"
+        ]
+      }
+    }
+  },
+  "required": [
+    "approved",
+    "reason",
+    "reopen_item_id",
+    "evidence",
+    "checks"
+  ]
+}

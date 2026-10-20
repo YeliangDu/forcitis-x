@@ -1,0 +1,60 @@
+{
+  "enabled": true,
+  "max_sidecar_workers": 1,
+  "max_total_workers": 2,
+  "mode": "evidence-only",
+  "policy": "一条主线加一张隔离并行卡；独立验收后导入新证据目录，共享台账只由主线更新。",
+  "jobs": [
+    {
+      "id": "B01-CLR-DECLARED-EDGES",
+      "parent_task": "B01",
+      "goal": "CLR 引用声明图与来源追踪",
+      "depends_on": [],
+      "inputs": [
+        "HANDOFF.md",
+        "AGENTS.md",
+        "docs/goal-driven-plan.md",
+        "planning/tasks.json",
+        "evidence/baseline/b01/clr/inventory.json",
+        "evidence/baseline/b01/dependencies/inventory.json",
+        "evidence/baseline/b01/msi-decoded/file-map.json"
+      ],
+      "scope": "从13个载荷的assembly与references提取有类型的声明引用边，保留程序集名/版本/token与来源sha256，辨别内部名称匹配和外部引用。每条边追溯到输入记录和REA evidence_id。必须明确这不是运行调用图，不能认定实际加载或新的模块职责。以输入字段复核数量；拒绝缺失source/name/版本的合成变体并保留测试。不要重复CLR字节解析或MSI/OLE主线取证。",
+      "enabled": false
+    },
+    {
+      "id": "B01-NAME-COMPAT-REGISTER",
+      "parent_task": "B01",
+      "goal": "旧名称与兼容标识取证样本",
+      "depends_on": [],
+      "inputs": [
+        "HANDOFF.md",
+        "AGENTS.md",
+        "docs/goal-driven-plan.md",
+        "planning/tasks.json",
+        "evidence/baseline/b01/clr/inventory.json",
+        "evidence/baseline/b01/dependencies/inventory.json",
+        "evidence/baseline/b01/msi-decoded/file-map.json"
+      ],
+      "scope": "基于安装文件映射和程序集声明建立一份名称观察样本：至少区分程序/文件名、程序集身份、部署路径或配置标签。稳定本卡ID、原名、原始路径、输入行与sha256、已知含义/未知、兼容风险。同名不同路径或大小写/版本差异保留原样，不合并不重命名，不猜缩写。不改主仓库命名清单；交付独立evidence/names.json和可重跑校验。"
+    },
+    {
+      "id": "B01-CLR-DECLARED-EDGES-R2",
+      "parent_task": "B01",
+      "goal": "CLR 引用声明图与来源追踪",
+      "depends_on": [],
+      "inputs": [
+        "HANDOFF.md",
+        "AGENTS.md",
+        "docs/goal-driven-plan.md",
+        "planning/tasks.json",
+        "evidence/baseline/b01/clr/inventory.json",
+        "evidence/baseline/b01/dependencies/inventory.json",
+        "evidence/baseline/b01/msi-decoded/file-map.json"
+      ],
+      "scope": "从13个载荷的assembly与references提取有类型的声明引用边，保留程序集名/版本/token与来源sha256，辨别内部名称匹配和外部引用。每条边追溯到输入记录和REA evidence_id。必须明确这不是运行调用图，不能认定实际加载或新的模块职责。以输入字段复核数量；拒绝缺失source/name/版本的合成变体并保留测试。不要重复CLR字节解析或MSI/OLE主线取证。",
+      "enabled": true,
+      "retry_of": "B01-CLR-DECLARED-EDGES"
+    }
+  ]
+}

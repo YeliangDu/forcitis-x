@@ -1,0 +1,35 @@
+{
+  "id": "CTRL-GOAL-ASSURANCE",
+  "status": "PASS",
+  "goal": "独立判断阶段实际达成与阶段组合对总Goal的贡献，替代工作包全PASS自动推进。",
+  "implemented": [
+    "goal-assurance-policy的10项总体目标义务",
+    "独立只读assessor角色、结构化输出及assurance.py初稿",
+    "stages.py工作包完成只产生阶段候选，runner.py新增独立审查分支",
+    "抽取共享review_checks.py，保留失败检查证据能力"
+  ],
+  "not_accepted": [
+    "真实stage_audit需工作包候选就绪后执行，当前NOT_RUN；阶段放行正反例已回归",
+    "HWK业务应用与全量替代仍未实现和验收"
+  ],
+  "checks": {
+    "control_suite": "PASS: 64 tests including 16 assurance tests",
+    "build": "PASS: dev-board only",
+    "lint": "PASS: dev-board only",
+    "live_assessor": "PASS: HWK-000024 plan CONTINUE; HWK-000023 malformed evidence rejected and preserved",
+    "asset_hashes": "PASS",
+    "new_assurance_ui": "PASS: live API plus Chrome DOM and screenshot observation",
+    "live_stage_audit": "NOT_RUN",
+    "business_application": "NOT_RUN"
+  },
+  "evidence": [
+    "evidence/scheduler/setup/assurance-wip/test-at-handoff.txt",
+    "evidence/scheduler/setup/assurance-wip/assets-at-handoff.txt",
+    "evidence/scheduler/setup/assurance-verification/checks.json",
+    "evidence/scheduler/setup/assurance-verification/primary-readback.json",
+    "evidence/goal-assurance/HWK-000024.json"
+  ],
+  "next_command": "python3 scripts/scheduler/control.py status",
+  "resume_condition": "HWK-000024已放行计划，主控复核缓存和命令日志完整；仅恢复B01依赖满足的补证。",
+  "acceptance_scope": "控制机制工程验收及真实plan_audit链路；不代表阶段/整体业务目标达成"
+}

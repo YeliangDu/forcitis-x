@@ -1,0 +1,198 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "plan_audit",
+        "stage_audit"
+      ]
+    },
+    "stage_id": {
+      "type": "string"
+    },
+    "stage_achievement": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "PARTIAL",
+        "FAIL",
+        "NOT_RUN",
+        "BLOCKED"
+      ]
+    },
+    "goal_contribution": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "PARTIAL",
+        "FAIL",
+        "NOT_RUN",
+        "BLOCKED"
+      ]
+    },
+    "composition_status": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "PARTIAL",
+        "FAIL",
+        "NOT_RUN",
+        "BLOCKED"
+      ]
+    },
+    "overall_goal_achievement": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "PARTIAL",
+        "FAIL",
+        "NOT_RUN",
+        "BLOCKED"
+      ]
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "CONTINUE",
+        "REPLAN",
+        "BLOCKED",
+        "COMPLETE"
+      ]
+    },
+    "next_step_justified": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "composition_argument": {
+      "type": "string"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "requirement_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "PARTIAL",
+              "FAIL",
+              "NOT_RUN",
+              "BLOCKED"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "evidence_type": {
+            "type": "string",
+            "enum": [
+              "PLAN_ARGUMENT",
+              "STATIC",
+              "RUNTIME",
+              "DIFFERENTIAL",
+              "E2E",
+              "USER_ACCEPTANCE"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "requirement_id",
+          "status",
+          "reason",
+          "evidence_type",
+          "evidence"
+        ]
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "owner_stage": {
+            "type": "string"
+          },
+          "blocks_next_step": {
+            "type": "boolean"
+          },
+          "verification": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "description",
+          "owner_stage",
+          "blocks_next_step",
+          "verification"
+        ]
+      }
+    },
+    "counterexamples": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "exit_code": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "command",
+          "exit_code"
+        ]
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "stage_id",
+    "stage_achievement",
+    "goal_contribution",
+    "composition_status",
+    "overall_goal_achievement",
+    "decision",
+    "next_step_justified",
+    "reason",
+    "composition_argument",
+    "claims",
+    "gaps",
+    "counterexamples",
+    "checks",
+    "evidence"
+  ]
+}

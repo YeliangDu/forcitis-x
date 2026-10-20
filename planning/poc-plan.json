@@ -1,0 +1,270 @@
+{
+ "version": 1,
+ "authority": [
+  "docs/poc-mvp-plan.md",
+  "docs/product-spec-v1.md"
+ ],
+ "pocs": [
+  {
+   "id": "P1",
+   "title": "断面特性引擎（组合断面）",
+   "hard_criterion": "与旧系统 型材参数表/复合型材参数表 值偏差 <= 0.5%，或差异可归因",
+   "steps": [
+    {
+     "id": "s1",
+     "title": "引擎单测（node --test）",
+     "cwd": "replica",
+     "run": [
+      "npm",
+      "test"
+     ],
+     "artifacts": []
+    },
+    {
+     "id": "s2",
+     "title": "解析解判据运行器",
+     "cwd": "replica",
+     "run": [
+      "npm",
+      "run",
+      "poc:p1"
+     ],
+     "artifacts": [
+      "evidence/poc/P1/data.json",
+      "evidence/poc/P1/criteria.md",
+      "evidence/poc/P1/conclusion.md"
+     ],
+     "requires": [
+      "s1"
+     ]
+    },
+    {
+     "id": "s3",
+     "title": "旧系统数据摄取（只读导出 → fixture）",
+     "cwd": ".",
+     "run": [
+      "python3",
+      "scripts/poc/ingest-profiles.py"
+     ],
+     "artifacts": [
+      "evidence/poc/P1/old-system-inputs.json"
+     ],
+     "next_action": "只读导出 型材参数表/复合型材参数表/图库数据表(BREP) 到 evidence/poc/P1/input/",
+     "requires": [
+      "s2"
+     ]
+    },
+    {
+     "id": "s4",
+     "title": "断面轮廓（BREP）解码",
+     "cwd": ".",
+     "run": [
+      "python3",
+      "scripts/poc/decode-brep.py"
+     ],
+     "artifacts": [
+      "evidence/poc/P1/brep-records.json"
+     ],
+     "next_action": "BREP 框已解：tag(0x8000|len)+UTF-16 类名+u32(恒 6)+载荷；下一步用 HWKCAD.dll 的 Serialize 链（HWKCADGraphLine/Arc）定字段布局，每条记录长度未存，需按字段宽度推",
+     "requires": [
+      "s3"
+     ]
+    },
+    {
+     "id": "s4b",
+     "title": "CbArchive 数组/聚合编码（复数字段）",
+     "cwd": ".",
+     "run": [
+      "python3",
+      "scripts/poc/decode-brep.py",
+      "--arrays"
+     ],
+     "artifacts": [
+      "evidence/poc/P1/brep-records.json"
+     ],
+     "requires": [
+      "s4"
+     ],
+     "next_action": "Line/Arc 载荷含聚合字段（点数组）；需先解 CbArchive 的数组/字符串原语（计数+元素宽度）"
+    },
+    {
+     "id": "s5",
+     "title": "与旧系统值对照（硬判据）",
+     "cwd": ".",
+     "run": [
+      "python3",
+      "scripts/poc/compare-profiles.py"
+     ],
+     "artifacts": [
+      "evidence/poc/P1/compare.json"
+     ],
+     "requires": [
+      "s3"
+     ]
+    }
+   ],
+   "gate": {
+    "cwd": ".",
+    "run": [
+     "python3",
+     "scripts/poc/compare-profiles.py",
+     "--gate"
+    ]
+   }
+  },
+  {
+   "id": "P2",
+   "title": "图形→计算桥（构件/受荷/荷载派生）",
+   "hard_criterion": "1 个真实工程中 3 个构件的跨度、受荷宽度、线荷载与旧系统一致（<=1e-6）",
+   "steps": [
+    {
+     "id": "s1",
+     "title": "几何模型 v0（参数化分格 → 构件）",
+     "cwd": "replica",
+     "run": [
+      "npm",
+      "run",
+      "poc:p2-model"
+     ],
+     "artifacts": [],
+     "next_action": "实现 packages/geometry 最小参数化网格"
+    },
+    {
+     "id": "s2",
+     "title": "桥规则 + 荷载派生",
+     "cwd": "replica",
+     "run": [
+      "npm",
+      "run",
+      "poc:p2-bridge"
+     ],
+     "artifacts": [],
+     "requires": [
+      "s1"
+     ],
+     "next_action": "实现 member/受荷宽度/线荷载派生与对照 fixture"
+    },
+    {
+     "id": "s3",
+     "title": "与旧系统荷载表对照",
+     "cwd": ".",
+     "run": [
+      "python3",
+      "scripts/poc/compare-loads.py"
+     ],
+     "artifacts": [
+      "evidence/poc/P2/compare.json"
+     ],
+     "requires": [
+      "s2"
+     ],
+     "next_action": "从旧系统只读取同工程荷载表"
+    }
+   ],
+   "gate": {
+    "cwd": ".",
+    "run": [
+     "python3",
+     "scripts/poc/compare-loads.py",
+     "--gate"
+    ]
+   }
+  },
+  {
+   "id": "P3",
+   "title": "结果→计算书 PDF（数值+文本+图，确定性）",
+   "hard_criterion": "数值 1e-6；同输入 PDF 内容 hash 稳定；图可重渲染一致",
+   "steps": [
+    {
+     "id": "s1",
+     "title": "ResultBundle 三元组 schema",
+     "cwd": "replica",
+     "run": [
+      "npm",
+      "run",
+      "poc:p3-result"
+     ],
+     "artifacts": []
+    },
+    {
+     "id": "s2",
+     "title": "6 类分析图渲染（数据→SVG）",
+     "cwd": "replica",
+     "run": [
+      "npm",
+      "run",
+      "poc:p3-figures"
+     ],
+     "artifacts": [],
+     "requires": [
+      "s1"
+     ]
+    },
+    {
+     "id": "s3",
+     "title": "PDF 合成 + 指纹",
+     "cwd": "replica",
+     "run": [
+      "npm",
+      "run",
+      "poc:p3-pdf"
+     ],
+     "artifacts": [
+      "evidence/poc/P3/pdf-hash.txt"
+     ],
+     "requires": [
+      "s2"
+     ]
+    }
+   ],
+   "gate": {
+    "cwd": "replica",
+    "run": [
+     "npm",
+     "run",
+     "poc:p3-gate"
+    ]
+   }
+  },
+  {
+   "id": "P4",
+   "title": "FE 板壳对齐（MITC4/Mindlin，决策后置）",
+   "hard_criterion": "1 个板/壳模型位移与应力相对误差 <= 2%，或差异可解释",
+   "steps": [
+    {
+     "id": "s1",
+     "title": "需 FE 的体系统计",
+     "cwd": ".",
+     "run": [
+      "python3",
+      "scripts/poc/fe-need-survey.py"
+     ],
+     "artifacts": []
+    },
+    {
+     "id": "s2",
+     "title": "单元与求解器对齐",
+     "cwd": "replica",
+     "run": [
+      "npm",
+      "run",
+      "poc:p4-fe"
+     ],
+     "artifacts": [],
+     "requires": [
+      "s1"
+     ]
+    }
+   ],
+   "gate": {
+    "cwd": "replica",
+    "run": [
+     "npm",
+     "run",
+     "poc:p4-gate"
+    ]
+   },
+   "decision": "P4 是否启动由用户按 P1-P3 结果决定；未决定前 state 保持 NOT_RUN"
+  }
+ ]
+}

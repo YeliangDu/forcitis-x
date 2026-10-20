@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "reason": {
+      "type": "string"
+    },
+    "route": {
+      "type": "string",
+      "enum": [
+        "LOCAL_FIX",
+        "REPLAN",
+        "EXTERNAL_INPUT"
+      ]
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "release_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "reason",
+    "route",
+    "next_actions",
+    "release_conditions",
+    "questions",
+    "evidence"
+  ]
+}

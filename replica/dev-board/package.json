@@ -1,0 +1,13 @@
+{
+  "name": "hwk-development-board",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "lint": "oxlint src",
+    "test": "node ../scripts/test-development-board.mjs"
+  },
+  "dependencies": {"react": "latest", "react-dom": "latest"},
+  "devDependencies": {"@types/react": "latest", "@types/react-dom": "latest", "typescript": "latest", "vite": "latest", "oxlint": "latest"}
+}

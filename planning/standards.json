@@ -1,0 +1,144 @@
+{
+ "status": "PARTIAL",
+ "updated_at": "2026-10-20T10:12:40.457344+00:00",
+ "authority": "docs/engineering-standards.md",
+ "levels": {
+  "ENFORCED": "机器可判定或已生效",
+  "PLANNED": "已定义未落地",
+  "DEVIATION": "经批准的偏离"
+ },
+ "items": [
+  {
+   "id": "ES-01",
+   "name": "单位与量纲",
+   "status": "ENFORCED",
+   "enforcement": "命名带单位后缀（section 引擎已整改）；评审 + 单测"
+  },
+  {
+   "id": "ES-02",
+   "name": "计算确定性",
+   "status": "ENFORCED",
+   "enforcement": "scripts/check-standards.py 扫描 packages/**/src"
+  },
+  {
+   "id": "ES-03",
+   "name": "数值输出契约",
+   "status": "PLANNED",
+   "enforcement": "MVP-3 差分样例时固化"
+  },
+  {
+   "id": "ES-04",
+   "name": "纯函数内核",
+   "status": "ENFORCED",
+   "enforcement": "目录约定：packages/*/src 无 IO/时钟"
+  },
+  {
+   "id": "ES-05",
+   "name": "命名分离",
+   "status": "ENFORCED",
+   "enforcement": "check-standards.py 扫描旧产品名/中文文案；产品名 FORCITIS-x（D24）；docs/naming-conventions.md §0/§5"
+  },
+  {
+   "id": "ES-06",
+   "name": "证据分级",
+   "status": "ENFORCED",
+   "enforcement": "scope/acceptance/standards 台账校验"
+  },
+  {
+   "id": "ES-07",
+   "name": "资产只读",
+   "status": "ENFORCED",
+   "enforcement": "check-standards.py --full 校验 installer manifest"
+  },
+  {
+   "id": "ES-08",
+   "name": "远端操作 preflight",
+   "status": "ENFORCED",
+   "enforcement": "HANDOFF 操作清单 + 独立复核"
+  },
+  {
+   "id": "ES-09",
+   "name": "交接规则",
+   "status": "ENFORCED",
+   "enforcement": "HANDOFF 模板；状态栏 75% 触发"
+  },
+  {
+   "id": "ES-10",
+   "name": "禁 any/@ts-ignore",
+   "status": "ENFORCED",
+   "enforcement": "check-standards.py 扫描"
+  },
+  {
+   "id": "ES-11",
+   "name": "测试四层",
+   "status": "PLANNED",
+   "enforcement": "当前只有单元层；契约/差分/E2E 随 MVP 建立"
+  },
+  {
+   "id": "ES-12",
+   "name": "黄金样例库",
+   "status": "PLANNED",
+   "enforcement": "MVP-3 建立首个 golden set"
+  },
+  {
+   "id": "ES-13",
+   "name": "RulePack 规范",
+   "status": "PLANNED",
+   "enforcement": "POC-1/规则治理阶段"
+  },
+  {
+   "id": "ES-14",
+   "name": "PDF/审计",
+   "status": "PLANNED",
+   "enforcement": "POC-3 / MVP-5"
+  },
+  {
+   "id": "ES-15",
+   "name": "依赖与许可证",
+   "status": "PLANNED",
+   "enforcement": "MVP 选型时列白名单"
+  },
+  {
+   "id": "ES-16",
+   "name": "代码规范",
+   "status": "ENFORCED",
+   "enforcement": "tsconfig strict + oxlint"
+  },
+  {
+   "id": "ES-17",
+   "name": "ADR 流程",
+   "status": "ENFORCED",
+   "enforcement": "docs/adr/README.md 模板与索引"
+  },
+  {
+   "id": "ES-18",
+   "name": "提交与评审",
+   "status": "PLANNED",
+   "enforcement": "仓库尚无提交；建仓时启用"
+  },
+  {
+   "id": "ES-19",
+   "name": "日志分层",
+   "status": "PLANNED",
+   "enforcement": "MVP-6 审计实现时"
+  },
+  {
+   "id": "ES-20",
+   "name": "三版本号",
+   "status": "PLANNED",
+   "enforcement": "MVP 发布前"
+  },
+  {
+   "id": "ES-21",
+   "name": "运维基线",
+   "status": "PLANNED",
+   "enforcement": "发布前"
+  },
+  {
+   "id": "ES-22",
+   "name": "安全基线",
+   "status": "PLANNED",
+   "enforcement": "MVP-6 权限矩阵"
+  }
+ ]
+}

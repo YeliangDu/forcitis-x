@@ -1,0 +1,140 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "continue",
+        "blocked",
+        "complete"
+      ]
+    },
+    "new_evidence": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stage_item_id": {
+      "type": "string"
+    },
+    "stage_item_status": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "PARTIAL",
+        "BLOCKED",
+        "FAIL"
+      ]
+    },
+    "stage_item_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "breakdown": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "parent_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "goal": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "done_when": {
+            "type": "string"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "coverage_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "parent_id",
+          "title",
+          "goal",
+          "inputs",
+          "outputs",
+          "done_when",
+          "depends_on",
+          "coverage_ids"
+        ]
+      }
+    },
+    "continuation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "type": "string",
+          "enum": [
+            "CONTINUE",
+            "CHANGE_METHOD",
+            "WAIT_EXTERNAL",
+            "STOP_SAFETY"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "execution_focus": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "decision",
+        "reason",
+        "execution_focus"
+      ]
+    }
+  },
+  "required": [
+    "outcome",
+    "new_evidence",
+    "reason",
+    "evidence",
+    "stage_item_id",
+    "stage_item_status",
+    "stage_item_evidence",
+    "breakdown",
+    "continuation"
+  ]
+}

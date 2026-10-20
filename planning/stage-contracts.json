@@ -1,0 +1,1068 @@
+{
+  "version": 2,
+  "policy": "阶段结果驱动；新卡绑定预定义工作包。卡片数上限触发复盘，不等于目标达成或允许删减验收。",
+  "scope_source": "docs/goal-driven-plan.md；原完整替代范围与planning/acceptance.json保留。",
+  "stages": [
+    {
+      "id": "B01",
+      "outcome": "锁定可复采的目标安装资产、版本来源、完整包内组件及已声明的安装依赖，交付可开始原版环境验证的基线。",
+      "deliverables": [
+        "版本身份与来源说明",
+        "MSI/CAB完整映射、PE及非PE/内嵌组件库存",
+        "声明先决条件与待运行验证清单",
+        "独立基线复核及B02输入包"
+      ],
+      "not_in_scope": [
+        "不递归还原CRT/字符串等辅助函数",
+        "不在本阶段还原全部计算算法或设计新架构",
+        "不把安装成功、准确运行绑定或原版业务行为宣称为已验证；这些仍由B02及后续承担"
+      ],
+      "block_when": [
+        "目标资产哈希不一致或无法确定分析对象",
+        "文件/组件库存漏项、版本来源混同",
+        "关键安装入口与声明依赖无法给出来源或明确的B02验证项"
+      ],
+      "work_items": [
+        {
+          "id": "B01-01",
+          "title": "锁定版本身份与分析目标",
+          "done_when": "逐项核对原资产哈希、MSI ProductVersion、PE资源版本及目录标签；分别记录来源与差异，选择基线以资产哈希而非标签猜测锁定。形成一个可重跑的版本基线清单和独立复核，不重新写版本解析器。",
+          "depends_on": [],
+          "max_rounds_before_review": 2,
+          "goal": "逐项核对原资产哈希、MSI ProductVersion、PE资源版本及目录标签；分别记录来源与差异，选择基线以资产哈希而非标签猜测锁定。形成一个可重跑的版本基线清单和独立复核，不重新写版本解析器。",
+          "inputs": [
+            "evidence/baseline/installer-manifest.json",
+            "evidence/baseline/b01/file-inventory.json",
+            "evidence/baseline/b01/msi-decoded/summary.json",
+            "已有PE原始listing与独立复核记录"
+          ],
+          "outputs": [
+            "evidence/stages/B01/B01-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不递归还原CRT/字符串等辅助函数",
+            "不在本阶段还原全部计算算法或设计新架构",
+            "不把安装成功、准确运行绑定或原版业务行为宣称为已验证；这些仍由B02及后续承担"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B01-02",
+          "title": "闭合文件与组件库存",
+          "done_when": "汇总已有独立MSI/OLE/CAB证据：每个载荷、安装映射、PE/非PE、内嵌Binary和随包运行库均有库存/哈希/来源；声明导入和实际绑定分开，复核数量及未覆盖范围。必要补证只针对缺项，不重复全量解析。",
+          "depends_on": [],
+          "max_rounds_before_review": 2,
+          "goal": "汇总已有独立MSI/OLE/CAB证据：每个载荷、安装映射、PE/非PE、内嵌Binary和随包运行库均有库存/哈希/来源；声明导入和实际绑定分开，复核数量及未覆盖范围。必要补证只针对缺项，不重复全量解析。",
+          "inputs": [
+            "evidence/baseline/b01/msi-decoded/file-map.json",
+            "evidence/baseline/b01/ole-bindings/audit.json",
+            "evidence/baseline/b01/dependencies/inventory.json",
+            "evidence/baseline/b01/clr/inventory.json",
+            "原资产清单及已验收的包内映射/内嵌Binary证据"
+          ],
+          "outputs": [
+            "evidence/stages/B01/B01-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不递归还原CRT/字符串等辅助函数",
+            "不在本阶段还原全部计算算法或设计新架构",
+            "不把安装成功、准确运行绑定或原版业务行为宣称为已验证；这些仍由B02及后续承担"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B01-03",
+          "title": "收敛安装先决条件并交给B02",
+          "done_when": "仅沿安装入口、MSI条件/动作、CheckFX属性输入→VSDFXAvailable消费者→返回与安装序列完成相关控制流图；列出静态已知/无法静态证明项及B02验证步骤。若相关返回路径仍有缺口则保持本包未通过，不能因写了未知清单而PASS。禁止继续无界展开与该结论无关的辅助函数。",
+          "depends_on": [],
+          "max_rounds_before_review": 2,
+          "goal": "仅沿安装入口、MSI条件/动作、CheckFX属性输入→VSDFXAvailable消费者→返回与安装序列完成相关控制流图；列出静态已知/无法静态证明项及B02验证步骤。若相关返回路径仍有缺口则保持本包未通过，不能因写了未知清单而PASS。禁止继续无界展开与该结论无关的辅助函数。",
+          "inputs": [
+            "evidence/baseline/b01/msi-decoded/tables.json",
+            "evidence/baseline/b01/framework-static/apple-objdump-disassembly.txt",
+            "evidence/baseline/b01/installer-resources/decoded.json",
+            "HWK-000020及此前已完成的相关CheckFX取证与独立审核"
+          ],
+          "outputs": [
+            "evidence/stages/B01/B01-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不递归还原CRT/字符串等辅助函数",
+            "不在本阶段还原全部计算算法或设计新架构",
+            "不把安装成功、准确运行绑定或原版业务行为宣称为已验证；这些仍由B02及后续承担"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B01-04",
+          "title": "独立验收基线与B02交接",
+          "done_when": "独立复跑前三项、验证资产未变，审查全量包内库存及版本/先决条件结论；所有运行相关未知明确追踪至B02而非删除。输出Windows候选要求、实际许可/环境待验证项、原版安装/启动采集步骤。不得用B02尚未执行去迫使B01继续还原无关算法。",
+          "depends_on": [
+            "B01-01",
+            "B01-02",
+            "B01-03"
+          ],
+          "max_rounds_before_review": 2,
+          "goal": "独立复跑前三项、验证资产未变，审查全量包内库存及版本/先决条件结论；所有运行相关未知明确追踪至B02而非删除。输出Windows候选要求、实际许可/环境待验证项、原版安装/启动采集步骤。不得用B02尚未执行去迫使B01继续还原无关算法。",
+          "inputs": [
+            "evidence/stages/B01/B01-01/work-package.json",
+            "evidence/stages/B01/B01-02/work-package.json",
+            "evidence/stages/B01/B01-03/work-package.json"
+          ],
+          "outputs": [
+            "evidence/stages/B01/B01-04/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不递归还原CRT/字符串等辅助函数",
+            "不在本阶段还原全部计算算法或设计新架构",
+            "不把安装成功、准确运行绑定或原版业务行为宣称为已验证；这些仍由B02及后续承担"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    },
+    {
+      "id": "B02",
+      "outcome": "复用已实测现成Windows环境，在隔离客户端及真实工程副本上证明许可/服务端连接、原版启动、重算、报告/绘图及保存重开可重复；保留安装卸载至B01/R01闭合。",
+      "deliverables": [
+        "资源/费用/回收与环境清单",
+        "原版安装/启动和许可状态证据",
+        "真实样例报告/图形/保存重开原始输出",
+        "输入与环境哈希、复跑步骤"
+      ],
+      "not_in_scope": [
+        "不以VM创建或API成功当原版可用",
+        "不实现现代求解器"
+      ],
+      "block_when": [
+        "Windows不可达、许可不可用或关键依赖无法满足",
+        "原版样例运行/输出/往返失败"
+      ],
+      "work_items": [
+        {
+          "id": "B02-01",
+          "title": "核验现成ECS与隔离运行目录",
+          "done_when": "实测SSH及交互会话、OS/区域/字体/运行库/数据库、原版exe与冻结资产及真实样例哈希，创建新的隔离客户端/工程/输出目录。读取可取得的实例ID/地域，费用不可读时明确未知且不新建资源；记录现有资源保留、只清理本轮目录及任务的回收边界。环境访问/哈希和隔离不成立不得PASS。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "实测SSH及交互会话、OS/区域/字体/运行库/数据库、原版exe与冻结资产及真实样例哈希，创建新的隔离客户端/工程/输出目录。读取可取得的实例ID/地域，费用不可读时明确未知且不新建资源；记录现有资源保留、只清理本轮目录及任务的回收边界。环境访问/哈希和隔离不成立不得PASS。",
+          "inputs": [
+            "evidence/runtime/ecs-20261018/summary.json",
+            "evidence/runtime/workflow-reset/environment/stdout",
+            "evidence/baseline/b01/msi-decoded/file-map.json"
+          ],
+          "outputs": [
+            "evidence/stages/B02/B02-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以VM创建或API成功当原版可用",
+            "不实现现代求解器"
+          ],
+          "blocked_action": "先记录真实运行断点及具体错误，只修复阻断该链的依赖；不得转入全量静态安装器展开，不把现成环境复用当新安装PASS。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B02-02",
+          "title": "验证原版启动、服务端连接与许可",
+          "done_when": "在新的隔离客户端上启动原版，采集实际UI、进程/错误、服务端连接和许可状态；通过实际可用操作判断许可，不由配置或安装推断。核对源安装及原样例未变。安装器完整控制流与重新安装留在B01及R01，不能冒称本包已验证；禁止为许可绕过而修改二进制或复制非授权状态。",
+          "depends_on": [
+            "B02-01"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "在新的隔离客户端上启动原版，采集实际UI、进程/错误、服务端连接和许可状态；通过实际可用操作判断许可，不由配置或安装推断。核对源安装及原样例未变。安装器完整控制流与重新安装留在B01及R01，不能冒称本包已验证；禁止为许可绕过而修改二进制或复制非授权状态。",
+          "inputs": [
+            "evidence/runtime/ecs-20261018/summary.json",
+            "evidence/runtime/workflow-reset/environment/stdout",
+            "evidence/baseline/b01/msi-decoded/file-map.json"
+          ],
+          "outputs": [
+            "evidence/stages/B02/B02-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以VM创建或API成功当原版可用",
+            "不实现现代求解器"
+          ],
+          "blocked_action": "先记录真实运行断点及具体错误，只修复阻断该链的依赖；不得转入全量静态安装器展开，不把现成环境复用当新安装PASS。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B02-03",
+          "title": "采集真实工程全链运行基线",
+          "done_when": "以安装包来源门窗计算示例1的隔离工作副本执行打开、重算、报告/绘图导出、可控参数编辑及另存、退出重开重算；原始输入/输出/截图/中间量/步骤按哈希锁定，黄金与工作副本分离。不能以窗口出现或历史文件替代本轮真实运行；单工程通过不等于全体系。",
+          "depends_on": [
+            "B02-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "以安装包来源门窗计算示例1的隔离工作副本执行打开、重算、报告/绘图导出、可控参数编辑及另存、退出重开重算；原始输入/输出/截图/中间量/步骤按哈希锁定，黄金与工作副本分离。不能以窗口出现或历史文件替代本轮真实运行；单工程通过不等于全体系。",
+          "inputs": [
+            "evidence/runtime/ecs-20261018/summary.json",
+            "evidence/runtime/workflow-reset/environment/stdout",
+            "evidence/baseline/b01/msi-decoded/file-map.json"
+          ],
+          "outputs": [
+            "evidence/stages/B02/B02-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以VM创建或API成功当原版可用",
+            "不实现现代求解器"
+          ],
+          "blocked_action": "先记录真实运行断点及具体错误，只修复阻断该链的依赖；不得转入全量静态安装器展开，不把现成环境复用当新安装PASS。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B02-04",
+          "title": "独立复跑现成环境业务链",
+          "done_when": "独立复跑前三包的版本/哈希/隔离、许可/服务端连接及真实工程全链操作，核对原始输入未变和输出可重复。安装卸载/全局部署条件仍由B01/R01验收，不能因此给部署PASS。",
+          "depends_on": [
+            "B02-01",
+            "B02-02",
+            "B02-03"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "独立复跑前三包的版本/哈希/隔离、许可/服务端连接及真实工程全链操作，核对原始输入未变和输出可重复。安装卸载/全局部署条件仍由B01/R01验收，不能因此给部署PASS。",
+          "inputs": [
+            "evidence/runtime/ecs-20261018/summary.json",
+            "evidence/runtime/workflow-reset/environment/stdout",
+            "evidence/baseline/b01/msi-decoded/file-map.json"
+          ],
+          "outputs": [
+            "evidence/stages/B02/B02-04/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以VM创建或API成功当原版可用",
+            "不实现现代求解器"
+          ],
+          "blocked_action": "先记录真实运行断点及具体错误，只修复阻断该链的依赖；不得转入全量静态安装器展开，不把现成环境复用当新安装PASS。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "用户授权重编排：B01-01独立PASS及现成ECS原版exe与冻结包哈希绑定为运行取证入口，须新WBS独立放行；B01其余缺口保留，不声称B01 PASS。",
+      "entry_work_items": [
+        {
+          "stage_id": "B01",
+          "item_id": "B01-01"
+        }
+      ],
+      "entry_evidence": [
+        {
+          "path": "evidence/runtime/ecs-20261018/summary.json",
+          "sha256": "4595dc2bf387c06b266a848d2a9b28fc1d051a56d983c8c1e89d67080a4649a4"
+        }
+      ]
+    },
+    {
+      "id": "B03",
+      "outcome": "建立经原版UI、资源和示例交叉核验的完整功能库存，明确完整替代范围。",
+      "deliverables": [
+        "全功能ID及入口库存",
+        "菜单/对象/材料/截面/规范/绘图/报告/文件版本覆盖",
+        "静态与原版UI/示例交叉核对",
+        "未访问项与审核记录"
+      ],
+      "not_in_scope": [
+        "不把DLL/菜单子集当全量功能",
+        "不先按猜测的体系实施"
+      ],
+      "block_when": [
+        "仍有无法访问或未核对的功能区域",
+        "库存未独立审核"
+      ],
+      "work_items": [
+        {
+          "id": "B03-01",
+          "title": "枚举功能与配置入口",
+          "done_when": "采集全部原版菜单、窗口、快捷键、工程树、对象/属性、材料截面、规范、绘图、报告、异常及文件版本；每条有来源及稳定ID。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "采集全部原版菜单、窗口、快捷键、工程树、对象/属性、材料截面、规范、绘图、报告、异常及文件版本；每条有来源及稳定ID。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/B03/B03-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不把DLL/菜单子集当全量功能",
+            "不先按猜测的体系实施"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B03-02",
+          "title": "交叉核查完整范围",
+          "done_when": "用原版UI、包内资源和全部可用示例交叉核对，列差集并逐项核实；未访问项保持未完成。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "用原版UI、包内资源和全部可用示例交叉核对，列差集并逐项核实；未访问项保持未完成。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/B03/B03-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不把DLL/菜单子集当全量功能",
+            "不先按猜测的体系实施"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B03-03",
+          "title": "独立关闭功能库存",
+          "done_when": "主控独立审查无漏项库存及边界后，才可设scope.inventory_complete=true；保留全部原始证据。",
+          "depends_on": [
+            "B03-01",
+            "B03-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "主控独立审查无漏项库存及边界后，才可设scope.inventory_complete=true；保留全部原始证据。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/B03/B03-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不把DLL/菜单子集当全量功能",
+            "不先按猜测的体系实施"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    },
+    {
+      "id": "B04",
+      "outcome": "把完整库存转成逐项可执行的原版验收案例和比较规则。",
+      "deliverables": [
+        "功能→案例→原版输入输出追踪",
+        "边界/失败/保留案例集",
+        "逐变量/单位容差策略",
+        "独立案例与规则审核"
+      ],
+      "not_in_scope": [
+        "不以测试数量替代业务覆盖",
+        "不使用统一宽松百分比"
+      ],
+      "block_when": [
+        "任何体系缺真实全链案例",
+        "高风险规范/材料/有限元分支缺显式规则或证据"
+      ],
+      "work_items": [
+        {
+          "id": "B04-01",
+          "title": "建立真实全链案例",
+          "done_when": "按B03每个体系至少一条真实工程从输入到报告/绘图/文件往返的完整基线；建立稳定案例与需求对应。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "按B03每个体系至少一条真实工程从输入到报告/绘图/文件往返的完整基线；建立稳定案例与需求对应。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/B04/B04-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以测试数量替代业务覆盖",
+            "不使用统一宽松百分比"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B04-02",
+          "title": "补高风险与保留案例",
+          "done_when": "覆盖关键规范、材料查表、有限元、边界、异常/失败、全局状态与组合，保留未参与调试的案例。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "覆盖关键规范、材料查表、有限元、边界、异常/失败、全局状态与组合，保留未参与调试的案例。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/B04/B04-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以测试数量替代业务覆盖",
+            "不使用统一宽松百分比"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "B04-03",
+          "title": "审定比较与容差",
+          "done_when": "按变量/单位/显示精度/工程意义审定规则；离散状态、文本、阈值与文件语义不得被数值容差掩盖；主控独立复跑审核。 同时保存planning/pilot-scope.json，列明门窗真实样例全部启用功能ID及来源，frozen=true须有独立审核。",
+          "depends_on": [
+            "B04-01",
+            "B04-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "按变量/单位/显示精度/工程意义审定规则；离散状态、文本、阈值与文件语义不得被数值容差掩盖；主控独立复跑审核。 同时保存planning/pilot-scope.json，列明门窗真实样例全部启用功能ID及来源，frozen=true须有独立审核。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/B04/B04-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以测试数量替代业务覆盖",
+            "不使用统一宽松百分比"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    },
+    {
+      "id": "P01",
+      "outcome": "现代实现能打开门窗真实样例，准确还原对象及输入，并支持可验证编辑。",
+      "deliverables": [
+        "真实样例对象/字段/引用映射",
+        "输入绑定与编辑实现",
+        "原版对照与回归证据"
+      ],
+      "not_in_scope": [
+        "不以fixture对象代替解析真实工程",
+        "不先推定全部计算通过"
+      ],
+      "block_when": [
+        "未知字段丢失或输入语义不一致",
+        "缺原版输入对照"
+      ],
+      "work_items": [
+        {
+          "id": "P01-01",
+          "title": "恢复真实工程输入契约",
+          "done_when": "用原版工程和运行证据确认对象、字段、单位、默认值、引用、数据库关联与未知字段；名称观察与正式标准名分离。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "用原版工程和运行证据确认对象、字段、单位、默认值、引用、数据库关联与未知字段；名称观察与正式标准名分离。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P01/P01-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以fixture对象代替解析真实工程",
+            "不先推定全部计算通过"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "P01-02",
+          "title": "实现打开及编辑输入",
+          "done_when": "replica实现真实文件解析、对象呈现、绑定和编辑；保持原版语义，运行该阶段npm test/build/lint。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "replica实现真实文件解析、对象呈现、绑定和编辑；保持原版语义，运行该阶段npm test/build/lint。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P01/P01-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以fixture对象代替解析真实工程",
+            "不先推定全部计算通过"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "P01-03",
+          "title": "独立验收输入切片",
+          "done_when": "独立打开原样例及参数变体，比对原版实际输入和对象关系，记录差异/失败及边界。",
+          "depends_on": [
+            "P01-01",
+            "P01-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "独立打开原样例及参数变体，比对原版实际输入和对象关系，记录差异/失败及边界。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P01/P01-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以fixture对象代替解析真实工程",
+            "不先推定全部计算通过"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    },
+    {
+      "id": "P02",
+      "outcome": "门窗样例所有实际启用计算链独立完成，并与原版逐结果、中间量和结论一致。",
+      "deliverables": [
+        "输入→查表/规范/状态→计算→结论契约",
+        "独立计算实现与差分",
+        "变体/边界/失败回归"
+      ],
+      "not_in_scope": [
+        "不使用常量/fixture/原DLL替代主计算",
+        "不擅改旧算法或安全判定"
+      ],
+      "block_when": [
+        "任一实际启用主链缺失或差异未解释",
+        "原版分支/中间量/单位未确认"
+      ],
+      "work_items": [
+        {
+          "id": "P02-01",
+          "title": "锁定启用计算体系与求解契约",
+          "done_when": "反追真实最终报告至全部启用输入、规范/材料表、全局状态、运算顺序、单位及求解边界；未运行分支单列。 提交本阶段执行容器的有限叶子工作包及实际功能ID覆盖；必须有明确目标、输入输出、验收条件和依赖。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "反追真实最终报告至全部启用输入、规范/材料表、全局状态、运算顺序、单位及求解边界；未运行分支单列。 提交本阶段执行容器的有限叶子工作包及实际功能ID覆盖；必须有明确目标、输入输出、验收条件和依赖。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P02/P02-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不使用常量/fixture/原DLL替代主计算",
+            "不擅改旧算法或安全判定"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "P02-02",
+          "title": "逐链实现并差分",
+          "done_when": "按业务链实现全部启用荷载、玻璃、杆件、连接及其它真实存在体系；如使用有限元，核对自由度/单元/边界/中间量与失败。每次差异有原版证据。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "按业务链实现全部启用荷载、玻璃、杆件、连接及其它真实存在体系；如使用有限元，核对自由度/单元/边界/中间量与失败。每次差异有原版证据。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P02/P02-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不使用常量/fixture/原DLL替代主计算",
+            "不擅改旧算法或安全判定"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": true,
+          "planned_by": "P02-01",
+          "coverage_source": {
+            "path": "planning/pilot-scope.json",
+            "key": "features",
+            "id_field": "id",
+            "closed_flag": "frozen"
+          },
+          "decomposition_rule": "本项为容器，禁止直接派执行卡；由上一个规划工作包依据已关闭实际库存提交有限叶子工作包，独立核对覆盖全部范围后注册；容器只从子包验收汇总通过。"
+        },
+        {
+          "id": "P02-03",
+          "title": "独立验收计算闭环",
+          "done_when": "主控复跑真实样例、参数变体、阈值/边界及失败案例，核对全部结果与状态，阶段工程检查通过。",
+          "depends_on": [
+            "P02-01",
+            "P02-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "主控复跑真实样例、参数变体、阈值/边界及失败案例，核对全部结果与状态，阶段工程检查通过。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P02/P02-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不使用常量/fixture/原DLL替代主计算",
+            "不擅改旧算法或安全判定"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    },
+    {
+      "id": "P03",
+      "outcome": "绘图、计算书和工程文件打开编辑保存重开在新版与原版间闭合。",
+      "deliverables": [
+        "图形/报告逐项差分",
+        "cwx保真与未知字段策略",
+        "双向保存重开与重算证据"
+      ],
+      "not_in_scope": [
+        "不以字节相同替代语义验证",
+        "不以语义相近掩盖原版无法打开"
+      ],
+      "block_when": [
+        "报告/图形/状态差异或往返丢失",
+        "原版不能打开新版保存工程"
+      ],
+      "work_items": [
+        {
+          "id": "P03-01",
+          "title": "实现绘图和计算书",
+          "done_when": "比对数值/单位/精度/文本/章节条件/判定/分页、图形尺寸与标注，保留原版输出及差分。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "比对数值/单位/精度/文本/章节条件/判定/分页、图形尺寸与标注，保留原版输出及差分。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P03/P03-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以字节相同替代语义验证",
+            "不以语义相近掩盖原版无法打开"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "P03-02",
+          "title": "实现文件往返",
+          "done_when": "真实工程编辑保存后在两端重开并重算，对象/属性/引用/数据库关联及未知字段保留均有实测证据。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "真实工程编辑保存后在两端重开并重算，对象/属性/引用/数据库关联及未知字段保留均有实测证据。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P03/P03-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以字节相同替代语义验证",
+            "不以语义相近掩盖原版无法打开"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "P03-03",
+          "title": "独立验收输出与兼容",
+          "done_when": "复跑原样例和变体的报告、图形、文件往返、失败案例及工程检查。",
+          "depends_on": [
+            "P03-01",
+            "P03-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "复跑原样例和变体的报告、图形、文件往返、失败案例及工程检查。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P03/P03-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以字节相同替代语义验证",
+            "不以语义相近掩盖原版无法打开"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    },
+    {
+      "id": "P04",
+      "outcome": "独立试点证明第一条真实业务链可替代，并据证据决定后续命名、架构和求解器改造方案。",
+      "deliverables": [
+        "原样例/变体/保留案例独立验收",
+        "使用者试点反馈",
+        "命名与架构/求解器候选取舍/实验/决定",
+        "更新的成本与扩展方案"
+      ],
+      "not_in_scope": [
+        "不把第一条样例通过当全产品完成",
+        "不以流行技术代替候选实验"
+      ],
+      "block_when": [
+        "主链仍依赖原DLL/fixture或保留案例失败",
+        "需要用户/专业判断的决定未完成"
+      ],
+      "work_items": [
+        {
+          "id": "P04-01",
+          "title": "独立复跑试点与保留案例",
+          "done_when": "全部试点流程在独立环境复跑，包括未用于调试的保留案例；任何fixture/常量/原DLL主计算依赖均不通过。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "全部试点流程在独立环境复跑，包括未用于调试的保留案例；任何fixture/常量/原DLL主计算依赖均不通过。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P04/P04-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不把第一条样例通过当全产品完成",
+            "不以流行技术代替候选实验"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "P04-02",
+          "title": "试点使用者验收",
+          "done_when": "使用者完成代表操作并记录反馈/差异；专业判定分歧须由专业人员裁定。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "使用者完成代表操作并记录反馈/差异；专业判定分歧须由专业人员裁定。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P04/P04-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不把第一条样例通过当全产品完成",
+            "不以流行技术代替候选实验"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "P04-03",
+          "title": "审定后续改造与扩展",
+          "done_when": "基于前置命名/架构/求解证据提交候选、取舍和实验，再记录用户决定；第一轮跑通具体边界须明示。更新试点成本与扩展计划，不宣称全量完成。",
+          "depends_on": [
+            "P04-01",
+            "P04-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "基于前置命名/架构/求解证据提交候选、取舍和实验，再记录用户决定；第一轮跑通具体边界须明示。更新试点成本与扩展计划，不宣称全量完成。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/P04/P04-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不把第一条样例通过当全产品完成",
+            "不以流行技术代替候选实验"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    },
+    {
+      "id": "E01",
+      "outcome": "按已经关闭的功能库存逐体系实现完整业务闭环，保持已完成体系回归。",
+      "deliverables": [
+        "B03全量库存派生的有限体系工作包",
+        "各体系输入/计算/图形/报告/往返/失败证据",
+        "规范×材料×边界×文件版本覆盖",
+        "扩展独立审核"
+      ],
+      "not_in_scope": [
+        "不凭旧标签猜测体系数量",
+        "不只补函数而遗漏业务链"
+      ],
+      "block_when": [
+        "库存有功能未实现或验收缺失",
+        "关键规范分支被组合测试替代"
+      ],
+      "work_items": [
+        {
+          "id": "E01-01",
+          "title": "冻结逐体系扩展清单",
+          "done_when": "从B03实际库存派生有限体系/规范/材料/边界/文件版本子清单，按真实使用/风险/共享依赖排序并独立核对完整性。 提交本阶段执行容器的有限叶子工作包及实际功能ID覆盖；必须有明确目标、输入输出、验收条件和依赖。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "从B03实际库存派生有限体系/规范/材料/边界/文件版本子清单，按真实使用/风险/共享依赖排序并独立核对完整性。 提交本阶段执行容器的有限叶子工作包及实际功能ID覆盖；必须有明确目标、输入输出、验收条件和依赖。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/E01/E01-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不凭旧标签猜测体系数量",
+            "不只补函数而遗漏业务链"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "E01-02",
+          "title": "逐项完成并保持回归",
+          "done_when": "逐体系真实工程完成输入、独立计算、报告/图形、文件往返和失败路径；每新增体系回归已有体系。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "逐体系真实工程完成输入、独立计算、报告/图形、文件往返和失败路径；每新增体系回归已有体系。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/E01/E01-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不凭旧标签猜测体系数量",
+            "不只补函数而遗漏业务链"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": true,
+          "planned_by": "E01-01",
+          "coverage_source": {
+            "path": "planning/scope.json",
+            "key": "features",
+            "id_field": "id",
+            "closed_flag": "inventory_complete"
+          },
+          "decomposition_rule": "本项为容器，禁止直接派执行卡；由上一个规划工作包依据已关闭实际库存提交有限叶子工作包，独立核对覆盖全部范围后注册；容器只从子包验收汇总通过。"
+        },
+        {
+          "id": "E01-03",
+          "title": "独立核对全库存追踪",
+          "done_when": "核对库存每项→案例→实现→原版及新版证据，无空项与漏项；通过不替代R01使用者最终验收。",
+          "depends_on": [
+            "E01-01",
+            "E01-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "核对库存每项→案例→实现→原版及新版证据，无空项与漏项；通过不替代R01使用者最终验收。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/E01/E01-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不凭旧标签猜测体系数量",
+            "不只补函数而遗漏业务链"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    },
+    {
+      "id": "R01",
+      "outcome": "经独立全量复跑和使用者/专业验收，证明目标旧版本全部工作可由新应用完整替代。",
+      "deliverables": [
+        "全库存全链独立验收",
+        "安装卸载/桌面/打印导出/性能对照",
+        "真实使用者及专业裁定",
+        "完整发布门槛与可恢复交付"
+      ],
+      "not_in_scope": [
+        "不以CI绿色或局部样例代替全量验收",
+        "不放宽容差或排除失败项以通过"
+      ],
+      "block_when": [
+        "任何范围/业务/兼容/部署门槛未通过",
+        "使用者或专业安全结论缺失"
+      ],
+      "work_items": [
+        {
+          "id": "R01-01",
+          "title": "复跑全量追踪与案例",
+          "done_when": "主控复跑全部真实工程、边界、失败及保留案例；核对无漏项库存、规范分支与完整文件往返，阶段工程检查全部通过。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "主控复跑全部真实工程、边界、失败及保留案例；核对无漏项库存、规范分支与完整文件往返，阶段工程检查全部通过。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/R01/R01-01/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以CI绿色或局部样例代替全量验收",
+            "不放宽容差或排除失败项以通过"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "R01-02",
+          "title": "验证部署与操作条件",
+          "done_when": "完整安装/卸载、桌面交互、打印/导出和性能对照在目标环境实测通过，交付及恢复方式可执行。 必须在可回收隔离环境从锁定安装资产验证干净安装/卸载、先决条件及失败/恢复；现成ECS可用不代替该义务。",
+          "depends_on": [],
+          "max_rounds_before_review": 4,
+          "goal": "完整安装/卸载、桌面交互、打印/导出和性能对照在目标环境实测通过，交付及恢复方式可执行。 必须在可回收隔离环境从锁定安装资产验证干净安装/卸载、先决条件及失败/恢复；现成ECS可用不代替该义务。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/R01/R01-02/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以CI绿色或局部样例代替全量验收",
+            "不放宽容差或排除失败项以通过"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        },
+        {
+          "id": "R01-03",
+          "title": "完成最终使用者与专业验收",
+          "done_when": "使用者完成代表性业务操作；安全相关差异有专业裁定；planning/acceptance所有门槛及独立业务比较器通过后才标最终complete。",
+          "depends_on": [
+            "R01-01",
+            "R01-02"
+          ],
+          "max_rounds_before_review": 4,
+          "goal": "使用者完成代表性业务操作；安全相关差异有专业裁定；planning/acceptance所有门槛及独立业务比较器通过后才标最终complete。",
+          "inputs": [
+            "阶段前置成果与已锁定原版证据",
+            "planning/stage-progress.json中依赖工作包的验收记录"
+          ],
+          "outputs": [
+            "evidence/stages/R01/R01-03/work-package.json"
+          ],
+          "owner": "执行代理交付；独立验收代理审核；调度器保留追踪与派卡",
+          "acceptance_method": "主代理核对done_when全部内容，亲自复跑相关检查并记录来源/差异/未证实项；PASS须有工作包交付清单与独立验收证据。",
+          "not_in_scope": [
+            "不以CI绿色或局部样例代替全量验收",
+            "不放宽容差或排除失败项以通过"
+          ],
+          "blocked_action": "记录具体缺口、已尝试方法及解除条件；可推进无依赖的工作包，不扩大本包范围或降低门槛。",
+          "requires_decomposition": false
+        }
+      ],
+      "exit_rule": "全部工作包经独立验收PASS且证据文件存在才通过本阶段；不以卡数/测试数/台账自测代替业务证据。",
+      "exhaustion_rule": "工作包达到复盘上限仍未通过时标BLOCKED，先处理其它可做工作包；无可执行项则暂停并列出缺口，不自行扩范围或降低标准。",
+      "goal_id": "HWK-G001",
+      "entry_rule": "planning/tasks.json的全部depends_on阶段及其工作包独立通过。"
+    }
+  ],
+  "goal": {
+    "id": "HWK-G001",
+    "outcome": "完整替代锁定目标版本旧应用的全部界面、计算、求解、材料截面、绘图报告和工程文件往返，并由独立全量与使用者/专业验收证明。",
+    "complete_when": "所有阶段的可追踪工作包与R01最终业务门槛通过；首个样例、卡片结束或工程检查成功均不足。",
+    "decomposition": "Goal→阶段→工作包（必要时含待展开容器）→执行/验收卡→原始证据；执行卡不是WBS本身。"
+  }
+}

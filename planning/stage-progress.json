@@ -1,0 +1,394 @@
+{
+  "contract_version": 2,
+  "stages": {
+    "B01": {
+      "items": {
+        "B01-01": {
+          "status": "PASS",
+          "rounds": 1,
+          "evidence": [
+            "evidence/stages/B01/B01-01/work-package.json",
+            "evidence/scheduler-reviews/20261018T112200Z/review.md",
+            "evidence/scheduler-reviews/20261018T112200Z/replay/work-package.json",
+            "evidence/scheduler-reviews/20261018T112200Z/msi-container-audit.json",
+            "evidence/scheduler-reviews/20261018T112200Z/checks.json",
+            "evidence/scheduler-reviews/20261018T112200Z/input-integrity.json"
+          ],
+          "reviewer": "HWK-000021",
+          "reason": "B01-01全部完成条件经独立复跑满足：资产哈希、MSI源流及版本、PE版本和目录标签分别核对一致，差异与未知保留。B01阶段仍PARTIAL，后续工作包可继续；原版运行和最终业务验收未通过。"
+        },
+        "B01-02": {
+          "status": "BLOCKED",
+          "rounds": 2,
+          "evidence": [
+            "evidence/scheduler-reviews/20261018T121000Z-B01-02/review.md",
+            "evidence/scheduler-reviews/20261018T121000Z-B01-02/checks.json",
+            "evidence/scheduler-reviews/20261018T121000Z-B01-02/source-audit.json"
+          ],
+          "reviewer": "HWK-000025",
+          "reason": "B01-02独立复跑的资产、库存及相关回归通过，但16份WSUS扫描CAB内部库存和MSU目标/差分对应仍未闭合；达到两轮上限，判为BLOCKED并交控制器复盘。B01-03依赖满足，可继续。交接已更新，阶段仍PARTIAL，原版运行及npm检查NOT_RUN。REA MCP版本核验被客户端审批策略拒绝，未重试或调整权限。"
+        },
+        "B01-03": {
+          "status": "BLOCKED",
+          "rounds": 2,
+          "evidence": [
+            "evidence/scheduler-reviews/20261018T131000Z-B01-03/review.md",
+            "evidence/scheduler-reviews/20261018T131000Z-B01-03/source-audit.json",
+            "evidence/scheduler-reviews/20261018T131000Z-B01-03/checks.json",
+            "evidence/scheduler-reviews/20261018T131000Z-B01-03/input-integrity.json"
+          ],
+          "reviewer": "HWK-000030",
+          "reason": "独立复跑与源字节审核通过，但四项安装控制流及返回缺口仍未闭合，B01-03达到两轮上限，须外部主控有限复盘。B01-04依赖未满足，B02未解锁。最终业务门槛FAIL，原版运行及应用npm检查NOT_RUN。REA MCP身份核验被客户端审批策略拒绝，未重试或调整权限。已更新交接并停止。"
+        },
+        "B01-04": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      },
+      "candidate_ready": false
+    },
+    "B02": {
+      "items": {
+        "B02-01": {
+          "status": "PASS",
+          "rounds": 2,
+          "evidence": [
+            "evidence/scheduler-reviews/HWK-000041-B02-01/review.md",
+            "evidence/scheduler-reviews/HWK-000041-B02-01/remote-command.ps1",
+            "evidence/scheduler-reviews/HWK-000041-B02-01/remote.stdout",
+            "evidence/scheduler-reviews/HWK-000041-B02-01/remote-exit.json",
+            "evidence/scheduler-reviews/HWK-000041-B02-01/delivery-audit.json"
+          ],
+          "reviewer": "HWK-000041",
+          "reason": "独立SSH只读复跑确认445文件清单、真实样例哈希、路径隔离及环境信息一致，B02-01全部完成条件满足。B02业务链与最终目标仍未完成。",
+          "dispatch_history": [
+            {
+              "at": "2026-10-18T17:04:16.839133+00:00",
+              "prior": {
+                "status": "BLOCKED",
+                "rounds": 1,
+                "evidence": [
+                  "evidence/scheduler-reviews/HWK-000037-B02-01/review.md",
+                  "evidence/scheduler-reviews/HWK-000037-B02-01/checks.json",
+                  "evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/exit.json"
+                ],
+                "reviewer": "HWK-000037",
+                "reason": "独立只读SSH复跑仍在连接前被策略拒绝。本地资产和样例哈希通过，但实时环境、交互会话及隔离目录未证实。需在允许既有SSH连接的会话中续采并重新验收；交接已更新。"
+              },
+              "judgment": "evidence/scheduler/2026-10-18T170307662637+0000-continuation/planner-final.txt"
+            }
+          ],
+          "dispatch_status": "ready",
+          "execution_focus": "由控制器登记本包PASS后派B02-02；先只读核查会话、进程及配置，再验证隔离客户端启动、许可和服务端连接。保留源安装与现有资源，不重跑目录创建脚本，不修改服务配置。",
+          "review_history": [
+            {
+              "status": "BLOCKED",
+              "rounds": 1,
+              "evidence": [
+                "evidence/scheduler-reviews/HWK-000037-B02-01/review.md",
+                "evidence/scheduler-reviews/HWK-000037-B02-01/checks.json",
+                "evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/exit.json"
+              ],
+              "reviewer": "HWK-000037",
+              "reason": "独立只读SSH复跑仍在连接前被策略拒绝。本地资产和样例哈希通过，但实时环境、交互会话及隔离目录未证实。需在允许既有SSH连接的会话中续采并重新验收；交接已更新。"
+            }
+          ],
+          "continuation": {
+            "decision": "CONTINUE",
+            "reason": "环境与隔离证据已闭合，后续启动和许可验证有明确授权及可执行路径。",
+            "execution_focus": "由控制器登记本包PASS后派B02-02；先只读核查会话、进程及配置，再验证隔离客户端启动、许可和服务端连接。保留源安装与现有资源，不重跑目录创建脚本，不修改服务配置。"
+          }
+        },
+        "B02-02": {
+          "status": "PARTIAL",
+          "rounds": 5,
+          "evidence": [
+            "evidence/scheduler-reviews/HWK-000046-B02-02/review.md",
+            "evidence/scheduler-reviews/HWK-000046-B02-02/live-stdout.json",
+            "evidence/scheduler-reviews/HWK-000046-B02-02/rea-connection.json"
+          ],
+          "reviewer": "HWK-000046",
+          "reason": "独立确认荷载重算切片、445项源文件及189项交付哈希一致；许可门控仍未知，B02-02保持PARTIAL。本验收会话误读SSH私钥导致其进入工具日志，须撤销并安全替换凭据后恢复远端执行。交接已更新。",
+          "review_history": [
+            {
+              "status": "NOT_RUN",
+              "rounds": 0,
+              "evidence": [],
+              "reviewer": null,
+              "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+            },
+            {
+              "status": "PARTIAL",
+              "rounds": 1,
+              "evidence": [
+                "evidence/scheduler-reviews/HWK-000042-B02-02/review.md",
+                "evidence/scheduler-reviews/HWK-000042-B02-02/live-audit.json",
+                "evidence/scheduler-reviews/HWK-000042-B02-02/delivery-audit.json"
+              ],
+              "reviewer": "HWK-000042",
+              "reason": "独立复跑确认445个源文件、冻结客户端及样例哈希一致，现有进程与TCP连接快照可信。新隔离客户端启动和实际许可操作仍未执行，B02-02保持PARTIAL。交接已更新。"
+            },
+            {
+              "status": "PARTIAL",
+              "rounds": 2,
+              "evidence": [
+                "evidence/scheduler-reviews/HWK-000043-B02-02/review.md",
+                "evidence/scheduler-reviews/HWK-000043-B02-02/independent-audit.json",
+                "evidence/scheduler-reviews/HWK-000043-B02-02/remote-read.stdout"
+              ],
+              "reviewer": "HWK-000043",
+              "reason": "独立复查确认进程、TCP连接及四项关键文件哈希；80项交付与5项输入哈希匹配。纠正服务到期日为2028年5月17日。新冻结客户端启动、实际许可操作及完整源安装哈希刷新仍未完成，本包保持PARTIAL。已更新交接。"
+            },
+            {
+              "status": "PARTIAL",
+              "rounds": 3,
+              "evidence": [
+                "evidence/scheduler-reviews/HWK-000044-B02-02/review.md",
+                "evidence/scheduler-reviews/HWK-000044-B02-02/checks.json",
+                "evidence/scheduler-reviews/HWK-000044-B02-02/live-comparison.json"
+              ],
+              "reviewer": "HWK-000044",
+              "reason": "独立复跑确认新客户端运行、445项源文件及真实样例哈希一致；171项交付和5项输入哈希无差异。实际许可门控尚未执行，本包保持PARTIAL，已有明确授权的下一步。"
+            },
+            {
+              "status": "PARTIAL",
+              "rounds": 4,
+              "evidence": [
+                "evidence/scheduler-reviews/HWK-000045-B02-02/review.md",
+                "evidence/scheduler-reviews/HWK-000045-B02-02/live-comparison.json"
+              ],
+              "reviewer": "HWK-000045",
+              "reason": "独立复查确认资产及样例哈希一致，崩溃事件真实；尚无成功计算或报告操作证明许可，工作包保持PARTIAL。已有明确授权的替代方法可继续。"
+            }
+          ],
+          "dispatch_status": "needs_plan",
+          "execution_focus": "撤销泄露密钥并安全配置替代凭据，独立复核限定只读SSH。安全解除后，刷新现有客户端状态，通过普通UI导航和受控计算书生成继续核验许可。",
+          "continuation": {
+            "decision": "STOP_SAFETY",
+            "reason": "实际SSH私钥泄露尚未完成撤销替换，停止后续远端操作。",
+            "execution_focus": "撤销泄露密钥并安全配置替代凭据，独立复核限定只读SSH。安全解除后，刷新现有客户端状态，通过普通UI导航和受控计算书生成继续核验许可。"
+          }
+        },
+        "B02-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "B02-04": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      },
+      "candidate_ready": false
+    },
+    "B03": {
+      "items": {
+        "B03-01": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "B03-02": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "B03-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      }
+    },
+    "B04": {
+      "items": {
+        "B04-01": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "B04-02": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "B04-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      }
+    },
+    "P01": {
+      "items": {
+        "P01-01": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "P01-02": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "P01-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      }
+    },
+    "P02": {
+      "items": {
+        "P02-01": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "P02-02": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "P02-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      }
+    },
+    "P03": {
+      "items": {
+        "P03-01": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "P03-02": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "P03-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      }
+    },
+    "P04": {
+      "items": {
+        "P04-01": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "P04-02": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "P04-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      }
+    },
+    "E01": {
+      "items": {
+        "E01-01": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "E01-02": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "E01-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      }
+    },
+    "R01": {
+      "items": {
+        "R01-01": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "R01-02": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        },
+        "R01-03": {
+          "status": "NOT_RUN",
+          "rounds": 0,
+          "evidence": [],
+          "reviewer": null,
+          "reason": "待按明确阶段目标独立审核；既有历史证据不自动变成PASS。"
+        }
+      }
+    }
+  },
+  "updated_at": "2026-10-18T18:33:12.950439+00:00"
+}

@@ -1,0 +1,74 @@
+{
+ "pocs": {
+  "P1": {
+   "status": "BLOCKED",
+   "steps": {
+    "s1": {
+     "status": "PASS",
+     "exit": 0,
+     "started": "2026-10-20T09:42:03Z",
+     "finished": "2026-10-20T09:42:03Z",
+     "artifacts_missing": [],
+     "log": "evidence/poc/orchestrator/P1-s1.log",
+     "summary": "ℹ duration_ms 58.461875"
+    },
+    "s2": {
+     "status": "PASS",
+     "exit": 0,
+     "started": "2026-10-20T09:42:03Z",
+     "finished": "2026-10-20T09:42:04Z",
+     "artifacts_missing": [],
+     "log": "evidence/poc/orchestrator/P1-s2.log",
+     "summary": "}"
+    },
+    "s3": {
+     "status": "PASS",
+     "exit": 0,
+     "started": "2026-10-20T09:55:17Z",
+     "finished": "2026-10-20T09:55:17Z",
+     "artifacts_missing": [],
+     "log": "evidence/poc/orchestrator/P1-s3.log",
+     "summary": "OK fixtures: {'profiles.json': 12, 'composites.json': 3, 'gallery.json': 12}"
+    },
+    "s5": {
+     "status": "PASS",
+     "requires_unmet": [
+      "s3"
+     ],
+     "exit": 0,
+     "started": "2026-10-20T09:55:18Z",
+     "finished": "2026-10-20T09:55:18Z",
+     "artifacts_missing": [],
+     "log": "evidence/poc/orchestrator/P1-s5.log",
+     "summary": "{\"checks\": 9, \"failures\": 0, \"geometry\": \"PENDING\", \"passed\": true}"
+    },
+    "s4": {
+     "status": "BLOCKED",
+     "note": "record framing decoded: payload = u32 version(6) + u32 ordinal + 8 zero bytes + body; Line body = 6 doubles (2 points) fits exactly; Arc record is the LAST record and its body runs to EOF and contains a mixed object graph (angles, points, 0/1 flags, NaNs) — no contiguous point array found by offset/count search, so the outline array must be decoded from the Arc/relation field order, not guessed"
+    }
+   },
+   "gate": {
+    "run": [
+     "python3",
+     "scripts/poc/compare-profiles.py",
+     "--gate"
+    ],
+    "exit": 2,
+    "verdict": "BLOCKED"
+   }
+  },
+  "P2": {
+   "status": "NOT_RUN",
+   "steps": {}
+  },
+  "P3": {
+   "status": "NOT_RUN",
+   "steps": {}
+  },
+  "P4": {
+   "status": "NOT_RUN",
+   "steps": {}
+  }
+ },
+ "updated_at": "2026-10-20T09:55:18Z"
+}

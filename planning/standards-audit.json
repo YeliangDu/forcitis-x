@@ -1,0 +1,57 @@
+{
+ "generated_at": "2026-10-20T10:12:40.456946+00:00",
+ "authority": "docs/engineering-standards.md",
+ "summary": {
+  "findings": 6,
+  "open": 2,
+  "resolved": 4,
+  "gaps_remaining": [
+   "ES-11/12/13/14",
+   "ES-18"
+  ]
+ },
+ "findings": [
+  {
+   "id": "ES-01",
+   "area": "replica/packages/section",
+   "verdict": "RESOLVED",
+   "detail": "properties without unit/semantic suffix: ['area', 'cx', 'cy', 'ix', 'iy', 'ixy', 'i1', 'i2', 'wxTop', 'wxBottom', 'wyLeft', 'wyRight', 'wMin', 'rx', 'ry', 'minX', 'maxX', 'minY', 'maxY', 'perimeter', 'boundingWidth', 'boundingHeight']",
+   "action": "已重命名为带单位后缀（areaMm2/ixMm4/wxTopMm3/principalAngleRad…）；tsc+9 单测+PoC 运行器+对照脚本全部通过"
+  },
+  {
+   "id": "ES-05",
+   "area": "scripts/**",
+   "verdict": "MITIGATED",
+   "detail": "76 取证/适配脚本未标注 T2/T3 层（旧名散落）: ['scripts/analyze-cwx.py', 'scripts/audit-install-consumer-return.py', 'scripts/audit-ole-bindings.py', 'scripts/b02-act-47.py']",
+   "action": "已建 scripts/README.md 声明 T2/T3 作用域；新增脚本需头部标注层"
+  },
+  {
+   "id": "ES-11/12/13/14",
+   "area": "replica + planning",
+   "verdict": "GAP",
+   "detail": "11 条规范为 PLANNED: ['ES-03', 'ES-11', 'ES-12', 'ES-13', 'ES-14', 'ES-15', 'ES-18', 'ES-19', 'ES-20', 'ES-21', 'ES-22']",
+   "action": "按 poc-mvp-plan 的 PoC/MVP 顺序落地；不阻塞当前 PoC"
+  },
+  {
+   "id": "ES-17",
+   "area": "docs/adr",
+   "verdict": "MITIGATED",
+   "detail": "模板已建；D01–D24 尚未迁成 ADR 文件",
+   "action": "docs/adr/0000-index.md 建立 D01–D24 → ADR 映射（状态 legacy，按需迁移）"
+  },
+  {
+   "id": "ES-18",
+   "area": "repo",
+   "verdict": "GAP",
+   "detail": "仓库尚无任何提交（工作树全为未跟踪）",
+   "action": "需用户授权后才能 git init/commit；未授权前记为偏差"
+  },
+  {
+   "id": "ES-02/10/16",
+   "area": "replica",
+   "verdict": "PASS",
+   "detail": "check-standards.py 已机器判定",
+   "action": "—"
+  }
+ ]
+}

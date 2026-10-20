@@ -1,0 +1,1323 @@
+{
+ "status": "PARTIAL",
+ "inventory_complete": false,
+ "policy": "原名与证据先行；**旧产品名不得进入新系统，旧的不规范命名必须规范化**（D23）。T0 新系统表面积只允许标准名；T2 适配层允许旧名但须集中并登记；T3 证据保留原名。",
+ "updated_at": "2026-10-20T10:10:45.765905+00:00",
+ "required_fields": [
+  "id",
+  "original_name",
+  "kind",
+  "locations",
+  "evidence_type",
+  "evidence",
+  "confirmed_meaning",
+  "unknowns",
+  "aliases",
+  "compatibility",
+  "candidate_name",
+  "decision_status"
+ ],
+ "observations": [
+  {
+   "id": "NAME-000001",
+   "original_name": "HWKUtilRibbon24",
+   "kind": "managed_assembly_identity",
+   "locations": [
+    "evidence/baseline/extracted/cab/_03EE5352573B4EDD87D133F0DCC640EB"
+   ],
+   "evidence_type": "STATIC_PACKAGE",
+   "evidence": [
+    "evidence/scheduler/setup/rea-upgrade/managed-smoke-6.7.0.json"
+   ],
+   "evidence_id": "ev_4da88dc45afb65cd6307a8fbfb8102a07fa4b428eadff2acc0e2af538ef6bf92",
+   "source_sha256": "d1607c2368b017f177d619c2e4378a775c12b7a7a4d688bd66ea12321ea36c9f",
+   "confirmed_meaning": "该PE的Assembly表声明名称为HWKUtilRibbon24，版本1.0.0.0。",
+   "unknowns": [
+    "业务职责、实际宿主、运行时是否加载尚未证明。",
+    "名称中的缩写与数字含义未确认。"
+   ],
+   "aliases": [],
+   "compatibility": "程序集身份与引用属于兼容性核查对象；当前不改名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000002",
+   "original_name": "System.Runtime.Versioning.TargetFrameworkAttribute",
+   "kind": "code_type_identifier",
+   "locations": [
+    "evidence/baseline/b01/clr-independent/audit.json (11 assembly-level attributes; type_ref_offset/constructor_offset/blob_offset)"
+   ],
+   "evidence_type": "STATIC_PACKAGE",
+   "evidence": [
+    "evidence/baseline/b01/clr-independent/audit.json",
+    "scripts/audit-clr-tables.py",
+    "evidence/scheduler-reviews/20261018T094300Z/source-audit.json"
+   ],
+   "confirmed_meaning": "11个程序集级属性的构造器MemberRef关联到此TypeRef，签名instance void(string)，blob含目标框架字符串。",
+   "unknowns": [
+    "运行类型解析与属性构造器实现未验证；不证明产品整体先决条件。"
+   ],
+   "aliases": [],
+   "compatibility": "保留元数据类型原名和属性blob；不改名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "11个属性静态类型/构造器/blob关联；运行解析仍未知",
+    "evidence": "evidence/scheduler-reviews/20261018T094300Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000003",
+   "original_name": "ProductVersion",
+   "kind": "installer_property_identifier",
+   "locations": [
+    "!Property: key@10/value@104; string IDs2602/2601"
+   ],
+   "evidence_type": "STATIC_PACKAGE",
+   "evidence": [
+    "evidence/baseline/b01/msi-independent/audit.json",
+    "evidence/baseline/b01/msi-independent/findings.md",
+    "evidence/stages/B01/B01-01/work-package.json"
+   ],
+   "confirmed_meaning": "Property表中原文值为05.45.1211。",
+   "unknowns": [
+    "与PE版本及目录标签差异原因、安装后显示值未知。"
+   ],
+   "aliases": [],
+   "compatibility": "保留安装协议/动作目标原名；不是新领域或UI标准名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "仅静态表声明及源字节；运行含义未知",
+    "evidence": "evidence/scheduler-reviews/20261018T095000Z/source-audit.json"
+   },
+   "version_reconciliation": "HWK-000021：目录标签5.4.25.1220、Property原文05.45.1211、XWall.exe MSI File.Version与PE字符串5.4.25.1209分别保留；差异原因与运行显示未知。",
+   "version_baseline_independent_review": {
+    "status": "PASS",
+    "scope": "B01-01 hash-locked static version identity only; difference causes UNKNOWN; runtime NOT_RUN",
+    "evidence": "evidence/scheduler-reviews/20261018T112200Z/review.md"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000004",
+   "original_name": "HWKInstallDo",
+   "kind": "installer_custom_action_target",
+   "locations": [
+    "!CustomAction Target@54; string ID644",
+    "OLE stream Binary._950D65EFBB35883F6303400413517E47"
+   ],
+   "evidence_type": "STATIC_PACKAGE",
+   "evidence": [
+    "evidence/baseline/b01/msi-independent/audit.json",
+    "evidence/baseline/b01/msi-independent/findings.md",
+    "evidence/baseline/b01/ole-bindings/audit.json",
+    "evidence/scheduler-reviews/20261018T100100Z/source-audit.json"
+   ],
+   "confirmed_meaning": "CustomAction表Target列首行声明此原名。 HWK-000007直接OLE字节核对Source键绑定Binary._950D65EFBB35883F6303400413517E47；仅静态绑定，已由HWK-000007独立源字节审核。",
+   "unknowns": [
+    "实际控制流、副作用、返回值与业务含义尚未验证。"
+   ],
+   "aliases": [],
+   "compatibility": "保留安装协议/动作目标原名；不是新领域或UI标准名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "仅静态表声明及源字节；运行含义未知",
+    "evidence": "evidence/scheduler-reviews/20261018T095000Z/source-audit.json"
+   },
+   "binding_independent_review": {
+    "status": "PASS",
+    "scope": "仅Binary键/源流/哈希静态关联；非实际导出调用",
+    "evidence": "evidence/scheduler-reviews/20261018T100100Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000005",
+   "original_name": "CheckFX",
+   "kind": "installer_custom_action_target",
+   "locations": [
+    "!CustomAction Target@62; string ID2576",
+    "OLE stream Binary.MSVBDPCADLL"
+   ],
+   "evidence_type": "STATIC_PACKAGE",
+   "evidence": [
+    "evidence/baseline/b01/msi-independent/audit.json",
+    "evidence/baseline/b01/msi-independent/findings.md",
+    "evidence/baseline/b01/ole-bindings/audit.json",
+    "evidence/scheduler-reviews/20261018T100100Z/source-audit.json"
+   ],
+   "confirmed_meaning": "CustomAction中DIRCA_CheckFX的Target原名。 HWK-000007直接OLE字节核对Source键绑定Binary.MSVBDPCADLL；仅静态绑定，已由HWK-000007独立源字节审核。",
+   "unknowns": [
+    "FX缩写含义和实际检查条件不由名称推断。"
+   ],
+   "aliases": [],
+   "compatibility": "保留安装协议/动作目标原名；不是新领域或UI标准名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "仅静态表声明及源字节；运行含义未知",
+    "evidence": "evidence/scheduler-reviews/20261018T095000Z/source-audit.json"
+   },
+   "binding_independent_review": {
+    "status": "PASS",
+    "scope": "仅Binary键/源流/哈希静态关联；非实际导出调用",
+    "evidence": "evidence/scheduler-reviews/20261018T100100Z/source-audit.json"
+   },
+   "resource_export_independent_review": {
+    "status": "PASS",
+    "scope": "仅源字节资源/导出；名称含义与运行行为保持未知",
+    "evidence": "evidence/scheduler-reviews/20261018T101500Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000006",
+   "original_name": "VsdLaunchConditions",
+   "kind": "installer_custom_action_target",
+   "locations": [
+    "!CustomAction: VSDCA_VsdLaunchConditions Target",
+    "OLE stream Binary.MSVBDPCADLL"
+   ],
+   "evidence_type": "INDEPENDENT_STATIC_SOURCE_BYTES",
+   "evidence": [
+    "evidence/scheduler-reviews/20261018T100100Z/source-audit.json"
+   ],
+   "confirmed_meaning": "动作Target原名，经Source键MSVBDPCADLL关联到同名Binary流；与CheckFX使用相同载荷哈希。",
+   "unknowns": [
+    "实际检查内容、导出分派、运行返回值及副作用未验证；不从名称推断条件。"
+   ],
+   "aliases": [],
+   "compatibility": "保留安装协议/代码目标原名；不认定为领域业务名或UI名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "resource_export_independent_review": {
+    "status": "PASS",
+    "scope": "仅源字节资源/导出；名称含义与运行行为保持未知",
+    "evidence": "evidence/scheduler-reviews/20261018T101500Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000007",
+   "original_name": "VSDFXAvailable",
+   "kind": "installer_protocol_identifier",
+   "locations": [
+    "MSI !_VsdLaunchCondition.Condition"
+   ],
+   "evidence_type": "INDEPENDENT_STATIC_SOURCE_BYTES",
+   "evidence": [
+    "evidence/baseline/b01/launch-search/audit.json",
+    "evidence/scheduler-reviews/20261018T101000Z/source-audit.json"
+   ],
+   "confirmed_meaning": "_VsdLaunchCondition唯一行的Condition原文；不是已测框架版本要求",
+   "unknowns": [
+    "运行赋值、解析与业务含义未知；未执行原版"
+   ],
+   "aliases": [],
+   "compatibility": "保留协议名，不改名；不是领域业务名或UI标准名",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000008",
+   "original_name": "FILEEXISTSHWUTILINI",
+   "kind": "installer_protocol_identifier",
+   "locations": [
+    "MSI !AppSearch.Property → !Signature / !DrLocator"
+   ],
+   "evidence_type": "INDEPENDENT_STATIC_SOURCE_BYTES",
+   "evidence": [
+    "evidence/baseline/b01/launch-search/audit.json",
+    "evidence/scheduler-reviews/20261018T101000Z/source-audit.json"
+   ],
+   "confirmed_meaning": "AppSearch Property原名，关联HWUTIL.INI|HWUtil.ini签名与目录定位声明",
+   "unknowns": [
+    "运行赋值、解析与业务含义未知；未执行原版"
+   ],
+   "aliases": [],
+   "compatibility": "保留协议名，不改名；不是领域业务名或UI标准名",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000009",
+   "original_name": "DPCA.DLL",
+   "kind": "version_resource_original_filename",
+   "locations": [
+    "Binary.MSVBDPCADLL RT_VERSION/name1/lang1033 OriginalFilename"
+   ],
+   "evidence_type": "STATIC_SOURCE_BYTES",
+   "evidence": [
+    "evidence/baseline/b01/installer-resources/decoded.json"
+   ],
+   "confirmed_meaning": "版本资源OriginalFilename声明；InternalName为CustomActions，导出DLL名CustomActions.dll，MSI Binary键为MSVBDPCADLL。",
+   "unknowns": [
+    "实际安装文件名、缩写含义及运行用途未知；不从名称推断。"
+   ],
+   "aliases": [],
+   "compatibility": "分别保留资源名、导出名和MSI键，非标准业务名称。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "resource_export_independent_review": {
+    "status": "PASS",
+    "scope": "仅源字节资源/导出；名称含义与运行行为保持未知",
+    "evidence": "evidence/scheduler-reviews/20261018T101500Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000010",
+   "original_name": "VSDFrameworkVersion",
+   "kind": "installer_protocol_identifier",
+   "locations": [
+    "MSI !Property",
+    "Binary.MSVBDPCADLL UTF-16LE literal / push immediate operand"
+   ],
+   "evidence_type": "ORDINARY_STATIC_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+   "evidence": [
+    "evidence/baseline/b01/framework-static/audit.json"
+   ],
+   "confirmed_meaning": "MSI原文值为ANY；存在同名字面值地址的静态push指令，非已证实API参数。",
+   "unknowns": [
+    "实际读取、赋值、分支及框架要求未知；有限静态关联已独立核对。"
+   ],
+   "aliases": [],
+   "compatibility": "保留MSI协议与代码字面原名；非标准领域/UI名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "framework_static_independent_review": {
+    "status": "PASS",
+    "scope": "源Property字面与操作数静态关联；实际语义未知",
+    "evidence": "evidence/scheduler-reviews/20261018T102100Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000011",
+   "original_name": "VSDAllowLaterFrameworkVersions",
+   "kind": "installer_protocol_identifier",
+   "locations": [
+    "MSI !Property",
+    "Binary.MSVBDPCADLL UTF-16LE literal / push immediate operand"
+   ],
+   "evidence_type": "ORDINARY_STATIC_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+   "evidence": [
+    "evidence/baseline/b01/framework-static/audit.json"
+   ],
+   "confirmed_meaning": "MSI原文值为False；存在同名字面值地址的静态push指令，非已证实API参数。",
+   "unknowns": [
+    "实际读取、赋值、分支及框架要求未知；有限静态关联已独立核对。"
+   ],
+   "aliases": [],
+   "compatibility": "保留MSI协议与代码字面原名；非标准领域/UI名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "framework_static_independent_review": {
+    "status": "PASS",
+    "scope": "源Property字面与操作数静态关联；实际语义未知",
+    "evidence": "evidence/scheduler-reviews/20261018T102100Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000012",
+   "original_name": "GetEnvironmentVariableW",
+   "kind": "native_import_identifier",
+   "locations": [
+    "Binary.MSVBDPCADLL ordinary IAT VA 0x10046060; write candidate for slot VA 0x10043884"
+   ],
+   "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+   "evidence": [
+    "evidence/baseline/b01/framework-slot/audit.json",
+    "evidence/baseline/b01/framework-slot/findings.md"
+   ],
+   "source_sha256": "83e33f07f0a0ef4ef54c32ece108a932a93567fb4699692e375026170b8f87c4",
+   "confirmed_meaning": "普通导入表声明KERNEL32.dll的该名称；槽位初始化局部指令有一条从该IAT取值的路径。",
+   "unknowns": [
+    "helper返回值、分支是否执行和运行输入输出未知；另一路候选0x1003be6b语义未知。"
+   ],
+   "aliases": [],
+   "compatibility": "保留导入名及原版ABI；不视为新接口设计。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "restricted static source bytes and declarations; runtime NOT_RUN",
+    "evidence": "evidence/scheduler-reviews/20261018T102700Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000013",
+   "original_name": "VSD_FORCE_ANSI",
+   "kind": "native_ascii_literal",
+   "locations": [
+    "Binary.MSVBDPCADLL VA0x1000b4c4 file0xa8c4; push0x1003b174"
+   ],
+   "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+   "evidence": [
+    "evidence/baseline/b01/framework-helper/audit.json",
+    "evidence/baseline/b01/framework-helper/findings.md"
+   ],
+   "confirmed_meaning": "NUL终止ASCII字面值指针被局部指令作为GetEnvironmentVariableA导入调用的参数；不是框架版本声明。",
+   "unknowns": [
+    "环境实际值、API实际返回及安装先决条件未知。"
+   ],
+   "aliases": [],
+   "compatibility": "保留原字面值；无新持久化或UI命名决定。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "restricted static source bytes; runtime NOT_RUN",
+    "evidence": "evidence/scheduler-reviews/20261018T103200Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000014",
+   "original_name": "GetLastError",
+   "kind": "native_import_name",
+   "locations": [
+    "Binary.MSVBDPCADLL IAT0x10046134; calls0x1003b9b4/0x1003ba3c/0x1003bac1"
+   ],
+   "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+   "evidence": [
+    "evidence/baseline/b01/framework-conversion/audit.json",
+    "evidence/baseline/b01/framework-conversion/findings.md"
+   ],
+   "confirmed_meaning": "三个窗口内FF15调用的地址操作数关联KERNEL32.dll该普通导入声明。",
+   "unknowns": [
+    "实际绑定、错误值、调用是否执行及完整错误契约未知。"
+   ],
+   "aliases": [],
+   "compatibility": "保留原导入名与ABI，不推导新接口或业务名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "restricted static source bytes; runtime NOT_RUN",
+    "evidence": "evidence/scheduler-reviews/20261018T103900Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000015",
+   "original_name": "MultiByteToWideChar / WideCharToMultiByte",
+   "kind": "native_import_names",
+   "locations": [
+    "Binary.MSVBDPCADLL calls0x1003b2d6/0x1003b699 IAT0x10046108/0x10046104"
+   ],
+   "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+   "evidence": [
+    "evidence/baseline/b01/framework-dispatch/audit.json",
+    "evidence/baseline/b01/framework-dispatch/findings.md"
+   ],
+   "confirmed_meaning": "两个FF15地址操作数分别关联KERNEL32.dll普通导入声明；不是运行观察。",
+   "unknowns": [
+    "实际绑定、输入编码和缓冲区契约、返回与完整异常路径未知。"
+   ],
+   "aliases": [],
+   "compatibility": "保留原导入与ABI，不确定新接口或业务命名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "restricted static source bytes; shared Apple objdump; runtime NOT_RUN",
+    "evidence": "evidence/scheduler-reviews/20261018T104400Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000016",
+   "original_name": "GetLastError / SetLastError",
+   "kind": "native_import_names",
+   "locations": [
+    "Binary.MSVBDPCADLL calls0x1003b1e0/0x1003b24a IAT0x10046134/0x1004617c"
+   ],
+   "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+   "evidence": [
+    "evidence/baseline/b01/framework-error-state/audit.json",
+    "evidence/baseline/b01/framework-error-state/findings.md"
+   ],
+   "confirmed_meaning": "两个窗口FF15操作数关联KERNEL32.dll普通导入声明；偏移+4写入与条件读取是静态指令观察。",
+   "unknowns": [
+    "对象名称、实际错误值、执行路径与完整异常契约未知。"
+   ],
+   "aliases": [],
+   "compatibility": "保留导入名及ABI；不命名未知对象或更改接口。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "status": "PARTIAL",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "restricted source bytes; shared Apple objdump; runtime NOT_RUN",
+    "evidence": "evidence/scheduler-reviews/20261018T104900Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000017",
+   "original_name": "MSVCP140.dll / VCRUNTIME140.dll",
+   "kind": "native_import_names",
+   "locations": [
+    "dependencies/inventory.json: XWall.exe imports"
+   ],
+   "evidence_type": "RETAINED_STATIC_EVIDENCE_JOIN",
+   "evidence": [
+    "evidence/baseline/b01/runtime-readiness/summary.json",
+    "evidence/baseline/b01/dependencies/inventory.json"
+   ],
+   "confirmed_meaning": "XWall.exe普通导入表中的库名，关联矩阵保留原拼写与包内同名候选。",
+   "unknowns": [
+    "实际加载路径、库版本、导出与运行库发行包要求未核验。"
+   ],
+   "aliases": [],
+   "compatibility": "保留原DLL名和ABI，不能将basename候选当作实际依赖解析。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "status": "PARTIAL",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "retained static JSON join only; runtime NOT_RUN; zero cross-format candidates observed",
+    "evidence": "evidence/scheduler-reviews/20261018T105500Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000018",
+   "original_name": "VSDFrameworkVersion / VSDAllowLaterFrameworkVersions / VSDFXAvailable",
+   "kind": "installer_property_names",
+   "locations": [
+    "Binary.MSVBDPCADLL 0x10011476/0x10011d63/0x10012246",
+    "MSI Property"
+   ],
+   "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+   "evidence": [
+    "evidence/baseline/b01/framework-properties/audit.json",
+    "evidence/baseline/b01/framework-properties/flow-gaps.json"
+   ],
+   "confirmed_meaning": "三个原名参与两个本地helper的参数流；false与TRUE为独立实读字面值。",
+   "unknowns": [
+    "比较大小写、属性运行值、准确版本要求与完整路径未知。"
+   ],
+   "aliases": [],
+   "compatibility": "保留原名、大小写及MSI协议，不覆盖标准名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "status": "PARTIAL",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "restricted source bytes; shared Apple objdump; runtime NOT_RUN",
+    "evidence": "evidence/scheduler-reviews/20261018T110100Z/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000019",
+   "original_name": "XWALL.CAB / Binary._950D65EFBB35883F6303400413517E47 / HWKInstallDo",
+   "kind": "package_and_installer_protocol_names",
+   "locations": [
+    "MSI Media.Cabinet",
+    "MSI Binary.Name",
+    "MSI CustomAction.Target"
+   ],
+   "evidence_type": "STATIC_PACKAGE_RECONCILIATION",
+   "evidence": [
+    "evidence/stages/B01/B01-02/work-package.json",
+    "evidence/baseline/b01/ole-bindings/audit.json"
+   ],
+   "confirmed_meaning": "XWALL.CAB是Media声明的外部柜名；Binary流通过Source关联HWKInstallDo，名称与哈希分别保留。",
+   "unknowns": [
+    "安装动作真实效果、返回值和运行绑定未验证。"
+   ],
+   "aliases": [],
+   "compatibility": "保留包名、流名及导出名；不按缩写推断业务含义。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "status": "PARTIAL",
+   "independent_review": {
+    "status": "PARTIAL",
+    "source": "evidence/scheduler-reviews/20261018T113100Z/review.md",
+    "scope": "Main MSI/CAB static inventory corroborated; nested bundled SQL/VC payload inventory absent; runtime NOT_RUN"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000020",
+   "original_name": "Microsoft SQL Server 2012 Express LocalDB ",
+   "kind": "installer_product_identity",
+   "locations": [
+    "evidence/stages/B01/B01-02/attempt-25/work/SqlLocalDB2012_x64_WithNCLI/x64/sqllocaldb.msi"
+   ],
+   "evidence_type": "STATIC_MSI_DECLARATION",
+   "evidence": [
+    "evidence/stages/B01/B01-02/attempt-25/package-0.tables.json",
+    "evidence/stages/B01/B01-02/attempt-25/inventory.json"
+   ],
+   "confirmed_meaning": "MSI Property.ProductName原文；ProductVersion=11.4.7001.0",
+   "unknowns": [
+    "实际安装选择、运行绑定与产品业务用途未验证"
+   ],
+   "aliases": [],
+   "compatibility": "安装身份与文件名保留；不据此改名或选择架构",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "independent_review": {
+    "status": "PARTIAL",
+    "evidence": [
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/review.md",
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/source-audit.json"
+    ],
+    "scope": "源库存/映射与名称来源关联复核；不证明运行身份或业务含义"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000021",
+   "original_name": "Microsoft SQL Server 2012 Native Client ",
+   "kind": "installer_product_identity",
+   "locations": [
+    "evidence/stages/B01/B01-02/attempt-25/work/SqlLocalDB2012_x64_WithNCLI/x64/sqlncli.msi"
+   ],
+   "evidence_type": "STATIC_MSI_DECLARATION",
+   "evidence": [
+    "evidence/stages/B01/B01-02/attempt-25/package-1.tables.json",
+    "evidence/stages/B01/B01-02/attempt-25/inventory.json"
+   ],
+   "confirmed_meaning": "MSI Property.ProductName原文；ProductVersion=11.4.7001.0",
+   "unknowns": [
+    "实际安装选择、运行绑定与产品业务用途未验证"
+   ],
+   "aliases": [],
+   "compatibility": "安装身份与文件名保留；不据此改名或选择架构",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "independent_review": {
+    "status": "PARTIAL",
+    "evidence": [
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/review.md",
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/source-audit.json"
+    ],
+    "scope": "源库存/映射与名称来源关联复核；不证明运行身份或业务含义"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000022",
+   "original_name": "Microsoft Visual C++ 2017 X64 Minimum Runtime - 14.16.27033",
+   "kind": "installer_product_identity",
+   "locations": [
+    "evidence/stages/B01/B01-02/attempt-25/package-2/overlay-439168.cab.members/a8"
+   ],
+   "evidence_type": "STATIC_MSI_DECLARATION",
+   "evidence": [
+    "evidence/stages/B01/B01-02/attempt-25/package-2/overlay-439168.cab.members/a8.members.tables.json",
+    "evidence/stages/B01/B01-02/attempt-25/inventory.json"
+   ],
+   "confirmed_meaning": "MSI Property.ProductName原文；ProductVersion=14.16.27033",
+   "unknowns": [
+    "实际安装选择、运行绑定与产品业务用途未验证"
+   ],
+   "aliases": [],
+   "compatibility": "安装身份与文件名保留；不据此改名或选择架构",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "independent_review": {
+    "status": "PARTIAL",
+    "evidence": [
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/review.md",
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/source-audit.json"
+    ],
+    "scope": "源库存/映射与名称来源关联复核；不证明运行身份或业务含义"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000023",
+   "original_name": "Microsoft Visual C++ 2017 X64 Additional Runtime - 14.16.27033",
+   "kind": "installer_product_identity",
+   "locations": [
+    "evidence/stages/B01/B01-02/attempt-25/package-2/overlay-439168.cab.members/a9"
+   ],
+   "evidence_type": "STATIC_MSI_DECLARATION",
+   "evidence": [
+    "evidence/stages/B01/B01-02/attempt-25/package-2/overlay-439168.cab.members/a9.members.tables.json",
+    "evidence/stages/B01/B01-02/attempt-25/inventory.json"
+   ],
+   "confirmed_meaning": "MSI Property.ProductName原文；ProductVersion=14.16.27033",
+   "unknowns": [
+    "实际安装选择、运行绑定与产品业务用途未验证"
+   ],
+   "aliases": [],
+   "compatibility": "安装身份与文件名保留；不据此改名或选择架构",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "independent_review": {
+    "status": "PARTIAL",
+    "evidence": [
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/review.md",
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/source-audit.json"
+    ],
+    "scope": "源库存/映射与名称来源关联复核；不证明运行身份或业务含义"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000024",
+   "original_name": "Microsoft Visual C++ 2017 X86 Minimum Runtime - 14.16.27033",
+   "kind": "installer_product_identity",
+   "locations": [
+    "evidence/stages/B01/B01-02/attempt-25/package-3/overlay-439136.cab.members/a8"
+   ],
+   "evidence_type": "STATIC_MSI_DECLARATION",
+   "evidence": [
+    "evidence/stages/B01/B01-02/attempt-25/package-3/overlay-439136.cab.members/a8.members.tables.json",
+    "evidence/stages/B01/B01-02/attempt-25/inventory.json"
+   ],
+   "confirmed_meaning": "MSI Property.ProductName原文；ProductVersion=14.16.27033",
+   "unknowns": [
+    "实际安装选择、运行绑定与产品业务用途未验证"
+   ],
+   "aliases": [],
+   "compatibility": "安装身份与文件名保留；不据此改名或选择架构",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "independent_review": {
+    "status": "PARTIAL",
+    "evidence": [
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/review.md",
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/source-audit.json"
+    ],
+    "scope": "源库存/映射与名称来源关联复核；不证明运行身份或业务含义"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-000025",
+   "original_name": "Microsoft Visual C++ 2017 X86 Additional Runtime - 14.16.27033",
+   "kind": "installer_product_identity",
+   "locations": [
+    "evidence/stages/B01/B01-02/attempt-25/package-3/overlay-439136.cab.members/a9"
+   ],
+   "evidence_type": "STATIC_MSI_DECLARATION",
+   "evidence": [
+    "evidence/stages/B01/B01-02/attempt-25/package-3/overlay-439136.cab.members/a9.members.tables.json",
+    "evidence/stages/B01/B01-02/attempt-25/inventory.json"
+   ],
+   "confirmed_meaning": "MSI Property.ProductName原文；ProductVersion=14.16.27033",
+   "unknowns": [
+    "实际安装选择、运行绑定与产品业务用途未验证"
+   ],
+   "aliases": [],
+   "compatibility": "安装身份与文件名保留；不据此改名或选择架构",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "independent_review": {
+    "status": "PARTIAL",
+    "evidence": [
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/review.md",
+     "evidence/scheduler-reviews/20261018T121000Z-B01-02/source-audit.json"
+    ],
+    "scope": "源库存/映射与名称来源关联复核；不证明运行身份或业务含义"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-B01-03-CALLBACK-124BF",
+   "original_name": "CheckFX+0x1166 (objdump nearest-export label)",
+   "kind": "code_identifier_disassembler_label",
+   "locations": [
+    "Binary.MSVBDPCADLL VA0x100124bf",
+    "VsdLaunchConditions VA0x10016d38"
+   ],
+   "evidence_type": "STATIC_SOURCE_BYTES_AND_RETAINED_DISASSEMBLY",
+   "evidence": [
+    "evidence/stages/B01/B01-03/control-flow.json"
+   ],
+   "confirmed_meaning": "0x10016d38将0x100124bf作为立即数push，随后调用0x100379dc；静态回调角色候选。",
+   "unknowns": [
+    "是否及如何实际调用；不能因最近导出标签确定归属CheckFX"
+   ],
+   "aliases": [],
+   "compatibility": "不是新增业务名或文件协议名；保留原标签及地址，不改原接口。",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "independent_review": {
+    "status": "PARTIAL",
+    "evidence": [
+     "evidence/scheduler-reviews/20261018T125000Z-B01-03/source-audit.json",
+     "evidence/scheduler-reviews/20261018T125000Z-B01-03/review.md"
+    ],
+    "scope": "回调地址push及后续相对call源字节已独立核对；实际调度/函数归属未知"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-HWK000030-ORD47",
+   "original_name": "msi.dll ordinal 47",
+   "kind": "import_protocol_identifier",
+   "locations": [
+    "MSVBDPCADLL IAT 0x10046268; thunk 0x1003c779"
+   ],
+   "evidence_type": "STATIC_SOURCE_BYTES",
+   "evidence": [
+    "evidence/stages/B01/B01-03/attempt-30/consumer-return.json"
+   ],
+   "confirmed_meaning": "PE导入表声明ordinal47，条件回调通过跳板引用；API名未知。",
+   "unknowns": [
+    "API语义、宿主实际导出/加载和异常结果未知"
+   ],
+   "aliases": [],
+   "compatibility": "保留DLL与ordinal身份，不以猜测API名改写接口。",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "independent_review": {
+    "status": "PASS",
+    "scope": "local source-byte/import identity only; package BLOCKED, runtime NOT_RUN",
+    "evidence": "evidence/scheduler-reviews/20261018T131000Z-B01-03/source-audit.json"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-RUNTIME-20261018-XWALL",
+   "original_name": "XWall.exe",
+   "kind": "installed_executable_and_ui_name",
+   "locations": [
+    "C:\\Program Files\\HWKSoft\\XWallClient\\XWall.exe",
+    "C:\\hwk-modern\\run-20261018\\client\\XWall.exe"
+   ],
+   "evidence_type": "ORIGINAL_WINDOWS_RUNTIME_OBSERVATION",
+   "evidence": [
+    "evidence/runtime/ecs-20261018/summary.json",
+    "evidence/runtime/workflow-reset/summary.json"
+   ],
+   "confirmed_meaning": "现成安装与本轮隔离执行的XWall可执行文件，SHA256均与冻结MSI载荷一致；本轮UI启动和真实文件对话框操作已观察。",
+   "unknowns": [
+    "完整工程对象语义、许可/服务端认证、计算与报告/文件往返未验收"
+   ],
+   "aliases": [],
+   "compatibility": "保留原文件名、工程扩展名和资源版本；不由启动推断业务范围。",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-HWK-000037",
+   "original_name": "门窗计算示例1.cwx",
+   "kind": "sample_file_name",
+   "locations": [
+    "[TARGETDIR]/XWallClient/示例/门窗计算示例1.cwx"
+   ],
+   "evidence_type": "LOCAL_FROZEN_INPUT_RECHECK",
+   "evidence": [
+    "evidence/stages/B02/B02-01/local-bindings.json",
+    "evidence/scheduler-reviews/HWK-000037-B02-01/bindings.stdout",
+    "evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/stderr"
+   ],
+   "confirmed_meaning": "Frozen package sample filename and payload hash; matches historical remote record.",
+   "unknowns": [
+    "Engineering object semantics and numerical contents not verified this round."
+   ],
+   "aliases": [],
+   "compatibility": "Preserve original filename and bytes; sample-working.cwx is only a proposed isolated copy name.",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-HWK-000041",
+   "original_name": "v11.0",
+   "kind": "database_instance_name",
+   "locations": [
+    "SqlLocalDB.exe info",
+    "Administrator session 4"
+   ],
+   "evidence_type": "LIVE_REMOTE_ENVIRONMENT",
+   "evidence": [
+    "evidence/stages/B02/B02-01/attempt-41/environment-final/stdout",
+    "evidence/stages/B02/B02-01/attempt-41/localdb-encoding-probe/stdout"
+   ],
+   "confirmed_meaning": "Existing LocalDB instance name returned by installed SqlLocalDB utility; sqlservr process observed separately.",
+   "unknowns": [
+    "Application actually selected database and SQL queries not verified"
+   ],
+   "aliases": [],
+   "compatibility": "Preserve instance name as observed; no database or server configuration changes.",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS_ENVIRONMENT_ONLY",
+    "evidence": "evidence/scheduler-reviews/HWK-000041-B02-01/review.md",
+    "unknown": "Application binding, license, numerical branches NOT_RUN"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-HWK-000042-UI",
+   "original_name": "工程控制 / 属性编辑 / 门窗立挺 / 门窗横挺 / 门窗锁点强度计算 / 门窗连接计算",
+   "kind": "ui_display_labels",
+   "locations": [
+    "XWall PID60096 session4 sample-working.cwx project tree and panels"
+   ],
+   "evidence_type": "LIVE_REMOTE_UI_SCREENSHOT_AND_UIA",
+   "evidence": [
+    "evidence/stages/B02/B02-02/attempt-42/desktop-visible.png",
+    "evidence/stages/B02/B02-02/attempt-42/ui-visible.json"
+   ],
+   "confirmed_meaning": "截图显示这些中文标签；UIA独立返回工程控制与属性编辑窗格名称。仅为UI显示名，不推断代码标识或完整功能范围。",
+   "unknowns": [
+    "菜单/树节点对应业务算法、许可与持久化字段未验证"
+   ],
+   "aliases": [],
+   "compatibility": "保留原UI显示名；不改工程文件或协议名称。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS_OBSERVATION_ONLY",
+    "evidence": "evidence/scheduler-reviews/HWK-000042-B02-02/review.md",
+    "live_evidence": "evidence/scheduler-reviews/HWK-000042-B02-02/remote-short.stdout",
+    "boundary": "既有UI/进程/端点与哈希切片；许可及新启动NOT_RUN，不证明算法或目标架构"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-HWK-000043-ABOUT",
+   "original_name": "关于 XWall / 软件文档模型内部版本号 / 当前工程文件模型内部版本号 / 服务到期日",
+   "kind": "ui_display_labels",
+   "locations": [
+    "PID60096 session4 About dialog"
+   ],
+   "evidence_type": "LIVE_REMOTE_UI_SCREENSHOT",
+   "evidence": [
+    "evidence/stages/B02/B02-02/attempt-43/about-open.png"
+   ],
+   "confirmed_meaning": "Original About labels and displayed model versions/service expiry; UI observation only.",
+   "unknowns": [
+    "Expiry enforcement and actual license capability unknown; model schema meanings unknown"
+   ],
+   "aliases": [],
+   "compatibility": "Preserve model version and UI names; no schema rewrite",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "evidence": "evidence/scheduler-reviews/HWK-000043-B02-02/review.md",
+    "raw_ui": "evidence/stages/B02/B02-02/attempt-43/final-read/stdout",
+    "correction": "服务到期日2028年5月17日；最终UI确含文本，执行摘要6月17日误读保留于原件",
+    "boundary": "UI display only; actual license operation NOT_RUN; model schema unknown"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-HWK-000044-SETTINGS",
+   "original_name": "系统设置控制框",
+   "kind": "UI_display_name",
+   "locations": [
+    "设置(S) > 系统设置(T) > 基本设定"
+   ],
+   "evidence_type": "LIVE_REMOTE_UI_SCREENSHOT",
+   "evidence": [
+    "evidence/stages/B02/B02-02/attempt-44/system-open-final.png",
+    "evidence/stages/B02/B02-02/attempt-44/system-open-final.json"
+   ],
+   "confirmed_meaning": "实际打开系统设置窗口；基本设定页显示CAD版本、OFFICE版本、自动刷新、保存时备份、临时文件备份时间间隔及输出小数点位数等。",
+   "unknowns": [
+    "其它页及许可入口未穷尽；不能由此推断许可可用或系统设置完整库存。"
+   ],
+   "aliases": [],
+   "compatibility": "仅UI显示名，未证明持久化字段或外部接口。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "evidence": "evidence/scheduler-reviews/HWK-000044-B02-02/review.md",
+    "status": "PARTIAL",
+    "boundary": "UI observation and read-only source hashes confirmed; license operation and solver NOT_RUN"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-HWK-000045-LOCKPOINT-OUTPUT",
+   "original_name": [
+    "产品结构",
+    "强度计算信息",
+    "门窗锁点强度计算",
+    "窗扇锁点计算总体说明",
+    "计算书输出(B)",
+    "输出设置对话框"
+   ],
+   "kind": "UI_display_name",
+   "locations": [
+    "真实sample-working.cwx产品结构树",
+    "输出(O) > 计算书输出(B)"
+   ],
+   "evidence_type": "LIVE_REMOTE_UI_SCREENSHOT",
+   "evidence": [
+    "evidence/stages/B02/B02-02/attempt-45/expand.png",
+    "evidence/stages/B02/B02-02/attempt-45/lock-strength.png",
+    "evidence/stages/B02/B02-02/attempt-45/report-open.png",
+    "evidence/stages/B02/B02-02/attempt-45/native-controls.json"
+   ],
+   "confirmed_meaning": "树节点显示门窗锁点强度计算；正文为窗扇锁点说明。输出设置实际可达，RTF/DOC及输出控制选项已观测。",
+   "unknowns": [
+    "门窗/窗扇名称边界及持久化字段未知",
+    "正文是否重算、实际求解输入输出/许可门控未知"
+   ],
+   "aliases": [],
+   "compatibility": "UI和业务名原样保留；不推断文件或接口名称。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "evidence": "evidence/scheduler-reviews/HWK-000045-B02-02/review.md",
+    "status": "PARTIAL",
+    "confirmed": "独立查看原始UI截图，直接SSH核对源文件、样例和崩溃日志；显示值不等于新算结果，许可和求解分支仍未知。"
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-STRSCAN-20261018-CALGLASSDISP",
+   "original_name": "CalGlassDisp",
+   "kind": "code_identifier_cxmap_named_entry",
+   "locations": [
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8 (HWKWallUtil.dll) 偏移 0x415680 名字表",
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8 (HWKWallUtil.dll) 偏移 0x4186d8 格式串 CalGlassDisp(%1,%2,%3,%4)",
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8 (HWKWallUtil.dll) 偏移 0x551bb4 RTTI .?AVCalGlassDisp@XYUtil@@",
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8 (HWKWallUtil.dll) 偏移 0x417d30 宽字符串表"
+   ],
+   "evidence_type": "STATIC_SOURCE_BYTES_AND_DECOMPILED_CALLER",
+   "evidence": [
+    "migration_workspace/raw/cxmap-registration-evidence.md",
+    "migration_workspace/raw/InitNewFunction-HWKWallUtil.rea.json",
+    "migration_workspace/raw/string-hits.txt",
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8"
+   ],
+   "source_sha256": "efefcabbc3c374636d4a55753acc58d0ba744cad1fc73fabad69d5627a5d1da6",
+   "confirmed_meaning": "HWKWallUtil.dll 内由 `FUN_1802d8960`（0x1802d8960–0x1802e4330，11120 条指令）批量登记的命名计算映射条目之一：该函数在 0x1802d9f38 处 `lea %rdx, \"CalGlassDisp\"`，随后调用导入的 `HWKSciCal.dll!?setName@CXMap@XYUtil@@QEAAXAEBVString@2@_NPEAV?$CXDict@VCXMap@XYUtil@@@2@@Z`（XYUtil::CXMap::setName(const String&, bool, CXDict<CXMap>*)），字符串经 `HWKUtil.dll!??0String@XYUtil@@QEAA@PEBD@Z` 由窄串构造。同一批登记覆盖 310 个不同名字串，包括 CalGlassDisp/CalGlassPSDisp/GetKuz/GetKuzcal/IsKuzTruncHigh。该 DLL 的 748 个导出（nname=nfun=解析数=748）中没有任何名字含 CalGlass，故它不是导出函数。",
+   "unknowns": [
+    "先前假设「解释器注册函数名」已被 setName(CXMap) 证据取代；本条目保留该假设的推翻记录，不沿用。",
+    "CalGlassDisp 条目对应的计算体地址、输入端口绑定与 4 个跟踪参数(%1..%4)的物理含义未取得。",
+    "310 是引用计数，不等于业务语义条目数；成组关系（CalGlassStress/CalGlassPSStress/CalGlassPSDisp）是否同属一张表未验证。",
+    "Disp 等缩写的业务含义未知，不做推测性展开。"
+   ],
+   "aliases": [
+    "CalGlassPSDisp（相邻注册名，疑为双面/双侧变体，未证实）"
+   ],
+   "compatibility": "若 .cwx 工程文件保存公式文本，则依赖此可调用标识；替换实现必须保留名字与求值语义，不得改名。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-STRSCAN-20261018-GETKUZ",
+   "original_name": "GetKuz",
+   "kind": "code_identifier_cxmap_named_entry",
+   "locations": [
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8 (HWKWallUtil.dll) 偏移 0x4155a4 与 0x4155b0 名字表",
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8 (HWKWallUtil.dll) 偏移 0x4024a8 格式串 GetKuzcal(%1,%2)",
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8 (HWKWallUtil.dll) 偏移 0x4026d8 格式串 GetKuz('%1',%2)"
+   ],
+   "evidence_type": "STATIC_SOURCE_BYTES_AND_DECOMPILED_CALLER",
+   "evidence": [
+    "migration_workspace/raw/cxmap-registration-evidence.md",
+    "migration_workspace/raw/InitNewFunction-HWKWallUtil.rea.json",
+    "migration_workspace/raw/string-hits.txt",
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8"
+   ],
+   "source_sha256": "efefcabbc3c374636d4a55753acc58d0ba744cad1fc73fabad69d5627a5d1da6",
+   "confirmed_meaning": "同属 `FUN_1802d8960` 的批量 setName 登记：`GetKuz` 在 0x1802d977b、`GetKuzcal` 在 0x1802d9805 处被 `lea %rdx` 传入，`IsKuzTruncHigh` 在 0x1802dfe55。注册 API 为 `HWKSciCal.dll` 的 `XYUtil::CXMap::setName`，不是解释器函数表，也不是导出符号。",
+   "unknowns": [
+    "Kuz 的业务含义与缩写来源未知，禁止按字面猜测。",
+    "跟踪文本 GetKuz('%1',%2)/GetKuzcal(%1,%2) 说明记录 2 个实参，但映射条目的实际输入端口数与类型未取得。",
+    "计算体地址与求值顺序未知。"
+   ],
+   "aliases": [
+    "GetKuzcal（同族，格式串 GetKuzcal(%1,%2)）",
+    "IsKuzTruncHigh（同族，未展开）"
+   ],
+   "compatibility": "公式文本依赖的标识名；改名会破坏既有工程的公式求值。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-STRSCAN-20261018-INITNEWFUNCTION",
+   "original_name": "?InitNewFunction@XYUtil@@YAXPEAVCXInterpreter@1@@Z",
+   "kind": "native_export_symbol",
+   "locations": [
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8 (HWKWallUtil.dll) 导出 0x1802e4330",
+    "evidence/baseline/extracted/cab/_F35DC0979FF04306B20773A25268CC58 (HWKKernal.dll) 导入表名称条目，文件偏移 0x6d23e1"
+   ],
+   "evidence_type": "STATIC_EXPORT_TABLE_AND_DECOMPILED_BODY",
+   "evidence": [
+    "migration_workspace/raw/cxmap-registration-evidence.md",
+    "migration_workspace/raw/InitNewFunction-HWKWallUtil.rea.json",
+    "migration_workspace/raw/string-hits.txt",
+    "evidence/baseline/extracted/cab/_1D7374B2004D4FE39A79BCDFC9340FB8"
+   ],
+   "source_sha256": "efefcabbc3c374636d4a55753acc58d0ba744cad1fc73fabad69d5627a5d1da6",
+   "confirmed_meaning": "HWKWallUtil.dll 导出的自由函数 `XYUtil::InitNewFunction(CXInterpreter*)`（0x1802e4330，返回 void，HWKKernal.dll 侧为导入方）。反编译实测函数体只有 4 步：`_time64(0)` → `FUN_180331af0(时间)` → `XYUtil::CXInterpreter::SwitchDictMap(param_1)` → `FUN_1802d8960(param_1)`。其中 `FUN_1802d8960` 就是批量 `CXMap::setName` 的登记函数（310 个名字串）。evidence_id `ev_45106813aaaaf5d4f37a8edfdd5dfa6b312fe0256f60ca6077a782a1ebea891f`。",
+   "unknowns": [
+    "`_time64` 播种的用途与影响（是否引入与时间相关的非确定性结果）未验证；不得据此断言计算不可复现。",
+    "`CXInterpreter::SwitchDictMap` 的字典切换语义与失败分支未知。",
+    "调用时机（工程加载/新建/切换模块）与实际调用次数未知。"
+   ],
+   "aliases": [],
+   "compatibility": "跨 DLL 的注册入口 ABI；名称与 CXInterpreter* 形参类型若变，插件与内核需同步修改。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-STRSCAN-20261018-INITFUNCTION",
+   "original_name": "InitFunction",
+   "kind": "native_plugin_entry_export",
+   "locations": [
+    "evidence/baseline/extracted/cab/_73B1DFBD13E2497EBB9C0D8524329A54 (WallUtilPlug1.xdl) 唯一导出 InitFunction",
+    "evidence/baseline/extracted/cab/_F35DC0979FF04306B20773A25268CC58 (HWKKernal.dll) 宽字符串 CSupport\\InitFunction*.xdl，文件偏移 0x3a8128"
+   ],
+   "evidence_type": "STATIC_SOURCE_BYTES_AND_EXPORT_IMPORT_TABLES",
+   "evidence": [
+    "migration_workspace/raw/string-hits.txt",
+    "evidence/baseline/extracted/cab/_73B1DFBD13E2497EBB9C0D8524329A54",
+    "evidence/baseline/extracted/cab/_F35DC0979FF04306B20773A25268CC58"
+   ],
+   "source_sha256": "60af5ba6d03446f5a4e5aaad3115b5b7658cd0323948dac0ad7a784fc5c3521b",
+   "confirmed_meaning": ".xdl 后缀的插件 DLL 以 InitFunction 作为入口导出；WallUtilPlug1.xdl 仅有这一个导出。HWKKernal.dll 内存在按 CSupport\\InitFunction*.xdl 匹配的路径串，指示插件目录与发现方式。",
+   "unknowns": [
+    "加载器代码位置、查找顺序、失败回退与卸载行为未验证。",
+    "InitFunction 的形参/返回类型与调用约定未取得（需反编译加载点）。",
+    "是否所有 .xdl 都必须导出该名，以及插件清单是否存在，未知。"
+   ],
+   "aliases": [],
+   "compatibility": "插件 ABI 约定名：自制或替换插件必须保留 InitFunction 导出，否则不会被加载。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-HWK-000046-LOAD-HEIGHT",
+   "original_name": [
+    "荷载计算",
+    "计算处标高",
+    "强度校核位置的结构标高（米）",
+    "风荷载标准值计算",
+    "μz",
+    "βgz",
+    "Wkhn"
+   ],
+   "kind": "UI_DISPLAY_AND_REPORT_VARIABLES",
+   "locations": [
+    "真实门窗样例/强度计算信息/荷载计算/属性编辑/首个标高值",
+    "原版内嵌RichEdit计算输出"
+   ],
+   "evidence_type": "LIVE_REMOTE_UI_TEXT_AND_SCREENSHOT",
+   "evidence": [
+    "evidence/stages/B02/B02-02/attempt-46/height21-corrected.json",
+    "evidence/stages/B02/B02-02/attempt-46/height20-restored.json",
+    "evidence/stages/B02/B02-02/attempt-46/height20-restored.png"
+   ],
+   "confirmed_meaning": "属性行显示计算处标高并以动态帮助注明结构标高（米）；编辑为21m后输出z=21、μz=0.754007、βgz=1.976809，恢复20m后分别为0.737993、1.98735。Wkhn在输出中标注为横梃负风荷载，最小值处理前由-0.768453变为-0.756143kN/m2。",
+   "unknowns": [
+    "首行属性名称在截图列宽中被截断，完整标签需进一步核对；不由缩写扩展",
+    "字段内部标识、文件编码位置及完整规范边界未证实",
+    "许可门控是否在此分支发生未知"
+   ],
+   "aliases": [],
+   "compatibility": "仅记录UI/计算输出原名，不改工程格式或接口。",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "independent_review": {
+    "status": "PASS_OBSERVATION_ONLY",
+    "evidence": "evidence/scheduler-reviews/HWK-000046-B02-02/review.md",
+    "boundary": "Retained original screenshots/text inspected; no new UI replay. License gate, file field and complete property label unknown."
+   },
+   "layer": "T3",
+   "canonical_name": null
+  },
+  {
+   "id": "NAME-LOOKUP-GETSDR",
+   "original_name": "GetSDr",
+   "locations": [
+    "HWKSciCal/HWKWallUtil 注册表 iid 304 (eval 0x1802a0fa0)",
+    "计算模板 43 处 2 参、14 处 3 参、20 处 4 参调用"
+   ],
+   "confirmed_meaning": "挠度系数查表节点：读形参 $0..$3，取 min/max 边长比后按 $2（材料/构件代码）与 $3（支承代码）选一对内嵌轴表并交 FUN_180299d50 插值；argc==2 时默认走 0x180544ba0/0x180544c20 主表，该表在 a/b=1 给出原版计算书打印的 μ=0.00406。$2=1 返回常数 0.013，$2=2 时 ratio 变为 (b/a)×0.5，未命中分支返回 0.0。",
+   "unknowns": [
+    "$2 取值 9/20/[30,40)/42 与 13/14/15 对应的工程含义未证实（只有轴表数值，无规范表号证据）",
+    "$3 除 4（四边）外的取值语义未知",
+    "模板层是否另有代码路径绕过本节点未验证"
+   ],
+   "aliases": [
+    "FUN_1802a0fa0",
+    "iid 304"
+   ],
+   "compatibility": "节点名属计算模板语言标识；改标准名必须同时改 2,079 条模板与 .cwx 内继承串，未做兼容层前不得改名。",
+   "kind": "code_identifier_cxmap_named_entry",
+   "evidence_type": "STATIC_SOURCE_BYTES_AND_DECOMPILED_BODY",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "evidence": [
+    "migration_workspace/raw/nodes/GetSDr.rea.json",
+    "migration_workspace/coefficient-tables.md",
+    "migration_workspace/raw/coefficient-tables.json",
+    "migration_workspace/formulas.json",
+    "evidence/stages/B02/B02-02/attempt-47/acceptance/frozen-report-head.txt"
+   ],
+   "canonical_name": "deflectionCoefficient",
+   "layer": "T2"
+  },
+  {
+   "id": "NAME-LOOKUP-GETSMR",
+   "original_name": "GetSMr",
+   "locations": [
+    "HWKSciCal/HWKWallUtil 注册表 iid 312 (eval 0x1802a2940)",
+    "计算模板 54 处 2 参、18 处 3 参、58 处 4 参调用"
+   ],
+   "confirmed_meaning": "板面跨中弯矩系数查表节点，与 GetSDr 同构：argc==2 或 $2∈{0,9,20,[30,40),42} 走 0x180544a20/0x180544aa0 主表（a/b=1 → m=0.0442，与原版计算书打印一致）；$2∈{1,5,8} 返回常数 0.125；$2=2 时按 $3 是否≈6 在两点支路上再分，ratio 为 $0/($1×0.5)。",
+   "unknowns": [
+    "$2 与 PRJGLASS/LINKNUM/STONECAL 的完整映射（仅 11=ALUS/ALUC/ALHCP 铝板族、0/1/2=PRJGLASS 有调用面证据）",
+    "$3∈{20,25,30} 三个细分表（0x180544300/0x1805442a0/0x180544360 与 0x180545450/0x1805454e0/0x180545570）无原版打印锚点",
+    "$2=2 的 $0/($1×0.5) 与 GetSDr 的 ($1/$0)×0.5 差异是否有意为之未证实"
+   ],
+   "aliases": [
+    "FUN_1802a2940",
+    "iid 312"
+   ],
+   "compatibility": "同 GetSDr：模板语言标识，改名需同步模板与文件内串。",
+   "kind": "code_identifier_cxmap_named_entry",
+   "evidence_type": "STATIC_SOURCE_BYTES_AND_DECOMPILED_BODY",
+   "candidate_name": null,
+   "decision_status": "OBSERVED_ONLY",
+   "evidence": [
+    "migration_workspace/raw/nodes/GetSMr.rea.json",
+    "migration_workspace/coefficient-tables.md",
+    "migration_workspace/raw/coefficient-tables.json",
+    "migration_workspace/formulas.json",
+    "evidence/stages/B02/B02-02/attempt-47/acceptance/frozen-report-head.txt"
+   ],
+   "canonical_name": "momentCoefficient",
+   "layer": "T2"
+  },
+  {
+   "id": "NAME-CWX-WALLCONTEXT-FIELDS",
+   "original_name": [
+    "城市基本雪压",
+    "城市基本风压",
+    "工程名称",
+    "工程所在城市",
+    "地面粗糙度类别"
+   ],
+   "kind": "cwx_record_field_layout",
+   "locations": [
+    "HWKWallContext::Serialize (0x1802bab80) 字段偏移 +0x98/+0x110/+0xa0/+0xe0/+0x140",
+    ".cwx 记录载荷 HWKWallContext +0x14/+0x56/+0x1c/+0x48/+0x62"
+   ],
+   "evidence_type": "STATIC_DECOMPILED_SERIALIZE_CHAIN_AND_LIVE_FILE_DIFF",
+   "evidence": [
+    "migration_workspace/serialize-fields.md",
+    "migration_workspace/raw/serialize-chains.json",
+    "migration_workspace/cwx-field-widths.md",
+    "migration_workspace/raw/cwx-diff-20261019/diff-b-c.json",
+    "migration_workspace/raw/cwx-diff-20261019/diff-c-d.json"
+   ],
+   "confirmed_meaning": "按 Serialize 链叠加出的顺序与实测记录一致：城市基本雪压=对象+0x98/载荷+0x14(double 0.4)，工程名称=+0xa0/+0x1c(u32字符数+UTF-16)，城市基本风压=+0x110/+0x56(double 0.45)，工程所在城市=+0xe0/+0x48(String \"北京市\")，地面粗糙度类别候选=+0x140/+0x62(String \"ⅡA\")。",
+   "unknowns": [
+    "对象+0x80/+0x88/+0x90/+0xa8/+0xd0/+0xd8/+0x108/+0x138 的业务含义（有值无标签）",
+    "记录边界：u32 A 语义未知，无法由长度推进",
+    "聚合槽位未细分 String/vector/嵌套对象，越过后推进会漂移",
+    "412 个 Serialize 类只对齐了 HWKWallContext 一个根"
+   ],
+   "aliases": [
+    "HWKWallContext 载荷 +0x14",
+    "HWKWallContext 载荷 +0x56"
+   ],
+   "compatibility": ".cwx 字段偏移与顺序复刻必须一致；不得把推得的候选语义写进 UI 标签。",
+   "candidate_name": null,
+   "decision_status": "PENDING_REVIEW",
+   "canonical_name": "projectContext",
+   "layer": "T2"
+  },
+  {
+   "id": "NAME-PRODUCT-FORCITIS-X",
+   "original_name": "FORCITIS-x",
+   "kind": "product_identity",
+   "locations": [
+    "docs/decisions.md D24",
+    "docs/naming-conventions.md §0"
+   ],
+   "evidence_type": "USER_DECISION",
+   "evidence": [
+    "docs/decisions.md",
+    "docs/naming-conventions.md"
+   ],
+   "confirmed_meaning": "新系统产品名：显示写法 FORCITIS-x（全大写词干+小写后缀），技术标识 forcitis-x（npm 包名/可执行文件需小写）。用于 T0：UI 标题、报告页眉/落款、安装程序名、日志标识。",
+   "unknowns": [
+    "商标与域名可用性未核查",
+    "中文显示名未定",
+    "是否存在历史商标冲突（Forcitis 类词根）"
+   ],
+   "aliases": [
+    "forcitis-x",
+    "FORCITIS-X(禁用写法)"
+   ],
+   "compatibility": "改名只影响 T0，不影响领域标识/数据 ID/RulePack 编号。",
+   "candidate_name": "FORCITIS-x",
+   "decision_status": "PENDING_REVIEW",
+   "layer": "T0"
+  }
+ ],
+ "layers": {
+  "T0": "new-surface (standard names only)",
+  "T1": "domain identifiers",
+  "T2": "legacy adapter (allowed, mapped)",
+  "T3": "evidence/docs (original names kept)"
+ }
+}

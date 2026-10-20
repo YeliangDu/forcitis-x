@@ -1,0 +1,589 @@
+{
+  "status": "PARTIAL",
+  "inventory_complete": false,
+  "user_intent": "第一轮行为跑通后标准化命名；为后续整体软件架构和求解器重构提前准备证据。",
+  "method": "随B/P阶段真实切片增量取证，先提交代表性样本再扩展；不以静态重构准备代替原版业务闭环。",
+  "implementation_choices": "桌面宿主、数值内核、持久化与求解器算法选型均未决定。",
+  "tracks": [
+    {
+      "id": "PREP-NAME",
+      "goal": "命名与概念对照",
+      "status": "PARTIAL",
+      "deliverable": "planning/naming-observations.json",
+      "collect": [
+        "原名、稳定ID、语境、来源、语义证据",
+        "同名异义/同义异名、缩写、单位、兼容名称",
+        "用户显示名、领域概念、代码标识、持久化/协议标识分别记录"
+      ],
+      "evidence": [
+        "evidence/scheduler/setup/rea-upgrade/managed-smoke-6.7.0.json",
+        "evidence/scheduler-reviews/20261018T094300Z/source-audit.json"
+      ],
+      "remaining": "当前仅有程序集身份与属性类型的静态样本；领域术语库存尚未建立。"
+    },
+    {
+      "id": "PREP-ARCH",
+      "goal": "现状架构与可替换接口证据",
+      "status": "PARTIAL",
+      "collect": [
+        "入口到输入/计算/绘图/报告/存储的真实调用与数据流",
+        "模块依赖、外部宿主、数据库/文件格式、全局状态及副作用",
+        "候选接口的输入输出、不变量、调用顺序、错误、配置与性能约束",
+        "候选seam与至少两种adapter的验证方案；未实测时保持候选"
+      ],
+      "observations": [
+        {
+          "id": "ARCH-OBS-000001",
+          "claim": "该载荷声明托管程序集身份HWKUtilRibbon24，不等同完整业务模块或运行时加载关系。",
+          "evidence_type": "STATIC_PACKAGE",
+          "evidence": [
+            "evidence/scheduler/setup/rea-upgrade/managed-smoke-6.7.0.json"
+          ]
+        },
+        {
+          "id": "ARCH-OBS-000002",
+          "claim": "13个CLR载荷元数据表游标独立导出；11个程序集级TargetFrameworkAttribute经MemberRef→TypeRef静态关联并解码。该关联是声明，不是运行调用或求解数据流。",
+          "evidence_type": "STATIC_PACKAGE",
+          "evidence": [
+            "evidence/baseline/b01/clr-independent/audit.json",
+            "scripts/audit-clr-tables.py",
+            "evidence/scheduler-reviews/20261018T094300Z/source-audit.json"
+          ],
+          "unknowns": [
+            "实际引用解析/宿主加载/运行副作用未知。",
+            "求解器输入输出、单位、自由度和精度仍NOT_RUN。"
+          ],
+          "independent_review": "PASS：仅实测13载荷的小heap/小索引表布局与11属性链；未运行求解器。"
+        },
+        {
+          "id": "ARCH-OBS-000003",
+          "claim": "独立读取MSI五表610行。CustomAction声明HWKInstallDo与CheckFX目标及Source标识，序列表条件/顺序已静态对照；这是安装声明数据流，不证明实际调用或副作用。ProductVersion保留包原文05.45.1211。 HWK-000007直接CFB读取确认三条Binary来源动作到两个载荷哈希的绑定；HWK-000007独立源字节审核PASS。",
+          "evidence_type": "STATIC_PACKAGE",
+          "evidence": [
+            "evidence/baseline/b01/msi-independent/audit.json",
+            "evidence/baseline/b01/msi-independent/findings.md",
+            "evidence/baseline/b01/ole-bindings/audit.json",
+            "evidence/scheduler-reviews/20261018T100100Z/source-audit.json",
+            "evidence/stages/B01/B01-01/work-package.json"
+          ],
+          "unknowns": [
+            "Binary静态键/源流/哈希绑定已独立审核；其余Source种类、实际导出调用和生效条件仍未知。",
+            "安装运行分支/副作用/失败未知。",
+            "求解输入输出、单位、自由度、边界、荷载、精度、性能仍NOT_RUN；目标架构未选择。"
+          ],
+          "independent_review": {
+            "status": "PASS",
+            "scope": "五表610行源字节及列布局；非运行调用/求解证据",
+            "evidence": "evidence/scheduler-reviews/20261018T095000Z/source-audit.json"
+          },
+          "binding_independent_review": {
+            "status": "PASS",
+            "scope": "59源流/6 Binary行/3动作绑定；不认证运行数据流或求解行为",
+            "evidence": "evidence/scheduler-reviews/20261018T100100Z/source-audit.json"
+          },
+          "version_baseline": "HWK-000021以11原资产SHA-256集合锁定版本；140提取PE版本复采一致、5原资产EXE版本单列。声明版本不证明运行绑定或求解行为。",
+          "version_baseline_independent_review": {
+            "status": "PASS",
+            "scope": "B01-01 hash-locked static version identity only; difference causes UNKNOWN; runtime NOT_RUN",
+            "evidence": "evidence/scheduler-reviews/20261018T112200Z/review.md"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000004",
+          "claim": "源MSI声明四条AppSearch→Signature/DrLocator关联及一个VSDFXAvailable启动条件，九条动作源/目标与序列表字面关联已记录；仅安装声明数据流。REA CLI另记录MSVBDPCADLL两个opaque资源的范围与哈希。",
+          "evidence_type": "STATIC_PACKAGE_SOURCE_BYTES_AND_REA_CLI_RESOURCE_INVENTORY",
+          "evidence": [
+            "evidence/baseline/b01/launch-search/audit.json",
+            "evidence/baseline/b01/launch-search/rea-resources.json",
+            "evidence/scheduler-reviews/20261018T101000Z/rea-resources.json"
+          ],
+          "unknowns": [
+            "运行目录、条件求值、准确先决条件、动作调用和副作用未知。",
+            "求解输入输出、单位、自由度、边界、荷载、精度、性能均NOT_RUN；不解锁架构选型。"
+          ],
+          "independent_review": {
+            "status": "PASS",
+            "scope": "源字节声明与关联、两个opaque资源范围哈希；非运行数据流",
+            "evidence": "evidence/scheduler-reviews/20261018T101000Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000005",
+          "claim": "MSVBDPCADLL源字节包含18导出，CheckFX/VsdLaunchConditions的名称与MSI Target字面一致；RT_VERSION固定版本16.0.32016.11111，RT_STRING四Runtime名称仅静态显示文本。",
+          "evidence_type": "STATIC_SOURCE_BYTES",
+          "evidence": [
+            "evidence/baseline/b01/installer-resources/decoded.json",
+            "evidence/baseline/b01/installer-resources/rea-resources.json"
+          ],
+          "unknowns": [
+            "调用控制流、依赖版本、属性赋值、返回及副作用未知。",
+            "求解行为NOT_RUN；不作为新架构蓝图或选型依据。"
+          ],
+          "review_status": "PASS_LIMITED_STATIC_SLICE",
+          "independent_review": {
+            "status": "PASS",
+            "scope": "两个资源源目录/版本/字符串及18导出；非运行数据流或求解行为",
+            "evidence": "evidence/scheduler-reviews/20261018T101500Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000006",
+          "claim": "MSI框架属性声明与DLL UTF-16LE字面值的push操作数静态关联；164普通导入，CheckFX至下一导出地址窗口有57处绝对间接call，56处匹配普通IAT，0x10043884未解析。地址窗口非已证实函数/CFG，不能当成新接口契约。",
+          "evidence_type": "ORDINARY_STATIC_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+          "evidence": [
+            "evidence/baseline/b01/framework-static/audit.json",
+            "evidence/baseline/b01/framework-static/findings.md"
+          ],
+          "unknowns": [
+            "实际调用、条件可达性、属性赋值、返回、副作用与精确先决条件未知。",
+            "求解输入输出/单位/自由度/性能NOT_RUN；架构、算法、持久化未选。"
+          ],
+          "review_status": "PASS_RESTRICTED_STATIC_SLICE",
+          "independent_review": {
+            "status": "PASS",
+            "evidence": "evidence/scheduler-reviews/20261018T102100Z/source-audit.json",
+            "scope": "源导入/字面值/引用和FF15模式；非函数边界或运行调用图",
+            "additional_observation": "PE32延迟导入目录RVA/size均0；0x10043884仍未解析"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000007",
+          "claim": "源文件可写槽位0x10043884初始指向本地代码0x1003b09d，含HIGHLOW重定位；局部指令可将其写入本地候选或GetEnvironmentVariableW IAT值后间接跳转。",
+          "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+          "evidence": [
+            "evidence/baseline/b01/framework-slot/audit.json",
+            "evidence/baseline/b01/framework-slot/findings.md"
+          ],
+          "unknowns": [
+            "helper/替代目标语义、别名写入与实际加载/运行路径未知；不形成新架构方案。"
+          ],
+          "runtime_status": "NOT_RUN",
+          "independent_review": {
+            "status": "PASS",
+            "scope": "restricted static source bytes and declarations; runtime NOT_RUN",
+            "evidence": "evidence/scheduler-reviews/20261018T102700Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000008",
+          "claim": "局部helper显示GetVersion符号位与VSD_FORCE_ANSI环境探针参与缓存选择；候选窗口显示A版环境API导入及SetLastError关联。两个缓存字节位于.data虚拟尾部。",
+          "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+          "evidence": [
+            "evidence/baseline/b01/framework-helper/audit.json",
+            "evidence/baseline/b01/framework-helper/findings.md"
+          ],
+          "unknowns": [
+            "实际分支、寄存器跨辅助调用保留、转换/异常语义、副作用及精确先决条件未知。",
+            "求解NOT_RUN，不能作为新架构蓝图或解锁算法选择。"
+          ],
+          "runtime_status": "NOT_RUN",
+          "review_status": "PASS_RESTRICTED_STATIC_SLICE",
+          "independent_review": {
+            "status": "PASS",
+            "scope": "restricted static source bytes; runtime NOT_RUN",
+            "evidence": "evidence/scheduler-reviews/20261018T103200Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000009",
+          "claim": "三个本地地址窗口可见2字节零终止扫描、0x1003b655/0x1003b295局部调用、三处GetLastError普通导入关联及条件缓冲区写；199指令和37相对边逐源字节记录。",
+          "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+          "evidence": [
+            "evidence/baseline/b01/framework-conversion/audit.json",
+            "evidence/baseline/b01/framework-conversion/findings.md"
+          ],
+          "unknowns": [
+            "局部转换/分配/清理语义、完整CFG、编码与缓冲区契约未知。",
+            "原版运行和求解器输入输出NOT_RUN；不作为新架构蓝图。"
+          ],
+          "status": "PARTIAL",
+          "independent_review": {
+            "status": "PASS",
+            "scope": "restricted static source bytes; runtime NOT_RUN",
+            "evidence": "evidence/scheduler-reviews/20261018T103900Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000010",
+          "claim": "两个地址窗口比较[ebp+8]与0xfde9后在本地辅助调用和两个转换API普通导入声明之间分派；63指令/10相对边逐源字节记录。",
+          "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+          "evidence": [
+            "evidence/baseline/b01/framework-dispatch/audit.json",
+            "evidence/baseline/b01/framework-dispatch/findings.md"
+          ],
+          "unknowns": [
+            "本地0x1003b320/0x1003b6ae与共用0x1003b1d7/0x1003b235语义、完整CFG和实际输入输出未知。",
+            "原版运行及求解NOT_RUN；非新架构蓝图。"
+          ],
+          "status": "PARTIAL",
+          "independent_review": {
+            "status": "PASS",
+            "scope": "restricted static source bytes; shared Apple objdump; runtime NOT_RUN",
+            "evidence": "evidence/scheduler-reviews/20261018T104400Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000011",
+          "claim": "两个共用窗口静态写入偏移+0/+4/+8，条件关联GetLastError/SetLastError普通导入；17指令、2分支及13处E8引用。",
+          "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+          "evidence": [
+            "evidence/baseline/b01/framework-error-state/audit.json",
+            "evidence/baseline/b01/framework-error-state/findings.md"
+          ],
+          "unknowns": [
+            "对象类型/生命周期、0x1000ba90含义及完整异常/副作用契约未知。",
+            "原版运行与求解NOT_RUN；不是新架构蓝图或新接口决定。"
+          ],
+          "status": "PARTIAL",
+          "independent_review": {
+            "status": "PASS",
+            "scope": "restricted static source slice only; runtime NOT_RUN",
+            "evidence": "evidence/scheduler-reviews/20261018T104900Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000012",
+          "claim": "142PE静态导入声明按basename关联2382边，388边有包内候选，保留路径/格式和跨格式候选；不是实际加载器绑定。",
+          "evidence_type": "RETAINED_STATIC_EVIDENCE_JOIN",
+          "evidence": [
+            "evidence/baseline/b01/runtime-readiness/summary.json"
+          ],
+          "unknowns": [
+            "运行搜索路径、实际宿主/绑定/导出、数据库provider与精确先决条件未知。",
+            "原版求解NOT_RUN，不推导目标架构。"
+          ],
+          "status": "PARTIAL",
+          "runtime_status": "NOT_RUN",
+          "independent_review": {
+            "status": "PASS",
+            "scope": "retained static JSON join only; runtime NOT_RUN; zero cross-format candidates observed",
+            "evidence": "evidence/scheduler-reviews/20261018T105500Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000013",
+          "claim": "CheckFX输入候选helper0x100385b9经序号74跳板，输出候选helper0x10038bcc经序号145跳板；栈槽、局部分支和出口见flow-gaps。",
+          "evidence_type": "ORDINARY_SOURCE_BYTES_AND_APPLE_OBJDUMP",
+          "evidence": [
+            "evidence/baseline/b01/framework-properties/audit.json",
+            "evidence/baseline/b01/framework-properties/flow-gaps.json"
+          ],
+          "unknowns": [
+            "完整CFG、比较大小写、实际属性/返回与准确先决条件未知；求解器NOT_RUN，不推导目标架构。"
+          ],
+          "status": "PARTIAL",
+          "runtime_status": "NOT_RUN",
+          "independent_review": {
+            "status": "PASS",
+            "scope": "restricted source bytes; shared Apple objdump; runtime NOT_RUN",
+            "evidence": "evidence/scheduler-reviews/20261018T110100Z/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000019",
+          "evidence_type": "STATIC_PACKAGE_RECONCILIATION",
+          "evidence": [
+            "evidence/stages/B01/B01-02/work-package.json"
+          ],
+          "observation": "458文件经File→Component→Directory与FeatureComponents静态关联；459组件含1个无File载荷组件。142 PE依赖声明与13 CLR记录按源SHA256对应。",
+          "unknowns": [
+            "特性实际选择、安装路径、组件副作用、实际绑定与调用/求解数据流均未观测。"
+          ],
+          "runtime_status": "NOT_RUN",
+          "architecture_decision": "UNDECIDED",
+          "independent_review": {
+            "status": "PARTIAL",
+            "source": "evidence/scheduler-reviews/20261018T113100Z/review.md",
+            "scope": "Main MSI/CAB static inventory corroborated; nested bundled SQL/VC payload inventory absent; runtime NOT_RUN"
+          }
+        },
+        {
+          "id": "ARCH-OBS-000020",
+          "evidence_type": "STATIC_NESTED_INSTALLER_DECLARATION",
+          "evidence": [
+            "evidence/stages/B01/B01-02/attempt-25/inventory.json",
+            "evidence/stages/B01/B01-02/attempt-25/burn-2.json",
+            "evidence/stages/B01/B01-02/attempt-25/burn-3.json"
+          ],
+          "observation": "随包SQL/VC安装器静态展开6份MSI、253条File映射；Burn清单保留两种架构与条件更新包，不能当成实际安装依赖。",
+          "unknowns": [
+            "WSUS扫描目录未递归闭合；MSU servicing目标和差分载荷语义未知",
+            "运行绑定、业务调用、求解输入输出和单位没有新增实测"
+          ],
+          "runtime_status": "NOT_RUN",
+          "architecture_decision": "UNDECIDED"
+        },
+        {
+          "evidence_type": "INDEPENDENT_STATIC_REVIEW",
+          "source": [
+            "evidence/scheduler-reviews/20261018T121000Z-B01-02/review.md",
+            "evidence/scheduler-reviews/20261018T121000Z-B01-02/source-audit.json"
+          ],
+          "observation": "复核随包6 MSI的253 File组件/特性关联及41 Binary源行/哈希；16 WSUS扫描容器有成员但内部库存未闭合。",
+          "unknown": "实际绑定、MSU目标/差分语义及求解数据流未知；不构成架构选型依据。"
+        },
+        {
+          "id": "ARCH-HWK000030-CALLBACK",
+          "claim": "消费者参数沿遍历器到回调间接调用；回调写上下文字节，调用者比较该局部字节；F2前缀共用正常尾部已核源字节。",
+          "evidence_type": "STATIC_SOURCE_BYTES",
+          "evidence": [
+            "evidence/stages/B01/B01-03/attempt-30/consumer-return.json",
+            "evidence/stages/B01/B01-03/attempt-30/findings.md"
+          ],
+          "unknowns": [
+            "异常/别名/全局可达性、最终返回、运行副作用未知；不是新架构蓝图。",
+            "求解器输入输出/单位/自由度/算法与真实案例仍NOT_RUN。"
+          ],
+          "independent_review": {
+            "status": "PASS",
+            "scope": "local source-byte/import identity only; package BLOCKED, runtime NOT_RUN",
+            "evidence": "evidence/scheduler-reviews/20261018T131000Z-B01-03/source-audit.json"
+          }
+        },
+        {
+          "id": "ARCH-RUNTIME-20261018-ENTRY",
+          "claim": "本轮以原安装的全新隔离副本启动XWall，通过原版文件对话框提交锁定真实样例，观察非空native树和远端数据库端口连接；原安装445文件前后哈希不变。",
+          "evidence_type": "ORIGINAL_WINDOWS_RUNTIME_OBSERVATION",
+          "evidence": [
+            "evidence/runtime/workflow-reset/summary.json",
+            "evidence/runtime/workflow-reset/final-runtime/stdout"
+          ],
+          "unknowns": [
+            "不证明工程语义已正确载入、数据库认证或应用许可；计算/报告/保存重开未执行。",
+            "环境变量APPDATA仅是本轮配置，未证明覆盖全部系统目录/注册表副作用。",
+            "不是新架构蓝图，求解器输入输出/单位/自由度/算法仍NOT_RUN。"
+          ]
+        },
+        {
+          "id": "ARCH-OBS-HWK-000037",
+          "claim": "Local CAB XWall.exe and 门窗计算示例1.cwx hashes match historical runtime observations; no new remote dependency/data-flow evidence because SSH denied before connection.",
+          "evidence_type": "LOCAL_FROZEN_INPUT_RECHECK",
+          "evidence": [
+            "evidence/stages/B02/B02-01/local-bindings.json",
+            "evidence/stages/B02/B02-01/environment/stderr",
+            "evidence/scheduler-reviews/HWK-000037-B02-01/bindings.stdout",
+            "evidence/scheduler-reviews/HWK-000037-B02-01/ssh-readonly/stderr"
+          ],
+          "unknowns": [
+            "Current database/runtime state and all solver behavior remain unverified."
+          ]
+        }
+      ],
+      "remaining": "尚无原版运行调用链，目标架构未设计。",
+      "evidence": [
+        {
+          "evidence_type": "STATIC_SOURCE_BYTES_AND_MSI_DECLARATION_JOIN",
+          "source": [
+            "evidence/stages/B01/B01-03/control-flow.json",
+            "evidence/stages/B01/B01-03/work-package.json"
+          ],
+          "observation": "MSI CheckFX序号1、消费者399；消费者传入_VsdLaunchCondition/SQL模板及0x100124bf地址，调用0x100379dc。三个包络1830指令核字节，非完整CFG。",
+          "unknown": "实际回调/返回、副作用与运行绑定未证明；没有新增求解输入输出/单位/性能实测。",
+          "runtime_status": "NOT_RUN",
+          "architecture_decision": "UNDECIDED"
+        },
+        "evidence/runtime/workflow-reset/summary.json"
+      ]
+    },
+    {
+      "id": "PREP-SOLVER",
+      "goal": "求解行为契约与数值基线",
+      "status": "NOT_RUN",
+      "collect": [
+        "按实际功能库存识别计算体系和求解器，不由DLL名推断",
+        "真实工程输入到组装/求解/后处理/验算结果的追踪",
+        "单位、坐标系、自由度、材料/截面、单元、边界、荷载及组合",
+        "浮点精度、运算顺序、舍入、容差来源、阈值翻转",
+        "若原版存在迭代：收敛条件、初值、步长、失败与诊断行为",
+        "若原版可观察：矩阵、向量、中间量、反力、位移、内力、应力、残差等，逐项记录实际存在项"
+      ],
+      "evidence": [],
+      "remaining": "没有真实原版求解运行与中间量证据，不声称任何求解器已还原。"
+    },
+    {
+      "id": "PREP-CASES",
+      "goal": "可重复对照与后续替换验收集",
+      "status": "NOT_RUN",
+      "collect": [
+        "真实工程黄金输入/原版输出/版本/环境哈希",
+        "保留案例、边界/失败/组合案例与可观测的工程不变量",
+        "逐变量比较规则、单位和依据；不设置全局宽松百分比",
+        "打开、编辑、保存、重开及原版兼容结果",
+        "在环境可用后记录耗时/内存/规模与可访问边界"
+      ],
+      "evidence": [
+        "evidence/runtime/workflow-reset/summary.json"
+      ],
+      "remaining": "静态采集回归不等于工程验收案例。"
+    },
+    {
+      "id": "PREP-MIGRATION",
+      "goal": "逐模块替换的依赖与风险",
+      "status": "NOT_RUN",
+      "collect": [
+        "名称/模块/求解器替换影响到哪些案例、文件和外部宿主",
+        "兼容映射、未知字段保留、恢复路径与差异分类",
+        "同一输入跨新旧实现的双跑接口方案及可替换实验",
+        "观察到的旧缺陷单列：先保留证据，后续修正须有明确决定"
+      ],
+      "evidence": [],
+      "remaining": "尚未确定替换顺序；从真实业务链和共享依赖决定。"
+    },
+    {
+      "id": "PREP-HWK-000041-ENV",
+      "goal": "Record observed runtime dependency boundary without selecting architecture",
+      "status": "PARTIAL",
+      "evidence_type": "LIVE_REMOTE_ENVIRONMENT",
+      "evidence": [
+        "evidence/stages/B02/B02-01/attempt-41/environment-final/stdout",
+        "evidence/stages/B02/B02-01/attempt-41/readback/stdout",
+        "evidence/stages/B02/B02-01/attempt-41/localdb-encoding-probe/stdout"
+      ],
+      "observed": {
+        "client_version": "5.4.25.1209",
+        "source_and_copy_files": 445,
+        "dotnet_registry": {
+          "Version": "4.8.04161",
+          "Release": 528449
+        },
+        "localdb_instance": "v11.0",
+        "isolated_project": "sample-working.cwx",
+        "copy_matches_frozen_sample": true
+      },
+      "remaining": "Installed dependencies and running sqlservr do not prove application binding, SQL connectivity, license, solver interfaces or numerical semantics. All solver branches NOT_RUN; target architecture undecided.",
+      "independent_review": {
+        "status": "PASS_ENVIRONMENT_ONLY",
+        "evidence": "evidence/scheduler-reviews/HWK-000041-B02-01/review.md",
+        "unknown": "Application binding, license, numerical branches NOT_RUN"
+      }
+    },
+    {
+      "id": "PREP-HWK-000042-RUNTIME",
+      "goal": "Record actual application endpoint and project UI boundary",
+      "status": "PARTIAL",
+      "evidence_type": "LIVE_REMOTE_PROCESS_UI_AND_TCP_SNAPSHOT",
+      "evidence": [
+        "evidence/stages/B02/B02-02/attempt-42/source-audit/stdout",
+        "evidence/stages/B02/B02-02/attempt-42/ui-visible.json",
+        "evidence/stages/B02/B02-02/attempt-42/desktop-visible.png"
+      ],
+      "observed": {
+        "pid": 60096,
+        "session": 4,
+        "executable": "C:\\hwk-modern\\run-20261018\\client\\XWall.exe",
+        "project_title": "sample-working.cwx",
+        "tcp_remote": "165.154.20.222:1433",
+        "tcp_state": "Established",
+        "unchanged_source_files": 445
+      },
+      "remaining": "单时刻TCP连接不证明SQL查询、服务端身份/版本、许可认证或数值计算；LocalDB与此端点关系未知。新隔离副本启动未执行；全部求解分支NOT_RUN；架构未选型。",
+      "independent_review": {
+        "status": "PASS_OBSERVATION_ONLY",
+        "evidence": "evidence/scheduler-reviews/HWK-000042-B02-02/review.md",
+        "live_evidence": "evidence/scheduler-reviews/HWK-000042-B02-02/remote-short.stdout",
+        "boundary": "既有UI/进程/端点与哈希切片；许可及新启动NOT_RUN，不证明算法或目标架构"
+      }
+    },
+    {
+      "id": "PREP-HWK-000043-ABOUT",
+      "status": "PARTIAL",
+      "goal": "Observe original model version and license UI boundary",
+      "evidence_type": "LIVE_REMOTE_UI_SCREENSHOT",
+      "evidence": [
+        "evidence/stages/B02/B02-02/attempt-43/about-open.png",
+        "evidence/stages/B02/B02-02/attempt-43/final-read/stdout"
+      ],
+      "observed": {
+        "version": "5.4.25.1209 (64位网络版)",
+        "software_document_model": 1057,
+        "project_model": 677,
+        "service_expiry_display": "2028年5月17日",
+        "meaning": "UI display only; license authority and gate operation unknown"
+      },
+      "remaining": "Model schemas, gated license operation, solver IO and all numerical branches NOT_RUN; target architecture undecided.",
+      "independent_review": {
+        "evidence": "evidence/scheduler-reviews/HWK-000043-B02-02/review.md",
+        "raw_ui": "evidence/stages/B02/B02-02/attempt-43/final-read/stdout",
+        "correction": "服务到期日2028年5月17日；最终UI确含文本，执行摘要6月17日误读保留于原件",
+        "boundary": "UI display only; actual license operation NOT_RUN; model schema unknown"
+      }
+    },
+    {
+      "id": "PREP-HWK-000044-SETTINGS",
+      "status": "PARTIAL",
+      "evidence_type": "LIVE_REMOTE_UI_SCREENSHOT_AND_SOURCE_HASH_COMPARISON",
+      "evidence": [
+        "evidence/stages/B02/B02-02/attempt-44/system-open-final.png",
+        "evidence/stages/B02/B02-02/attempt-44/source-comparison.json",
+        "evidence/stages/B02/B02-02/attempt-44/launch-final.json",
+        "evidence/stages/B02/B02-02/attempt-44/final-runtime/stdout"
+      ],
+      "confirmed": "设置窗口暴露CAD/OFFICE版本、备份及数值输出位数选项；445项源安装哈希与B02-01冻结清单相同。设置读取后取消，正常关闭请求后旧窗口消失。 新冻结客户端PID78216通过实际启动打开真实样例；当前数据库TCP连接1433已观测，但数据库语义与许可协议未知。",
+      "unknowns": [
+        "设置持久化位置、实际输出舍入算法、CAD/OFFICE实际绑定未验证；许可门控与求解器仍待实测。"
+      ],
+      "architecture_decision": "UNDECIDED",
+      "independent_review": {
+        "evidence": "evidence/scheduler-reviews/HWK-000044-B02-02/review.md",
+        "status": "PARTIAL",
+        "boundary": "UI observation and read-only source hashes confirmed; license operation and solver NOT_RUN"
+      }
+    },
+    {
+      "id": "PREP-HWK-000045-REPORT-FOLDER-FAILURE",
+      "status": "PARTIAL",
+      "evidence_type": "LIVE_REMOTE_UI_SCREENSHOT_PROCESS_EVENT_LOG",
+      "evidence": [
+        "evidence/stages/B02/B02-02/attempt-45/lock-strength.png",
+        "evidence/stages/B02/B02-02/attempt-45/report-open.png",
+        "evidence/stages/B02/B02-02/attempt-45/choose-folder.ps1",
+        "evidence/stages/B02/B02-02/attempt-45/post-action/stdout",
+        "evidence/stages/B02/B02-02/attempt-45/source-hashes-after.json"
+      ],
+      "confirmed": "实际工程树到锁点信息页到计算书输出设置的UI链已观测；正文显示面荷载1.672032kN/m²与锁点数0/支撑数0；其来源可能为已保存数据，不能当重算结果。目录选择尝试后PID78216崩溃，Application1000记录SHELL32.dll、0xc0000005及0xc000041d；未提交导出、无输出文件。",
+      "unknowns": [
+        "目录选择采集方法与应用错误的因果归属未知",
+        "报告生成后端、Office依赖、许可门控与数值算法仍未实测",
+        "本次未改变参数、未验证求解输入/输出"
+      ],
+      "architecture_decision": "UNDECIDED",
+      "independent_review": {
+        "evidence": "evidence/scheduler-reviews/HWK-000045-B02-02/review.md",
+        "status": "PARTIAL",
+        "confirmed": "独立查看原始UI截图，直接SSH核对源文件、样例和崩溃日志；显示值不等于新算结果，许可和求解分支仍未知。"
+      }
+    },
+    {
+      "id": "PREP-HWK-000046-LOAD-RECOMPUTE",
+      "status": "PARTIAL",
+      "evidence_type": "LIVE_REMOTE_UI_TEXT_SCREENSHOT_PROCESS_TCP_SHA256",
+      "evidence": [
+        "evidence/stages/B02/B02-02/attempt-46/height21-text.json",
+        "evidence/stages/B02/B02-02/attempt-46/height21-corrected.json",
+        "evidence/stages/B02/B02-02/attempt-46/height20-restored.json",
+        "evidence/stages/B02/B02-02/attempt-46/postflight/stdout"
+      ],
+      "confirmed": [
+        "在真实工程副本中，标高属性原20m，键盘选择差异误变2021m；随后明确首尾选择变21m，最终恢复20m。没有保存。",
+        "属性提交后内嵌计算输出自动更新z、风压高度系数、阵风系数、未取最小值的负横梃荷载。21m:0.754007/1.976809/-0.768453kN/m2；20m:0.737993/1.98735/-0.756143kN/m2。",
+        "输出按最小风荷载1kN/m2处理，20m和21m最终面板组合均1.672032kN/m2，因此只比较最终值会掩盖本次实测中间量变化。",
+        "显示规范引用GB50009-2012、JGJ102-2003属于原版输出声明，不代表已审核规范正确性。",
+        "同一PID113264/session4在计算后保持TCP165.154.20.222:1433；源445项及工作样例哈希未变。"
+      ],
+      "unknowns": [
+        "完整计算调度/调用依赖、内部函数与模块、数值精度和其它自由度/边界/组合未采",
+        "该自动计算分支是否受许可门控未知；未证明其它计算系统许可",
+        "没有报告文件、保存重开、性能基线或完整求解器输入输出；单切片不闭合功能库存"
+      ],
+      "architecture_decision": "NOT_MADE",
+      "independent_review": {
+        "status": "PARTIAL",
+        "evidence": "evidence/scheduler-reviews/HWK-000046-B02-02/review.md",
+        "live_evidence": "evidence/scheduler-reviews/HWK-000046-B02-02/live-comparison.json",
+        "confirmed": "Retained input/output changes verified; live source hashes, process and TCP refreshed.",
+        "unknown": "License gate, complete solver IO, call graph, file roundtrip and architecture remain unverified."
+      }
+    }
+  ],
+  "updated_at": "2026-10-18T18:32:58.403149+00:00"
+}

@@ -1,0 +1,3907 @@
+{
+ "selection_rule": "^(MG_)?(WDISPLACEMENT[A-Z]*|GLASSRIBDISP[A-Z]*|GLASSFEDISPMENT[A-Z]*)$",
+ "formulas": [
+  {
+   "iid": "14",
+   "symbol": "WDISPLACEMENT",
+   "bytes": 1262,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "IFValue": {
+     "count": 1,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_to",
+    "GLS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "te\\: ${GLS_STRUCTDESC}的等效厚度\r\n   te=${IsLarge(GLS_tm,3.0):+0.95×}(t1^3+t2^3)^(1/3)\r\n     =${IsLarge(GLS_tm,3.0):+0.95×}(${GLS_to}^3+${GLS_ti}^3)^(1/3)\r\n     =${GLS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "15",
+   "symbol": "WDISPLACEMENTJD",
+   "bytes": 1206,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetE": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "IFValue": {
+     "count": 1,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_to",
+    "GLS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "te\\: ${GLS_STRUCTDESC}的等效厚度\r\n   te=${IsLarge(GLS_tm,3.0):+0.95×}(t1^3+t2^3)^(1/3)\r\n     =${IsLarge(GLS_tm,3.0):+0.95×}(${GLS_to}^3+${GLS_ti}^3)^(1/3)\r\n     =${GLS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "60",
+   "symbol": "GLASSRIBDISP",
+   "bytes": 643,
+   "calls": {
+    "IFValue": {
+     "count": 2,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetE": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    },
+    "GetOKStr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802541e0",
+     "registry_arity": 1
+    }
+   },
+   "variables": [
+    "GRIB_Bw",
+    "GRIB_COMPK",
+    "GRIB_DFRLIMIT",
+    "GRIB_H",
+    "GRIB_Hw",
+    "GRIB_dfribcal",
+    "GRIB_dfrlim",
+    "GRIB_ttrib"
+   ],
+   "conditionals": []
+  },
+  {
+   "iid": "61",
+   "symbol": "GLASSRIBDISPJD",
+   "bytes": 487,
+   "calls": {
+    "IFValue": {
+     "count": 2,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetE": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    },
+    "GetOKStr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802541e0",
+     "registry_arity": 1
+    }
+   },
+   "variables": [
+    "GRIB_Bw",
+    "GRIB_COMPK",
+    "GRIB_DFRLIMIT",
+    "GRIB_H",
+    "GRIB_Hw",
+    "GRIB_dfribcal",
+    "GRIB_dfrlim",
+    "GRIB_ttrib"
+   ],
+   "conditionals": []
+  },
+  {
+   "iid": "273",
+   "symbol": "WDISPLACEMENTTHRLAYER",
+   "bytes": 1377,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DESC",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_tmg",
+    "GLS_to",
+    "GLS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "274",
+   "symbol": "WDISPLACEMENTTHRLAYERJD",
+   "bytes": 1377,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DESC",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_tmg",
+    "GLS_to",
+    "GLS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "282",
+   "symbol": "MG_WDISPLACEMENT",
+   "bytes": 1999,
+   "calls": {
+    "GetEQFormat": {
+     "count": 18,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetSSubFormat": {
+     "count": 10,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180254620",
+     "registry_arity": 3
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "GetEQSSubFormat": {
+     "count": 4,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180252940",
+     "registry_arity": 3
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "IFValue": {
+     "count": 1,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_to",
+    "GLS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "${GetEQSSubFormat('t','','e')}\\: ${GLS_STRUCTDESC}的等效厚度\r\n   ${GetEQFormat(0)}${GetSSubFormat('t','','e')}=${IsLarge(GLS_tm,3.0):+0.95×}\\\\r(3,${GetSSubFormat('t','','1')}^3+${GetSSubFormat('t','','2')}^3)${GetEQFormat(1)}\r\n     ${GetEQFormat(0)}=${IsLarge(GLS_tm,3.0):+0.95×}\\\\r(3,${GLS_to}^3+${GLS_ti}^3)${GetEQFormat(1)}\r\n     =${GLS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "${GetSSubFormat('t','','e')}"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "${GetSSubFormat('t','','e')}"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "283",
+   "symbol": "MG_WDISPLACEMENTJD",
+   "bytes": 1063,
+   "calls": {
+    "GetEQFormat": {
+     "count": 10,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "IsLarge": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_to",
+    "GLS_θwe"
+   ],
+   "conditionals": [
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "te\\: ${GLS_STRUCTDESC}的等效厚度\r\n   te=${IsLarge(GLS_tm,3.0):+0.95×}${GetEQFormat(0)}\\\\r(3,t1^3+t2^3)${GetEQFormat(1)}\r\n     =${GLS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "310",
+   "symbol": "MG_WDISPLACEMENTTHRLAYER",
+   "bytes": 2123,
+   "calls": {
+    "GetEQSSubFormat": {
+     "count": 8,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180252940",
+     "registry_arity": 3
+    },
+    "GetEQFormat": {
+     "count": 18,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSSubFormat": {
+     "count": 7,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180254620",
+     "registry_arity": 3
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DESC",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_tmg",
+    "GLS_to",
+    "GLS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "311",
+   "symbol": "MG_WDISPLACEMENTTHRLAYERJD",
+   "bytes": 2123,
+   "calls": {
+    "GetEQSSubFormat": {
+     "count": 8,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180252940",
+     "registry_arity": 3
+    },
+    "GetEQFormat": {
+     "count": 18,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSSubFormat": {
+     "count": 7,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180254620",
+     "registry_arity": 3
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DESC",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_tmg",
+    "GLS_to",
+    "GLS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "415",
+   "symbol": "MG_GLASSRIBDISP",
+   "bytes": 844,
+   "calls": {
+    "GetEQFormat": {
+     "count": 10,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "IFValue": {
+     "count": 2,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetE": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    },
+    "GetOKStr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802541e0",
+     "registry_arity": 1
+    }
+   },
+   "variables": [
+    "GRIB_Bw",
+    "GRIB_COMPK",
+    "GRIB_DFRLIMIT",
+    "GRIB_H",
+    "GRIB_Hw",
+    "GRIB_dfribcal",
+    "GRIB_dfrlim",
+    "GRIB_ttrib"
+   ],
+   "conditionals": []
+  },
+  {
+   "iid": "446",
+   "symbol": "GLASSFEDISPMENT",
+   "bytes": 79,
+   "calls": {
+    "GLASSFE_SHTable": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    }
+   },
+   "variables": [],
+   "conditionals": []
+  },
+  {
+   "iid": "447",
+   "symbol": "MG_GLASSFEDISPMENT",
+   "bytes": 142,
+   "calls": {
+    "GLASSFE_SHTable": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    }
+   },
+   "variables": [],
+   "conditionals": []
+  },
+  {
+   "iid": "494",
+   "symbol": "WDISPLACEMENTPS",
+   "bytes": 1569,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "IsEqual": {
+     "count": 6,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      4
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "IFValue": {
+     "count": 1,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "Div": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLSPS_COMPK",
+    "GLSPS_DFNum",
+    "GLSPS_DISP",
+    "GLSPS_DWLESS",
+    "GLSPS_Dw",
+    "GLSPS_STRUCTDESC",
+    "GLSPS_awl",
+    "GLSPS_dflim",
+    "GLSPS_dfw",
+    "GLSPS_te",
+    "GLSPS_ti",
+    "GLSPS_to",
+    "GLSPS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLSPS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLSPS_to}mm"
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "te\\: ${GLSPS_STRUCTDESC}的等效厚度\r\n   te=${IsLarge(GLSPS_tm,3.0):+0.95×}(to^3+ti^3)^(1/3)\r\n     =${IsLarge(GLSPS_tm,3.0):+0.95×}(${GLSPS_to}^3+${GLSPS_ti}^3)^(1/3)\r\n     =${GLSPS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLSPS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLSPS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "8.1.5.2"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "参数θ计算\\: \r\n   θ=qk×b^4/E/t${GLSPS_ti:+e}^4        (JGJ102-2003  8.1.5-4) \r\n    =${GLSPS_COMPK}×${GLSPS_awl}^4/${GetE(GLOB_BOARDMATERIAL)}/${IFValue(GLSPS_ti,GLSPS_te,GLSPS_to)}^4×10^9 \r\n    =${GLSPS_θwe} \r\n   η\\: 折减系数,根据参数θ查表6.1.2-2  得η = ${GetNg(GLSPS_θwe)} \r\n   "
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×η"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "${GLSPS_awl}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "*",
+     "body": "${Div(GLSPS_awl,2.0)}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×${GetNg(GLSPS_θwe)}"
+    },
+    {
+     "head": "GLSPS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "495",
+   "symbol": "WDISPLACEMENTPSJD",
+   "bytes": 1569,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "IsEqual": {
+     "count": 6,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      4
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "IFValue": {
+     "count": 1,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "Div": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLSPS_COMPK",
+    "GLSPS_DFNum",
+    "GLSPS_DISP",
+    "GLSPS_DWLESS",
+    "GLSPS_Dw",
+    "GLSPS_STRUCTDESC",
+    "GLSPS_awl",
+    "GLSPS_dflim",
+    "GLSPS_dfw",
+    "GLSPS_te",
+    "GLSPS_ti",
+    "GLSPS_to",
+    "GLSPS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLSPS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLSPS_to}mm"
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "te\\: ${GLSPS_STRUCTDESC}的等效厚度\r\n   te=${IsLarge(GLSPS_tm,3.0):+0.95×}(to^3+ti^3)^(1/3)\r\n     =${IsLarge(GLSPS_tm,3.0):+0.95×}(${GLSPS_to}^3+${GLSPS_ti}^3)^(1/3)\r\n     =${GLSPS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLSPS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLSPS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "8.1.5.2"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "参数θ计算\\: \r\n   θ=qk×b^4/E/t${GLSPS_ti:+e}^4        (JGJ102-2003  8.1.5-4) \r\n    =${GLSPS_COMPK}×${GLSPS_awl}^4/${GetE(GLOB_BOARDMATERIAL)}/${IFValue(GLSPS_ti,GLSPS_te,GLSPS_to)}^4×10^9 \r\n    =${GLSPS_θwe} \r\n   η\\: 折减系数,根据参数θ查表6.1.2-2  得η = ${GetNg(GLSPS_θwe)} \r\n   "
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×η"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "${GLSPS_awl}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "*",
+     "body": "${Div(GLSPS_awl,2.0)}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×${GetNg(GLSPS_θwe)}"
+    },
+    {
+     "head": "GLSPS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "500",
+   "symbol": "WDISPLACEMENTTHRLAYERPS",
+   "bytes": 1677,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "IsEqual": {
+     "count": 6,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      4
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "Div": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLSPS_COMPK",
+    "GLSPS_DESC",
+    "GLSPS_DFNum",
+    "GLSPS_DISP",
+    "GLSPS_DWLESS",
+    "GLSPS_Dw",
+    "GLSPS_STRUCTDESC",
+    "GLSPS_awl",
+    "GLSPS_dflim",
+    "GLSPS_dfw",
+    "GLSPS_te",
+    "GLSPS_ti",
+    "GLSPS_tmg",
+    "GLSPS_to",
+    "GLSPS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "8.1.5-2"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "参数θ计算\\: \r\n   θ=qk×b^4/E/te^4        (JGJ102-2003  8.1.5-4) \r\n    =${GLSPS_COMPK}×${GLSPS_awl}^4/${GetE(GLOB_BOARDMATERIAL)}/GLSPS_te^4×10^9 \r\n    =${GLSPS_θwe} \r\n   η\\: 折减系数,根据参数θ查表6.1.2-2  得η = ${GetNg(GLSPS_θwe)} \r\n   "
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×η"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "${GLSPS_awl}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "*",
+     "body": "${Div(GLSPS_awl,2)}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×${GetNg(GLSPS_θwe)}"
+    },
+    {
+     "head": "GLSPS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "501",
+   "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+   "bytes": 1677,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "IsEqual": {
+     "count": 6,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      4
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "Div": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLSPS_COMPK",
+    "GLSPS_DESC",
+    "GLSPS_DFNum",
+    "GLSPS_DISP",
+    "GLSPS_DWLESS",
+    "GLSPS_Dw",
+    "GLSPS_STRUCTDESC",
+    "GLSPS_awl",
+    "GLSPS_dflim",
+    "GLSPS_dfw",
+    "GLSPS_te",
+    "GLSPS_ti",
+    "GLSPS_tmg",
+    "GLSPS_to",
+    "GLSPS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "8.1.5-2"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "参数θ计算\\: \r\n   θ=qk×b^4/E/te^4        (JGJ102-2003  8.1.5-4) \r\n    =${GLSPS_COMPK}×${GLSPS_awl}^4/${GetE(GLOB_BOARDMATERIAL)}/GLSPS_te^4×10^9 \r\n    =${GLSPS_θwe} \r\n   η\\: 折减系数,根据参数θ查表6.1.2-2  得η = ${GetNg(GLSPS_θwe)} \r\n   "
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×η"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "${GLSPS_awl}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "*",
+     "body": "${Div(GLSPS_awl,2)}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×${GetNg(GLSPS_θwe)}"
+    },
+    {
+     "head": "GLSPS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "502",
+   "symbol": "MG_WDISPLACEMENTPS",
+   "bytes": 1908,
+   "calls": {
+    "GetEQFormat": {
+     "count": 18,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "IsEqual": {
+     "count": 6,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      4
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "IFValue": {
+     "count": 1,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "Div": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLSPS_COMPK",
+    "GLSPS_DFNum",
+    "GLSPS_DISP",
+    "GLSPS_DWLESS",
+    "GLSPS_Dw",
+    "GLSPS_STRUCTDESC",
+    "GLSPS_awl",
+    "GLSPS_dflim",
+    "GLSPS_dfw",
+    "GLSPS_te",
+    "GLSPS_ti",
+    "GLSPS_to",
+    "GLSPS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLSPS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLSPS_to}mm"
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "te\\: ${GLSPS_STRUCTDESC}的等效厚度\r\n   te=${IsLarge(GLSPS_tm,3.0):+0.95×}${GetEQFormat(0)}\\\\r(3,to^3+ti^3)${GetEQFormat(1)}\r\n     =${IsLarge(GLSPS_tm,3.0):+0.95×}${GetEQFormat(0)}\\\\r(3,${GLSPS_to}^3+${GLSPS_ti}^3)${GetEQFormat(1)}\r\n     =${GLSPS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLSPS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLSPS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "8.1.5.2"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "参数θ计算\\: \r\n   θ=${GetEQFormat(0)}\\\\f(qk×b^4,E×t${GLSPS_ti:+e}^4)${GetEQFormat(1)}        (JGJ102-2003  8.1.5-4) \r\n    =${GetEQFormat(0)}\\\\f(${GLSPS_COMPK}×${GLSPS_awl}^4,${GetE(GLOB_BOARDMATERIAL)}×${IFValue(GLSPS_ti,GLSPS_te,GLSPS_to)}^4)${GetEQFormat(1)}×10^9 \r\n    =${GLSPS_θwe} \r\n   η\\: 折减系数,根据参数θ查表6.1.2-2  得η = ${GetNg(GLSPS_θwe)} \r\n   "
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×η"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "${GLSPS_awl}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "*",
+     "body": "${Div(GLSPS_awl,2)}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×${GetNg(GLSPS_θwe)}"
+    },
+    {
+     "head": "GLSPS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "503",
+   "symbol": "MG_WDISPLACEMENTPSJD",
+   "bytes": 1908,
+   "calls": {
+    "GetEQFormat": {
+     "count": 18,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "IsEqual": {
+     "count": 6,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      4
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "IFValue": {
+     "count": 1,
+     "call_arity": [
+      3
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "Div": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLSPS_COMPK",
+    "GLSPS_DFNum",
+    "GLSPS_DISP",
+    "GLSPS_DWLESS",
+    "GLSPS_Dw",
+    "GLSPS_STRUCTDESC",
+    "GLSPS_awl",
+    "GLSPS_dflim",
+    "GLSPS_dfw",
+    "GLSPS_te",
+    "GLSPS_ti",
+    "GLSPS_to",
+    "GLSPS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLSPS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLSPS_to}mm"
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "te\\: ${GLSPS_STRUCTDESC}的等效厚度\r\n   te=${IsLarge(GLSPS_tm,3.0):+0.95×}${GetEQFormat(0)}\\\\r(3,to^3+ti^3)${GetEQFormat(1)}\r\n     =${IsLarge(GLSPS_tm,3.0):+0.95×}${GetEQFormat(0)}\\\\r(3,${GLSPS_to}^3+${GLSPS_ti}^3)${GetEQFormat(1)}\r\n     =${GLSPS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLSPS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLSPS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "8.1.5.2"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "参数θ计算\\: \r\n   θ=${GetEQFormat(0)}\\\\f(qk×b^4,E×t${GLSPS_ti:+e}^4)${GetEQFormat(1)}        (JGJ102-2003  8.1.5-4) \r\n    =${GetEQFormat(0)}\\\\f(${GLSPS_COMPK}×${GLSPS_awl}^4,${GetE(GLOB_BOARDMATERIAL)}×${IFValue(GLSPS_ti,GLSPS_te,GLSPS_to)}^4)${GetEQFormat(1)}×10^9 \r\n    =${GLSPS_θwe} \r\n   η\\: 折减系数,根据参数θ查表6.1.2-2  得η = ${GetNg(GLSPS_θwe)} \r\n   "
+    },
+    {
+     "head": "GLSPS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×η"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "${GLSPS_awl}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "*",
+     "body": "${Div(GLSPS_awl,2)}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×${GetNg(GLSPS_θwe)}"
+    },
+    {
+     "head": "GLSPS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "506",
+   "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+   "bytes": 2399,
+   "calls": {
+    "GetEQSSubFormat": {
+     "count": 7,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180252940",
+     "registry_arity": 3
+    },
+    "GetEQFormat": {
+     "count": 18,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSSubFormat": {
+     "count": 7,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180254620",
+     "registry_arity": 3
+    },
+    "IsEqual": {
+     "count": 6,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      4
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "Div": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLSPS_COMPK",
+    "GLSPS_DESC",
+    "GLSPS_DFNum",
+    "GLSPS_DISP",
+    "GLSPS_DWLESS",
+    "GLSPS_Dw",
+    "GLSPS_STRUCTDESC",
+    "GLSPS_awl",
+    "GLSPS_dflim",
+    "GLSPS_dfw",
+    "GLSPS_te",
+    "GLSPS_ti",
+    "GLSPS_tmg",
+    "GLSPS_to",
+    "GLSPS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "8.1.5-2"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "参数θ计算\\: \r\n   θ=${GetEQFormat(0)}\\\\f(${GetSSubFormat('q','','k')}×b^4,E×${GetSSubFormat('t','','e')}^4)${GetEQFormat(1)}        (JGJ102-2003  8.1.5-4) \r\n    =${GetEQFormat(0)}\\\\f(${GLSPS_COMPK}×${GLSPS_awl}^4,${GetE(GLOB_BOARDMATERIAL)}×${GLSPS_te}^4)${GetEQFormat(1)}×10^9 \r\n    =${GLSPS_θwe} \r\n   η\\: 折减系数,根据参数θ查表6.1.2-2  得η = ${GetNg(GLSPS_θwe)} \r\n   "
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×η"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "${GLSPS_awl}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "*",
+     "body": "${Div(GLSPS_awl,2)}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×${GetNg(GLSPS_θwe)}"
+    },
+    {
+     "head": "GLSPS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "507",
+   "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+   "bytes": 2399,
+   "calls": {
+    "GetEQSSubFormat": {
+     "count": 7,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180252940",
+     "registry_arity": 3
+    },
+    "GetEQFormat": {
+     "count": 18,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 3,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSSubFormat": {
+     "count": 7,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180254620",
+     "registry_arity": 3
+    },
+    "IsEqual": {
+     "count": 6,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetSDr": {
+     "count": 2,
+     "call_arity": [
+      4
+     ],
+     "resolved": true,
+     "impl": "FUN_1802986b0",
+     "registry_arity": 2
+    },
+    "GetNg": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_1802980c0",
+     "registry_arity": 1
+    },
+    "Div": {
+     "count": 1,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLSPS_COMPK",
+    "GLSPS_DESC",
+    "GLSPS_DFNum",
+    "GLSPS_DISP",
+    "GLSPS_DWLESS",
+    "GLSPS_Dw",
+    "GLSPS_STRUCTDESC",
+    "GLSPS_awl",
+    "GLSPS_dflim",
+    "GLSPS_dfw",
+    "GLSPS_te",
+    "GLSPS_ti",
+    "GLSPS_tmg",
+    "GLSPS_to",
+    "GLSPS_θwe",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "8.1.5-2"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "参数θ计算\\: \r\n   θ=${GetEQFormat(0)}\\\\f(${GetSSubFormat('q','','k')}×b^4,E×${GetSSubFormat('t','','e')}^4)${GetEQFormat(1)}        (JGJ102-2003  8.1.5-4) \r\n    =${GetEQFormat(0)}\\\\f(${GLSPS_COMPK}×${GLSPS_awl}^4,${GetE(GLOB_BOARDMATERIAL)}×${GLSPS_te}^4)${GetEQFormat(1)}×10^9 \r\n    =${GLSPS_θwe} \r\n   η\\: 折减系数,根据参数θ查表6.1.2-2  得η = ${GetNg(GLSPS_θwe)} \r\n   "
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×η"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "${GLSPS_awl}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "*",
+     "body": "${Div(GLSPS_awl,2)}"
+    },
+    {
+     "head": "IsEqual(GLSPS_LINKNUM,4)",
+     "operator": "+",
+     "body": "×${GetNg(GLSPS_θwe)}"
+    },
+    {
+     "head": "GLSPS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "1091",
+   "symbol": "WDISPLACEMENTTWOSIDE",
+   "bytes": 873,
+   "calls": {
+    "GetE": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_SDr",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_to",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "te\\: ${GLS_STRUCTDESC}的等效厚度\r\n   te=${IsLarge(GLS_tm,3.0):+0.95×}(t1^3+t2^3)^(1/3)\r\n     =${IsLarge(GLS_tm,3.0):+0.95×}(${GLS_to}^3+${GLS_ti}^3)^(1/3)\r\n     =${GLS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "e"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "1092",
+   "symbol": "MG_WDISPLACEMENTTWOSIDE",
+   "bytes": 1498,
+   "calls": {
+    "GetEQFormat": {
+     "count": 16,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetSSubFormat": {
+     "count": 8,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180254620",
+     "registry_arity": 3
+    },
+    "GetE": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "GetEQSSubFormat": {
+     "count": 4,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180252940",
+     "registry_arity": 3
+    },
+    "IsLarge": {
+     "count": 2,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_SDr",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_to",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "${GetEQSSubFormat('t','','e')}\\: ${GLS_STRUCTDESC}的等效厚度\r\n   ${GetEQFormat(0)}${GetSSubFormat('t','','e')}=${IsLarge(GLS_tm,3.0):+0.95×}\\\\r(3,${GetSSubFormat('t','','1')}^3+${GetSSubFormat('t','','2')}^3)${GetEQFormat(1)}\r\n     ${GetEQFormat(0)}=${IsLarge(GLS_tm,3.0):+0.95×}\\\\r(3,${GLS_to}^3+${GLS_ti}^3)${GetEQFormat(1)}\r\n     =${GLS_te}mm"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "IsLarge(GLS_tm,3.0)",
+     "operator": "+",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "*",
+     "body": "t"
+    },
+    {
+     "head": "GLS_ti",
+     "operator": "+",
+     "body": "${GetSSubFormat('t','','e')}"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "1095",
+   "symbol": "WDISPLACEMENTTWOSIDETHRLAYER",
+   "bytes": 1061,
+   "calls": {
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DESC",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_SDr",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_tmg",
+    "GLS_to",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  },
+  {
+   "iid": "1096",
+   "symbol": "MG_WDISPLACEMENTTWOSIDETHRLAYER",
+   "bytes": 1691,
+   "calls": {
+    "GetEQFormat": {
+     "count": 14,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180252770",
+     "registry_arity": 1
+    },
+    "GetSSubFormat": {
+     "count": 9,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180254620",
+     "registry_arity": 3
+    },
+    "GetVr": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180275fa0",
+     "registry_arity": 1
+    },
+    "GetE": {
+     "count": 2,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180271340",
+     "registry_arity": 1
+    },
+    "GetEQSSubFormat": {
+     "count": 4,
+     "call_arity": [
+      3
+     ],
+     "resolved": true,
+     "impl": "FUN_180252940",
+     "registry_arity": 3
+    },
+    "LAnd": {
+     "count": 3,
+     "call_arity": [
+      2
+     ],
+     "resolved": false,
+     "impl": null,
+     "registry_arity": null
+    },
+    "GetLess": {
+     "count": 1,
+     "call_arity": [
+      1
+     ],
+     "resolved": true,
+     "impl": "FUN_180254010",
+     "registry_arity": 2
+    }
+   },
+   "variables": [
+    "GLS_COMPK",
+    "GLS_DESC",
+    "GLS_DFNum",
+    "GLS_DISP",
+    "GLS_DWLESS",
+    "GLS_Dw",
+    "GLS_SDr",
+    "GLS_STRUCTDESC",
+    "GLS_awl",
+    "GLS_dflim",
+    "GLS_dfw",
+    "GLS_te",
+    "GLS_ti",
+    "GLS_tmg",
+    "GLS_to",
+    "νw"
+   ],
+   "conditionals": [
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "\r\n   由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))",
+     "operator": "*",
+     "body": "0.95×"
+    },
+    {
+     "head": "GLS_DWLESS",
+     "operator": "*",
+     "body": "不"
+    }
+   ]
+  }
+ ],
+ "unresolved": {
+  "IsLarge": [
+   "not in registry (MG_WDISPLACEMENT)",
+   "not in registry (MG_WDISPLACEMENTJD)",
+   "not in registry (MG_WDISPLACEMENTPS)",
+   "not in registry (MG_WDISPLACEMENTPSJD)",
+   "not in registry (MG_WDISPLACEMENTTWOSIDE)",
+   "not in registry (WDISPLACEMENT)",
+   "not in registry (WDISPLACEMENTJD)",
+   "not in registry (WDISPLACEMENTPS)",
+   "not in registry (WDISPLACEMENTPSJD)",
+   "not in registry (WDISPLACEMENTTWOSIDE)"
+  ],
+  "IFValue": [
+   "not in registry (GLASSRIBDISP)",
+   "not in registry (GLASSRIBDISPJD)",
+   "not in registry (MG_GLASSRIBDISP)",
+   "not in registry (MG_WDISPLACEMENT)",
+   "not in registry (MG_WDISPLACEMENTPS)",
+   "not in registry (MG_WDISPLACEMENTPSJD)",
+   "not in registry (WDISPLACEMENT)",
+   "not in registry (WDISPLACEMENTJD)",
+   "not in registry (WDISPLACEMENTPS)",
+   "not in registry (WDISPLACEMENTPSJD)"
+  ],
+  "LAnd": [
+   "not in registry (MG_WDISPLACEMENTTHRLAYER)",
+   "not in registry (MG_WDISPLACEMENTTHRLAYERJD)",
+   "not in registry (MG_WDISPLACEMENTTHRLAYERPS)",
+   "not in registry (MG_WDISPLACEMENTTHRLAYERPSJD)",
+   "not in registry (MG_WDISPLACEMENTTWOSIDETHRLAYER)",
+   "not in registry (WDISPLACEMENTTHRLAYER)",
+   "not in registry (WDISPLACEMENTTHRLAYERJD)",
+   "not in registry (WDISPLACEMENTTHRLAYERPS)",
+   "not in registry (WDISPLACEMENTTHRLAYERPSJD)",
+   "not in registry (WDISPLACEMENTTWOSIDETHRLAYER)"
+  ],
+  "GLASSFE_SHTable": [
+   "not in registry (GLASSFEDISPMENT)",
+   "not in registry (MG_GLASSFEDISPMENT)"
+  ],
+  "IsEqual": [
+   "not in registry (MG_WDISPLACEMENTPS)",
+   "not in registry (MG_WDISPLACEMENTPSJD)",
+   "not in registry (MG_WDISPLACEMENTTHRLAYERPS)",
+   "not in registry (MG_WDISPLACEMENTTHRLAYERPSJD)",
+   "not in registry (WDISPLACEMENTPS)",
+   "not in registry (WDISPLACEMENTPSJD)",
+   "not in registry (WDISPLACEMENTTHRLAYERPS)",
+   "not in registry (WDISPLACEMENTTHRLAYERPSJD)"
+  ],
+  "Div": [
+   "not in registry (MG_WDISPLACEMENTPS)",
+   "not in registry (MG_WDISPLACEMENTPSJD)",
+   "not in registry (MG_WDISPLACEMENTTHRLAYERPS)",
+   "not in registry (MG_WDISPLACEMENTTHRLAYERPSJD)",
+   "not in registry (WDISPLACEMENTPS)",
+   "not in registry (WDISPLACEMENTPSJD)",
+   "not in registry (WDISPLACEMENTTHRLAYERPS)",
+   "not in registry (WDISPLACEMENTTHRLAYERPSJD)"
+  ]
+ },
+ "variadic": {
+  "GetLess": [
+   "1 args in GLASSRIBDISP (registry arity 2)",
+   "1 args in GLASSRIBDISPJD (registry arity 2)",
+   "1 args in MG_GLASSRIBDISP (registry arity 2)",
+   "1 args in MG_WDISPLACEMENT (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTJD (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTPS (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTPSJD (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTTHRLAYER (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTTHRLAYERJD (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTTHRLAYERPS (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTTHRLAYERPSJD (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTTWOSIDE (registry arity 2)",
+   "1 args in MG_WDISPLACEMENTTWOSIDETHRLAYER (registry arity 2)",
+   "1 args in WDISPLACEMENT (registry arity 2)",
+   "1 args in WDISPLACEMENTJD (registry arity 2)",
+   "1 args in WDISPLACEMENTPS (registry arity 2)",
+   "1 args in WDISPLACEMENTPSJD (registry arity 2)",
+   "1 args in WDISPLACEMENTTHRLAYER (registry arity 2)",
+   "1 args in WDISPLACEMENTTHRLAYERJD (registry arity 2)",
+   "1 args in WDISPLACEMENTTHRLAYERPS (registry arity 2)",
+   "1 args in WDISPLACEMENTTHRLAYERPSJD (registry arity 2)",
+   "1 args in WDISPLACEMENTTWOSIDE (registry arity 2)",
+   "1 args in WDISPLACEMENTTWOSIDETHRLAYER (registry arity 2)"
+  ],
+  "GetSDr": [
+   "4 args in MG_WDISPLACEMENTPS (registry arity 2)",
+   "4 args in MG_WDISPLACEMENTPSJD (registry arity 2)",
+   "4 args in MG_WDISPLACEMENTTHRLAYERPS (registry arity 2)",
+   "4 args in MG_WDISPLACEMENTTHRLAYERPSJD (registry arity 2)",
+   "4 args in WDISPLACEMENTPS (registry arity 2)",
+   "4 args in WDISPLACEMENTPSJD (registry arity 2)",
+   "4 args in WDISPLACEMENTTHRLAYERPS (registry arity 2)",
+   "4 args in WDISPLACEMENTTHRLAYERPSJD (registry arity 2)"
+  ]
+ },
+ "summary": {
+  "calls": 555,
+  "resolved": 434,
+  "arity_ok": 395,
+  "arity_mismatch": 0,
+  "arity_unknown": 0,
+  "arity_variadic": 39,
+  "variables": 526,
+  "conditionals": 158
+ },
+ "library_occurrences": {
+  "IsLarge": 387,
+  "IFValue": 114,
+  "LAnd": 271,
+  "GLASSFE_SHTable": 21,
+  "IsEqual": 916,
+  "Div": 134
+ },
+ "node_call_sites": {
+  "CalGlassDisp": 0,
+  "CalGlassPSDisp": 0
+ },
+ "nodes_never_called": 293,
+ "input_prefixes": {
+  "GLS": [
+   "GLS_COMPK",
+   "GLS_DESC",
+   "GLS_DFNum",
+   "GLS_DISP",
+   "GLS_DWLESS",
+   "GLS_Dw",
+   "GLS_SDr",
+   "GLS_STRUCTDESC",
+   "GLS_awl",
+   "GLS_dflim",
+   "GLS_dfw",
+   "GLS_te",
+   "GLS_ti",
+   "GLS_tmg",
+   "GLS_to",
+   "GLS_θwe"
+  ],
+  "GLSPS": [
+   "GLSPS_COMPK",
+   "GLSPS_DESC",
+   "GLSPS_DFNum",
+   "GLSPS_DISP",
+   "GLSPS_DWLESS",
+   "GLSPS_Dw",
+   "GLSPS_STRUCTDESC",
+   "GLSPS_awl",
+   "GLSPS_dflim",
+   "GLSPS_dfw",
+   "GLSPS_te",
+   "GLSPS_ti",
+   "GLSPS_tmg",
+   "GLSPS_to",
+   "GLSPS_θwe"
+  ],
+  "GRIB": [
+   "GRIB_Bw",
+   "GRIB_COMPK",
+   "GRIB_DFRLIMIT",
+   "GRIB_H",
+   "GRIB_Hw",
+   "GRIB_dfribcal",
+   "GRIB_dfrlim",
+   "GRIB_ttrib"
+  ],
+  "other": [
+   "νw"
+  ]
+ },
+ "branch_heads": {
+  "IsEqual(GLSPS_LINKNUM,4)": [
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "8.1.5.2"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "参数θ计算\\: \r    θ=qk×b^4/E/t${GLSPS_ti:+e}^4        (JGJ102-2003  8.1.5-4) \r     =$"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "×η"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "${GLSPS_awl}"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "*",
+    "body": "${Div(GLSPS_awl,2.0)}"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "×${GetNg(GLSPS_θwe)}"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "8.1.5.2"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "参数θ计算\\: \r    θ=qk×b^4/E/t${GLSPS_ti:+e}^4        (JGJ102-2003  8.1.5-4) \r     =$"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "×η"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "${GLSPS_awl}"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "*",
+    "body": "${Div(GLSPS_awl,2.0)}"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "×${GetNg(GLSPS_θwe)}"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "8.1.5-2"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "参数θ计算\\: \r    θ=qk×b^4/E/te^4        (JGJ102-2003  8.1.5-4) \r     =${GLSPS_COMPK}"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "×η"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "${GLSPS_awl}"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "${Div(GLSPS_awl,2)}"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "×${GetNg(GLSPS_θwe)}"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "8.1.5-2"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "参数θ计算\\: \r    θ=qk×b^4/E/te^4        (JGJ102-2003  8.1.5-4) \r     =${GLSPS_COMPK}"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "×η"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "${GLSPS_awl}"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "${Div(GLSPS_awl,2)}"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "×${GetNg(GLSPS_θwe)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "8.1.5.2"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "参数θ计算\\: \r    θ=${GetEQFormat(0)}\\\\f(qk×b^4,E×t${GLSPS_ti:+e}^4)${GetEQFormat(1)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "×η"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "${GLSPS_awl}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "*",
+    "body": "${Div(GLSPS_awl,2)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "×${GetNg(GLSPS_θwe)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "8.1.5.2"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "参数θ计算\\: \r    θ=${GetEQFormat(0)}\\\\f(qk×b^4,E×t${GLSPS_ti:+e}^4)${GetEQFormat(1)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "×η"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "${GLSPS_awl}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "*",
+    "body": "${Div(GLSPS_awl,2)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "×${GetNg(GLSPS_θwe)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "8.1.5-2"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "参数θ计算\\: \r    θ=${GetEQFormat(0)}\\\\f(${GetSSubFormat('q','','k')}×b^4,E×${GetSSub"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "×η"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "${GLSPS_awl}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "${Div(GLSPS_awl,2)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "+",
+    "body": "×${GetNg(GLSPS_θwe)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "8.1.5-2"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "参数θ计算\\: \r    θ=${GetEQFormat(0)}\\\\f(${GetSSubFormat('q','','k')}×b^4,E×${GetSSub"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "×η"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "${GLSPS_awl}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "${Div(GLSPS_awl,2)}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "+",
+    "body": "×${GetNg(GLSPS_θwe)}"
+   }
+  ],
+  "GLS_ti": [
+   {
+    "symbol": "WDISPLACEMENT",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+   },
+   {
+    "symbol": "WDISPLACEMENT",
+    "operator": "+",
+    "body": "te\\: ${GLS_STRUCTDESC}的等效厚度\r    te=${IsLarge(GLS_tm,3.0):+0.95×}(t1^3+t2^3)^(1/3"
+   },
+   {
+    "symbol": "WDISPLACEMENT",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "WDISPLACEMENT",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "WDISPLACEMENTJD",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+   },
+   {
+    "symbol": "WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "te\\: ${GLS_STRUCTDESC}的等效厚度\r    te=${IsLarge(GLS_tm,3.0):+0.95×}(t1^3+t2^3)^(1/3"
+   },
+   {
+    "symbol": "WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "+",
+    "body": "${GetEQSSubFormat('t','','e')}\\: ${GLS_STRUCTDESC}的等效厚度\r    ${GetEQFormat(0)}${G"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "*",
+    "body": "t"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "+",
+    "body": "${GetSSubFormat('t','','e')}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "*",
+    "body": "t"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "+",
+    "body": "${GetSSubFormat('t','','e')}"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTJD",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "te\\: ${GLS_STRUCTDESC}的等效厚度\r    te=${IsLarge(GLS_tm,3.0):+0.95×}${GetEQFormat(0)"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDE",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDE",
+    "operator": "+",
+    "body": "te\\: ${GLS_STRUCTDESC}的等效厚度\r    te=${IsLarge(GLS_tm,3.0):+0.95×}(t1^3+t2^3)^(1/3"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDE",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDE",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLS_to}mm"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDE",
+    "operator": "+",
+    "body": "${GetEQSSubFormat('t','','e')}\\: ${GLS_STRUCTDESC}的等效厚度\r    ${GetEQFormat(0)}${G"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDE",
+    "operator": "*",
+    "body": "t"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDE",
+    "operator": "+",
+    "body": "${GetSSubFormat('t','','e')}"
+   }
+  ],
+  "LAnd(IsNLarge(GLS_tm,3),IsNLarge(GLS_tml,3))": [
+   {
+    "symbol": "WDISPLACEMENTTHRLAYER",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYER",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYER",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERJD",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERJD",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERJD",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYER",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYER",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYER",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERJD",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERJD",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERJD",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDETHRLAYER",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDETHRLAYER",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDETHRLAYER",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDETHRLAYER",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDETHRLAYER",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDETHRLAYER",
+    "operator": "*",
+    "body": "0.95×"
+   }
+  ],
+  "GLSPS_ti": [
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLSPS_to}mm"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "te\\: ${GLSPS_STRUCTDESC}的等效厚度\r    te=${IsLarge(GLSPS_tm,3.0):+0.95×}(to^3+ti^3)^"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLSPS_to}mm"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "te\\: ${GLSPS_STRUCTDESC}的等效厚度\r    te=${IsLarge(GLSPS_tm,3.0):+0.95×}(to^3+ti^3)^"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLSPS_to}mm"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "te\\: ${GLSPS_STRUCTDESC}的等效厚度\r    te=${IsLarge(GLSPS_tm,3.0):+0.95×}${GetEQForma"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "*",
+    "body": "t\\: 玻璃板块厚度\\: ${GLSPS_to}mm"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "te\\: ${GLSPS_STRUCTDESC}的等效厚度\r    te=${IsLarge(GLSPS_tm,3.0):+0.95×}${GetEQForma"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "e"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "e"
+   }
+  ],
+  "GLS_DWLESS": [
+   {
+    "symbol": "WDISPLACEMENT",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "WDISPLACEMENTJD",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYER",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERJD",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTJD",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYER",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERJD",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDE",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDE",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDETHRLAYER",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDETHRLAYER",
+    "operator": "*",
+    "body": "不"
+   }
+  ],
+  "LAnd(IsNLarge(GLSPS_tm,3),IsNLarge(GLSPS_tml,3))": [
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "\r    由于有空气层存在,故需要按照规范JGJ102-2003 6.1.5进行折减 "
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "0.95×"
+   }
+  ],
+  "IsLarge(GLS_tm,3.0)": [
+   {
+    "symbol": "WDISPLACEMENT",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENT",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENT",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTJD",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDE",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTTWOSIDE",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDE",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTWOSIDE",
+    "operator": "+",
+    "body": "0.95×"
+   }
+  ],
+  "IsLarge(GLSPS_tm,3.0)": [
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "0.95×"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "+",
+    "body": "0.95×"
+   }
+  ],
+  "GLSPS_DWLESS": [
+   {
+    "symbol": "WDISPLACEMENTPS",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "WDISPLACEMENTPSJD",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPS",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTPSJD",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPS",
+    "operator": "*",
+    "body": "不"
+   },
+   {
+    "symbol": "MG_WDISPLACEMENTTHRLAYERPSJD",
+    "operator": "*",
+    "body": "不"
+   }
+  ]
+ }
+}

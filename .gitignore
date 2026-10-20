@@ -1,0 +1,13 @@
+# large binary / generated artifacts (kept locally, never pushed)
+vendor/
+evidence/
+migration_workspace/raw/
+migration_workspace/.cache/
+node_modules/
+replica/node_modules/
+*.log
+.DS_Store
+.pi/
+.codex-runtime/
+migration_workspace/.venv/
+migration_workspace/UNATTENDED.state

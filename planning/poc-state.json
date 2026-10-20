@@ -44,7 +44,7 @@
     },
     "s4": {
      "status": "RUNNING",
-     "note": "BREP body is a sub-object stream: each object = u32 version(6) + u32 objectId + u64 0 + fields; 1783 shows ids 5..11 at offsets 0,114,132,198,216,282,300 — locate the type marker and per-type field widths next"
+     "note": "geometry encoding solved and verified on gid 1783: line=48B (two 3-D points), arc=96B (startRad, radius, endRad, cx, cy, cz), 2-byte markers ignored; chained 23 lines + 16 arcs → area 73.5 mm² == stored 73.5 mm² (0.00%). Remaining: robust chaining for multi-loop sections (1780/1781/1782 chain counts too high)"
     }
    },
    "gate": {

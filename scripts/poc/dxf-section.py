@@ -274,6 +274,37 @@ def raw_dxf_entities(path, scale):
     return out
 
 
+def sections_from_outer_rings(loops):
+    """One section per outermost ring; a ring belongs to the smallest ring that contains it.
+
+    Correct for profile drawings: separate profiles are separate outer rings, holes are contained.
+    """
+    rings = []
+    for loop in loops:
+        area = abs(signed_area(loop))
+        if area < 1.0:
+            continue
+        rings.append({'pts': loop, 'area': area})
+    for ring in rings:
+        n = len(ring['pts'])
+        cx = sum(p[0] for p in ring['pts']) / n
+        cy = sum(p[1] for p in ring['pts']) / n
+        probe = (cx, cy) if inside((cx, cy), ring['pts']) else ring['pts'][0]
+        ring['probe'] = probe
+    for ring in rings:
+        ring['contained_by'] = [other for other in rings
+                                if other is not ring and other['area'] > ring['area']
+                                and inside(ring['probe'], other['pts'])]
+    groups = {}
+    for ring in rings:
+        if ring['contained_by']:
+            parent = min(ring['contained_by'], key=lambda r: r['area'])
+            groups.setdefault(id(parent), [parent]).append(ring)
+        else:
+            groups.setdefault(id(ring), [ring])
+    return [g[0]['pts'] and [r['pts'] for r in g] for g in groups.values()]
+
+
 def cluster_rings(loops, gap=5.0):
     """Group rings into separate sections by bounding-box proximity (a drawing holds many profiles)."""
     def bbox(loop):
@@ -327,7 +358,7 @@ def analyse_multi(path, gap=5.0):
     y0 = min(p[1] for loop in loops for p in loop)
     loops = [[(p[0] - x0, p[1] - y0) for p in loop] for loop in loops]
     sections = []
-    for group in cluster_rings(loops, gap):
+    for group in sections_from_outer_rings(loops):
         try:
             props = properties(group)
         except ValueError:

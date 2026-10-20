@@ -75,7 +75,7 @@ def block_record_names(pairs):
 def scan_blocks(pairs, names):
     blocks = defaultdict(list)
     inserts = Counter()
-    section, owner, name, current, fields, verts = None, None, None, None, {}, []
+    section, name, current, fields, verts = None, None, None, {}, []
 
     def emit():
         nonlocal current, fields, verts
@@ -109,7 +109,7 @@ def scan_blocks(pairs, names):
             elif value == 'ENDSEC':
                 section = None
             elif value in ('BLOCK', 'ENDBLK'):
-                owner, name = None, None
+                name = None
             elif value == 'INSERT':
                 inserts['__pending__'] += 1
             current = value

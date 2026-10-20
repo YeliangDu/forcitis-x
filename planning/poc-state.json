@@ -47,8 +47,8 @@
      "note": "DXF import pipeline implemented and self-tested: entities LINE/ARC/LWPOLYLINE(with bulge)/POLYLINE/CIRCLE + recursive INSERT explosion, INSUNITS scaling, snapped loop assembly, hole classification by containment+area, exact Green properties; selftest (100x60 rect with 20x20 hole) matches analytic area 5600 mm² and Ix 1,786,666.67 (<=1e-9)"
     },
     "s4b": {
-     "status": "BLOCKED",
-     "note": "needs a real DXF/DWG from the user (or 型材参数表 rows) to compare against the original system"
+     "status": "RUNNING",
+     "note": "real DWG imported: 1,425 entities → 94 closed rings (mm); per-section grouping still wrong (bbox proximity merges neighbouring profiles). Need block-based grouping or one-outer-ring-per-section rule."
     }
    },
    "gate": {

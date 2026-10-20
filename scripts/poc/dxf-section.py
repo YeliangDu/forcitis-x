@@ -192,6 +192,9 @@ def properties(loops):
         ix += sign * ixr / 12
         iy += sign * iyr / 12
         ixy += sign * ixyr / 24
+    if not area:
+        raise ValueError('no closed ring found — check that the drawing contains a closed outline '
+                         '(segments within the snap tolerance)')
     cx, cy = sx / area, sy / area
     return {'areaMm2': float(area), 'cxMm': float(cx), 'cyMm': float(cy),
             'ixMm4': float(ix - area * cy * cy), 'iyMm4': float(iy - area * cx * cx),
@@ -271,6 +274,79 @@ def raw_dxf_entities(path, scale):
     return out
 
 
+def cluster_rings(loops, gap=5.0):
+    """Group rings into separate sections by bounding-box proximity (a drawing holds many profiles)."""
+    def bbox(loop):
+        xs = [p[0] for p in loop]
+        ys = [p[1] for p in loop]
+        return min(xs), min(ys), max(xs), max(ys)
+
+    boxes = [bbox(loop) for loop in loops]
+    parent = list(range(len(loops)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    def near(a, b):
+        return not (a[2] + gap < b[0] or b[2] + gap < a[0] or a[3] + gap < b[1] or b[3] + gap < a[1])
+
+    for i in range(len(loops)):
+        for j in range(i + 1, len(loops)):
+            if near(boxes[i], boxes[j]):
+                ra, rb = find(i), find(j)
+                if ra != rb:
+                    parent[rb] = ra
+    groups = {}
+    for i in range(len(loops)):
+        groups.setdefault(find(i), []).append(loops[i])
+    return list(groups.values())
+
+
+def analyse_multi(path, gap=5.0):
+    dxf_path, converter = to_dxf(path)
+    unit_code, scale = 4, 1.0
+    stream = None
+    try:
+        doc = ezdxf.readfile(str(dxf_path))  # pyright: ignore[reportPrivateImportUsage]
+        unit_code = doc.header.get('$INSUNITS', 4)
+        scale = UNITS.get(unit_code, 1.0)
+        stream = entity_stream(doc, scale)
+    except (ValueError, DXFStructureError) as error:
+        sys.stderr.write(f'ezdxf rejected the DXF ({error}); using group-code scan\n')
+    if stream is None:
+        stream = raw_dxf_entities(dxf_path, scale)
+    loops = build_loops([polyline_of(seg) for seg in stream])
+    if not loops:
+        return []
+    # translate to the local origin: absolute drawing coordinates (hundreds of metres) destroy the
+    # second-moment subtraction through catastrophic cancellation
+    x0 = min(p[0] for loop in loops for p in loop)
+    y0 = min(p[1] for loop in loops for p in loop)
+    loops = [[(p[0] - x0, p[1] - y0) for p in loop] for loop in loops]
+    sections = []
+    for group in cluster_rings(loops, gap):
+        try:
+            props = properties(group)
+        except ValueError:
+            continue
+        props['entities'] = len(stream)
+        props['units'] = f'INSUNITS={unit_code} scale={scale}'
+        props['sourceFormat'] = Path(path).suffix.lower().lstrip('.')
+        props['converter'] = converter or 'none (native DXF)'
+        props['cxMm'] += x0
+        props['cyMm'] += y0
+        props['bboxMm'] = [props['bboxMm'][0] + x0, props['bboxMm'][1] + y0,
+                           props['bboxMm'][2] + x0, props['bboxMm'][3] + y0]
+        if props['areaMm2'] < 1.0:
+            continue
+        sections.append(props)
+    sections.sort(key=lambda s: (-s['areaMm2']))
+    return sections
+
+
 def analyse(path):
     dxf_path, converter = to_dxf(path)
     unit_code, scale = 4, 1.0
@@ -340,6 +416,19 @@ def selftest():
 
 
 def main(argv):
+    if '--split' in argv:
+        path = next(a for a in argv[1:] if not a.startswith('--'))
+        sections = analyse_multi(path)
+        for i, props in enumerate(sections[:15], 1):
+            print(f"#{i:<2} A={props['areaMm2']:10.2f} mm²  Ix={props['ixMm4']:14.4g}  Iy={props['iyMm4']:14.4g}  "
+                  f"rings={props['rings']} bbox={[round(v, 1) for v in props['bboxMm']]}")
+        print(f'total sections: {len(sections)}')
+        if '--json' in argv:
+            import json as _json
+            out = Path(argv[argv.index('--json') + 1])
+            out.write_text(_json.dumps({'file': path, 'sections': sections}, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+            print(f'wrote {out}')
+        return 0
     if '--selftest' in argv:
         return selftest()
     if '--selftest-dwg' in argv:

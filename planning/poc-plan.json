@@ -65,14 +65,14 @@
      "artifacts": [
       "evidence/poc/P1/brep-records.json"
      ],
-     "next_action": "BREP 框已解：tag(0x8000|len)+UTF-16 类名+u32(恒 6)+载荷；下一步用 HWKCAD.dll 的 Serialize 链（HWKCADGraphLine/Arc）定字段布局，每条记录长度未存，需按字段宽度推",
+     "next_action": "静态度量卡住：body 前缀 `int 6 / int64 5 / int32 0 / double…` 与反编译写入顺序 (int 21, int64, int32, CbString) 对不上，说明记录由容器层写入而非直接调 Serialize。改走已验证的方法：原版改一个断面尺寸→另存→逐字节差分，直接量出参数偏移（与 .cwx 字段宽度同一手法）",
      "requires": [
       "s3"
      ]
     },
     {
      "id": "s4b",
-     "title": "CbArchive 数组/聚合编码（复数字段）",
+     "title": "动态差分：断面尺寸→另存→字节偏移",
      "cwd": ".",
      "run": [
       "python3",
@@ -85,7 +85,7 @@
      "requires": [
       "s4"
      ],
-     "next_action": "Line/Arc 载荷含聚合字段（点数组）；需先解 CbArchive 的数组/字符串原语（计数+元素宽度）"
+     "next_action": "在 ECS 上以只读副本打开一个含该型材的工程，改一个尺寸参数，另存后差分"
     },
     {
      "id": "s5",

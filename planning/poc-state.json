@@ -43,8 +43,8 @@
      "summary": "{\"checks\": 9, \"failures\": 0, \"geometry\": \"PENDING\", \"passed\": true}"
     },
     "s4": {
-     "status": "RUNNING",
-     "note": "exact write order recovered by decompile: ModelDocObject(int 21, int64 +8, int32 +0xc, CbString +0x10) -> GraphBase(int +0x48, double +0x50) -> Arc(int +0x70, 3 doubles +0x90/98/a0, gp_Pnt +0xa8, gp_Vec +0xc0, gp_Vec +0xd8); OCCT types are 3 doubles each; fixed part 132 B, so the 5 kB Arc body is dominated by relations/constructor-include arrays not yet decompiled"
+     "status": "BLOCKED",
+     "note": "static layout mismatch: body starts with int32 6 / int64 5 / int32 0 / double 1.5708..., while decompiled write order starts with int literal 21 + int64 + int32 + CbString — so the BREP records are written by the container (tag+name+…) rather than by a direct Serialize call; switch to dynamic differential (change one section dimension → save → byte diff)"
     }
    },
    "gate": {

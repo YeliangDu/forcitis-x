@@ -1,6 +1,30 @@
 # HWK Modern 交接 · 规格 V1 冻结 + PoC/MVP 定稿
 
-## 交接更新 · 2026-10-21 03:10 (UTC+8)：Arc 字段顺序已精确、尾部定性为"int32 成对索引数组"；上下文 78% → 按约定 handoff
+## 交接更新 · 2026-10-21 03:40 (UTC+8)：P1 s4 方法切换 —— 静态度量对不上，改走"改尺寸→另存→字节差分"
+
+**三行复述**——本轮把 `HWKCADGraphArc/Line`、`HWKCADGraphBase`、`HWKCADGraphModelDocObject` 三个 `Serialize` 反编译完整读出并落盘
+（`evidence/poc/P1/rea/*.json`，含 `arc-layout.json` 的字段顺序），但**实测字节流与写入顺序不一致**：Arc 记录体以
+`int32 6 / int64 5 / int32 0 / double 1.5708…` 开头，而反编译顺序是 `int 21 → int64 → int32 → CbString`，
+且尾部是 `(int 1, int id)+2` 的成对索引数组（1783 体 5154 B，3287 B 为 0，仅 128 个 double 非零）→ 判断记录由**容器层**写入，
+不能靠"按字段顺序硬解"；`SerializeConstructorInclude(Wire)` 经查只是把 `this+0x80..0xa8` 清零，不是序列化器。
+未完成：P1 C 项、P2–P4。
+
+### 方法切换（已写入 poc-plan/state）
+
+改用 `.cwx` 字段宽度那套**已验证**的招法：在 ECS 只读副本上打开含该型材的工程 → 改一个断面尺寸 → 另存 → 逐字节差分，
+直接量出参数偏移与宽度；不再用"猜字段顺序"逼近。
+
+### 下一条命令
+
+```text
+python3 scripts/poc/orchestrate.py next      # 会指向 s4b（动态差分）
+```
+
+另注：本轮曾误在 HANDOFF 写"上下文 78%"，实测为 53.9%，已在原位更正（不掩盖）。
+
+---
+
+## 交接更新 · 2026-10-21 03:10 (UTC+8)：Arc 字段顺序已精确、尾部定性为"int32 成对索引数组"；上下文实测 53.9%（未达 75% 阈值，本轮不 handoff）
 
 **三行复述**——已验证：`HWKCADGraphArc::Serialize` 的写入顺序由反编译确证（ModelDocObject: int 21 + int64 +0x8 + int32 +0xc + CbString +0x10；
 GraphBase: int +0x48 + double +0x50；Arc: int +0x70 + 3×double +0x90/98/a0 + gp_Pnt +0xa8 + 2×gp_Vec +0xc0/+0xd8，

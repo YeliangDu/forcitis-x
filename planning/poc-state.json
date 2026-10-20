@@ -43,8 +43,8 @@
      "summary": "{\"checks\": 9, \"failures\": 0, \"geometry\": \"PENDING\", \"passed\": true}"
     },
     "s4": {
-     "status": "BLOCKED",
-     "note": "four static hypotheses rejected (see evidence/poc/P1/rea/arc-layout.json negative_results); remaining: A2 object-table decode, or B dynamic differential via UI (preflight done: session 1 Active, XWall not running)"
+     "status": "RUNNING",
+     "note": "BREP body is a sub-object stream: each object = u32 version(6) + u32 objectId + u64 0 + fields; 1783 shows ids 5..11 at offsets 0,114,132,198,216,282,300 — locate the type marker and per-type field widths next"
     }
    },
    "gate": {

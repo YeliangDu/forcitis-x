@@ -43,8 +43,8 @@
      "summary": "{\"checks\": 9, \"failures\": 0, \"geometry\": \"PENDING\", \"passed\": true}"
     },
     "s4": {
-     "status": "BLOCKED",
-     "note": "record framing decoded: payload = u32 version(6) + u32 ordinal + 8 zero bytes + body; Line body = 6 doubles (2 points) fits exactly; Arc record is the LAST record and its body runs to EOF and contains a mixed object graph (angles, points, 0/1 flags, NaNs) — no contiguous point array found by offset/count search, so the outline array must be decoded from the Arc/relation field order, not guessed"
+     "status": "RUNNING",
+     "note": "exact write order recovered by decompile: ModelDocObject(int 21, int64 +8, int32 +0xc, CbString +0x10) -> GraphBase(int +0x48, double +0x50) -> Arc(int +0x70, 3 doubles +0x90/98/a0, gp_Pnt +0xa8, gp_Vec +0xc0, gp_Vec +0xd8); OCCT types are 3 doubles each; fixed part 132 B, so the 5 kB Arc body is dominated by relations/constructor-include arrays not yet decompiled"
     }
    },
    "gate": {

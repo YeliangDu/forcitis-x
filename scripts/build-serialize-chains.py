@@ -98,6 +98,45 @@ def this_register(insns):
     return max(counts.items(), key=lambda item: item[1])[0]
 
 
+def store_ranges(insns):
+    """Per-field guards: `cmpb $0x0,0x8(%rdi)` + `je T`; the fall-through (je_addr, T) is storing."""
+    ranges = []
+    for index, (addr, mnemonic, insn_operands) in enumerate(insns):
+        if mnemonic != 'cmpb' or '0x8(%rdi)' not in insn_operands:
+            continue
+        for probe in range(index + 1, min(index + 4, len(insns))):
+            mn, ops = insns[probe][1], insns[probe][2]
+            if mn in ('je', 'jne', 'jz', 'jnz') and ops.split()[0].startswith('0x'):
+                ranges.append((addr, int(ops.split()[0], 16)))
+                break
+    return ranges
+
+
+def in_store_range(addr, ranges):
+    return any(start < addr < end for start, end in ranges)
+
+
+def storing_split(insns):
+    """Address where the read half starts: the branch target after the `testb`-checked predicate call.
+
+    Shape in this binary: callq *<IAT slot>; testb %al,%al; je 0x<read half>. The predicate is
+    CbArchive::IsStoring, so everything from the branch target on is the load path.
+    """
+    for index, (_, mnemonic, operands) in enumerate(insns):
+        if mnemonic != 'callq' or index + 2 >= len(insns):
+            continue
+        nxt_mnemonic, nxt_ops = insns[index + 1][1], insns[index + 1][2]
+        if nxt_mnemonic != 'testb' or not nxt_ops.startswith('%al'):
+            continue
+        branch_mnemonic, branch_ops = insns[index + 2][1], insns[index + 2][2]
+        if branch_mnemonic not in ('je', 'jne', 'jz', 'jnz'):
+            continue
+        target = branch_ops.split()[0]
+        if target.startswith('0x'):
+            return int(target, 16)
+    return None
+
+
 def gate_markers(insns, register):
     """Instruction indices where the class version at this+0xc is compared, and the value."""
     markers = {}
@@ -111,7 +150,8 @@ def gate_markers(insns, register):
             continue
         value, where = int(match.group(1), 16), match.group(2)
         if where.startswith('0x'):
-            if where == f'0xc(%{register})':
+            member_offset = where.split('(')[0]
+            if member_offset in ('0xc', '0x28', '0x2c', '0x30') and register in where:
                 markers[index] = value
         elif index:
             previous = EAX_FROM_THIS.match(insns[index - 1][2])
@@ -124,7 +164,12 @@ def parse_body(insns):
     """Return {'base', 'writes', 'reads', 'this_register', 'gates'} for one Serialize body."""
     register = this_register(insns)
     markers = gate_markers(insns, register)
-    split = min(markers) if markers else len(insns)
+    ranges = store_ranges(insns)
+    branch = storing_split(insns)
+    addresses = [insn[0] for insn in insns]
+    split_index = min(markers) if markers else len(insns)
+    if branch is not None:
+        split_index = next((i for i, addr in enumerate(addresses) if addr >= branch), split_index)
 
     base, writes, reads = None, [], []
     gate, pending = None, None
@@ -151,15 +196,16 @@ def parse_body(insns):
             slot = SLOT.search(operands)
             if slot and pending is not None:
                 from_kind = KIND.get(pending[1], 'unknown')
-                if index < split or pending[1] == 'leaq':
+                storing = in_store_range(addresses[index], ranges) if ranges else (index < split_index)
+                if storing or (not ranges and pending[1] == 'leaq'):
                     entry = {'offset': pending[0], 'from': pending[1], 'kind': from_kind,
                              'width': WIDTH.get(pending[1]), 'slot': '0x' + slot.group(1)}
                     if pending[0] == 0xc:
                         # this+0xc is the class version, not a payload value: archive writes it
                         # through its own slot (0x18034f288) so keep it out of the field list
                         entry['kind'] = 'version_tag'
-                        writes.append(entry) if index < split else reads.append(entry)
-                    elif index < split:
+                        (writes if storing else reads).append(entry)
+                    elif storing:
                         writes.append(entry)
                     else:
                         entry['gate'] = gate

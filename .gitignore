@@ -11,3 +11,5 @@ replica/node_modules/
 .codex-runtime/
 migration_workspace/.venv/
 migration_workspace/UNATTENDED.state
+__pycache__/
+*.pyc

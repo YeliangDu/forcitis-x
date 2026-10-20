@@ -36,3 +36,5 @@
 
 - D24（2026-10-21用户）：新系统产品名定为 **FORCITIS-x**（显示写法 `FORCITIS-x`；技术标识小写 `forcitis-x`）。该名进入 T0（UI 标题、报告页眉/页脚、包名、安装程序名、日志标识），**不含旧品牌字样**。派生约定：npm scope `@forcitis-x/*`、根包名 `forcitis-x`、可执行文件名 `forcitis-x`、报告落款“FORCITIS-x”。中文显示名暂缺（待定）。商标/域名可用性未核查，属**未完成的法律核对项**；核查后若需改名，只改 T0，不改领域标识与数据 ID。D23 的“禁用旧产品名”不变。
 
+- D25（2026-10-21用户授权）：代码托管到个人 GitHub 私有仓库 `YeliangDu/forcitis-x`（`origin`，SSH），CI 用 GitHub Actions（`.github/workflows/ci.yml`）。`vendor/`、`evidence/`、`migration_workspace/raw/`、`node_modules/`、`__pycache__/`、`.codex-runtime/`、`migration_workspace/.venv/` 不入库（本地保留）。**远端 CI 首次运行失败原因不在代码**：GitHub 提示账户"recent account payments have failed or your spending limit needs to be increased"，任务未启动；因此 CI 的等价检查以 `scripts/ci-local.sh` 为当前权威门禁（已 PASS），远端 CI 待账户计费恢复后再验，不得把"已配置"表述为"已通过"。
+

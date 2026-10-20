@@ -359,3 +359,10 @@ npm test/build/lint 仍 NOT_RUN（尚无应用）。
 
 `python3 scripts/check-acceptance.py` 目前仍应 exit 1：13 项未通过 + 7 个 gate 未过；74 体系全量库存仍未闭合。
 
+## 仓库与 CI（2026-10-21）
+
+- 远端：`git@github.com:YeliangDu/forcitis-x.git`（私有，`main`）
+- 本地等价门禁（权威）：`./scripts/ci-local.sh` → install / build / lint / test / python syntax / standards / acceptance self-test
+- 远端 CI：`.github/workflows/ci.yml`（同一套步骤）。**首次运行未启动**：GitHub 账户计费提示 `recent account payments have failed or your spending limit needs to be increased`；恢复后重跑 `gh run list` 核验，未核验前不得表述为通过。
+- 不入库：`vendor/`、`evidence/`、`migration_workspace/raw/`、`node_modules/`、`__pycache__/`、`.codex-runtime/`、`migration_workspace/.venv/`
+

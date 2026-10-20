@@ -1,5 +1,32 @@
 # HWK Modern 交接 · 规格 V1 冻结 + PoC/MVP 定稿
 
+## 交接更新 · 2026-10-21 03:10 (UTC+8)：Arc 字段顺序已精确、尾部定性为"int32 成对索引数组"；上下文 78% → 按约定 handoff
+
+**三行复述**——已验证：`HWKCADGraphArc::Serialize` 的写入顺序由反编译确证（ModelDocObject: int 21 + int64 +0x8 + int32 +0xc + CbString +0x10；
+GraphBase: int +0x48 + double +0x50；Arc: int +0x70 + 3×double +0x90/98/a0 + gp_Pnt +0xa8 + 2×gp_Vec +0xc0/+0xd8，
+**OCCT 类型各 3 个 double**，读写半由 `archive+8` 的 IsStoring 分支决定、版本门在 `this+0x28`），
+且 Arc 记录体尾部实测为 **int32 成对数组**（`(1,64) (1,66) (1,68) …` 每次 +2），1783 体 5154 B 中 3287 B 为 0、仅 128 个 double 非零 → 大块是索引/关系数组；
+未完成：写出该数组的方法与其计数前缀（决定 4+count*8 编码），P1 C 项、P2–P4。
+
+### 本轮新增证据
+
+- `evidence/poc/P1/rea/{arc-serialize,graphbase-serialize,modeldocobject-serialize}.json`（REA 反编译原文）
+- `evidence/poc/P1/rea/arc-layout.json`（写入顺序 + 版本门 + 尾部数组结论 + 下一步）
+- 结论：`SerializeConstructorInclude(Wire)` **不是序列化器**（只把 this+0x80..0xa8 清零），不要再按它找字段
+
+### 下一条命令
+
+```text
+# 找写"成对 int32 数组"的方法（候选：HWKCADGraphModelDoc::SerializeRelations 的数组分支）
+export PATH="/Users/yeliang/.nvm/versions/node/v24.18.0/bin:$PATH" GHIDRA_INSTALL_DIR=/Users/yeliang/tools/ghidra_12.1.4_PUBLIC
+rea decompile evidence/baseline/extracted/cab/_1C34889D4B7943DB91CA676194B3F1FC \
+  --procedure='?SerializeRelations@HWKCADGraphModelDoc@HWKCAD@@MEAAXAEAVCbArchive@@QEAPEAVHWKCADGraphModelDocObject@2@@Z' --format=json
+```
+
+读法：在 77 行伪代码里找写 `int` 对的循环（`operator<<(int)` 两次 / vector 遍历），确认计数前缀与元素宽度。
+
+---
+
 ## 交接更新 · 2026-10-21 02:20 (UTC+8)：ES-01 整改完成、ADR 索引建立；基建审计闭合 2 项
 
 **三行复述**——已按"采纳"执行：①ES-01 重命名落地（`areaMm2/centroidXMm/ixMm4/wxTopMm3/principalAngleRad…`，

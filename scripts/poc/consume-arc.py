@@ -18,6 +18,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 _spec = importlib.util.spec_from_file_location('decode_brep', ROOT / 'scripts/poc/decode-brep.py')
+if _spec is None or _spec.loader is None:
+    raise SystemExit('cannot load scripts/poc/decode-brep.py')
 _brep = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_brep)
 HEADER = 16  # u32 version + u32 ordinal + 8 zero bytes, before the field payload

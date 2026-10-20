@@ -38,3 +38,5 @@
 
 - D25（2026-10-21用户授权）：代码托管到个人 GitHub 私有仓库 `YeliangDu/forcitis-x`（`origin`，SSH；**2026-10-21 用户决定改为 public**，因私有仓库 Actions 受账户计费阻塞，公开仓库 Actions 免费），CI 用 GitHub Actions（`.github/workflows/ci.yml`）。`vendor/`、`evidence/`、`migration_workspace/raw/`、`node_modules/`、`__pycache__/`、`.codex-runtime/`、`migration_workspace/.venv/` 不入库（本地保留）。**远端 CI 首跑（私有期）未启动**：GitHub 提示账户计费问题；改 public 后重跑验证。`scripts/ci-local.sh` 仍是本地权威门禁（已 PASS），远端 CI 以 `gh run list` 的实际结论为准，不得把"已配置"表述为"已通过"。公开仓库的入库范围仍需排除 `vendor/`、`evidence/`、`migration_workspace/raw/`（已排除）。
 
+- D26（2026-10-21用户）：**截面参数不在新系统里照搬旧系统存储**。改为"批量导入截面图纸（DWG/DXF）→ 自动计算参数 → 入库（不可变版本）→ 计算时按 `sectionAssetId + version` 引用"；新设计截面同样走导入-计算-审核-入库。旧 `型材参数表`/`图库数据表` 降级为只读对照来源，旧 BREP 编码**不再需要**（仅保留为历史证据）。规格见 `docs/section-library-spec.md`；扭转/扇性（旧 `JA/CJ/TCX`）须单独实现并用旧列锚定后才可入库。
+

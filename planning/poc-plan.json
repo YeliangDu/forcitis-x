@@ -8,7 +8,7 @@
   {
    "id": "P1",
    "title": "断面特性引擎（组合断面）",
-   "hard_criterion": "与旧系统 型材参数表/复合型材参数表 值偏差 <= 0.5%，或差异可归因",
+   "hard_criterion": "导入真实截面图纸(DXF/DWG)自动算参，与解析解 ≤1e-9；可获取旧值时与 型材参数表 偏差 ≤0.5%",
    "steps": [
     {
      "id": "s1",
@@ -56,28 +56,28 @@
     },
     {
      "id": "s4",
-     "title": "断面轮廓（BREP）解码",
+     "title": "DXF/DWG 导入与参数计算（替代 BREP 解码）",
      "cwd": ".",
      "run": [
       "python3",
-      "scripts/poc/decode-brep.py"
+      "scripts/poc/dxf-section.py",
+      "--selftest"
      ],
-     "artifacts": [
-      "evidence/poc/P1/brep-records.json"
-     ],
-     "next_action": "静态度量卡住：body 前缀 `int 6 / int64 5 / int32 0 / double…` 与反编译写入顺序 (int 21, int64, int32, CbString) 对不上，说明记录由容器层写入而非直接调 Serialize。改走已验证的方法：原版改一个断面尺寸→另存→逐字节差分，直接量出参数偏移（与 .cwx 字段宽度同一手法）",
+     "artifacts": [],
+     "next_action": "已实现：LINE/ARC/LWPOLYLINE/POLYLINE/CIRCLE + INSERT 展开，环/孔分类，解析解自检通过（5600 mm²、Ix 1,786,666.67）",
      "requires": [
       "s3"
      ]
     },
     {
      "id": "s4b",
-     "title": "动态差分：断面尺寸→另存→字节偏移",
+     "title": "真实图纸批量导入与对照（需用户提供 DXF 或旧库值）",
      "cwd": ".",
      "run": [
       "python3",
-      "scripts/poc/decode-brep.py",
-      "--arrays"
+      "scripts/poc/dxf-section.py",
+      "--batch",
+      "evidence/sections"
      ],
      "artifacts": [
       "evidence/poc/P1/brep-records.json"
@@ -85,7 +85,7 @@
      "requires": [
       "s4"
      ],
-     "next_action": "在 ECS 上以只读副本打开一个含该型材的工程，改一个尺寸参数，另存后差分"
+     "next_action": "用户提供 1–3 个真实截面 DXF（或旧 型材参数表 行）后运行对照"
     },
     {
      "id": "s5",
